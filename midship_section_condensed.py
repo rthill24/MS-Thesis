@@ -8,6 +8,7 @@ import Plate
 import Cost
 from operator import itemgetter
 import Section
+import matplotlib.pyplot as plt
 
 
 class Midship_Section(object):

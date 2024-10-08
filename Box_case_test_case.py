@@ -78,6 +78,7 @@ eta = 0
 test_panel_1 = TPanel_trans.TPanel_trans(B,L,nstiff,ntrans,tp,tw,hw,tf,bf,twh,twt,tft,tfb,sloc,ornt,qloc,pmatl,smatl,tmatl,eta)
 
 structure = midship_section_condensed.Midship_Section([test_panel_1,test_panel_1],0)
-#data = structure.section_data()
+data = structure.section_data()
+#print (data)
 SM = structure.section_modulii()
 prod_cost = structure.production_cost()

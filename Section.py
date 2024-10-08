@@ -78,11 +78,11 @@ class section(object):
             self._Area += i.getPlatebreadth()*i.getPlatethickness()
             # Plate Thickness * Plate Length * Y Plate center
             self._YFirstMoment += i.getPlatebreadth()*i.getPlatethickness()*(i.getPlatey2()+i.getPlatey1())/2
-            
+            #print (self._Area)
         # First moment Arm/Area
         self._YCentroid = self._YFirstMoment/self._Area    
         for j in self._plates:
-            # I_NA = Area*y_height^2/12 + Area*distance_to_centroid^2
+            #I_NA = Area*y_height^2/12 + Area*distance_to_centroid^2
             MoI = j.getPlatebreadth()*j.getPlatethickness()*math.pow((j.getPlatey2()-j.getPlatey1()),2)/12+j.getPlatebreadth()*j.getPlatethickness()*math.pow((((j.getPlatey2()+j.getPlatey1())/2)-self._YCentroid),2) 
             self._YSecondMoment += MoI
             self._EI += MoI * j.getE()
