@@ -58,10 +58,15 @@ data = structure.section_data()
 #get production cost
 structure = midship_section.Midship_Section([test_panel_1],0)
 PC = structure.production_cost()
-       
+
+#produce plot
+structure = midship_section.Midship_Section([test_panel_1],0)
+plot = structure.plot_section()
+
 print (SM)
 print (data)
 print (PC)
+plot
 
 #set up the smith collapse curve
 #structure = Midship_Section([self.test_panel_3],0)
