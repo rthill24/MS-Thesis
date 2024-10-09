@@ -9,7 +9,63 @@ import Cost
 from operator import itemgetter
 import Section
 import matplotlib.pyplot as plt
+import deterioratingStructure
+import Corrosion as corrode
+import Structures
 
+class Midship_Repair_Cost(deterioratingStructure.TPanel_Repair):
+    '''
+    A repair class for the midship section class - can be extended to consider
+    whatever overhaul, drydocking, or mainteance costs are neccessary
+    '''
+    
+    def __init__(self, cost, recoat_cost):
+        '''
+        Constructor takes the renewal cost, crack repair cost, and recoat cost
+        '''   
+        deterioratingStructure.TPanel_Repair.__init__(self, cost, recoat_cost)
+    
+    def dry_docked_repair(self, multiplier):
+        '''
+        Repair cost given that the repair must be done at dry dock
+        
+        This returns the renewal cost of the midship section piece with a multiplier
+        based on the cost to dry dock the vessel in order to make the repair.
+        
+        Parameters
+        -----------
+        No parameters
+        
+        Returns
+        --------
+        dry_dock_cost:  Cost value
+        '''
+        
+        renew_cost = self.cost
+        dry_dock_cost = renew_cost * multiplier
+        
+        return dry_dock_cost
+    
+    def underway_repair_cost(self, multipler):
+        '''
+        Repair cost given that the repair must be done underway
+        
+        This returns the renewal cost of the midship section piece with a multiplier
+        based on the cost to do an underway repair for the vessel.
+        
+        Parameters
+        ----------
+        No parameters
+        
+        Returns
+        --------
+        underway_cost:  Cost value
+        '''
+        
+        renew_cost = self.cost
+        underway_cost = renew_cost * multipler
+        
+        return underway_cost
 
 class Midship_Section(object):
     '''
@@ -58,6 +114,12 @@ class Midship_Section(object):
         ### Take list of T-Panels and convert them into TransTPanelDet objects - 
         ### deteriorating T-Panel objects which can be aged, repaired, and fatigued
         self.grillages = []
+        for i in grillage_list:  
+            coster = Cost.Cost_trans(i)
+            renewal_cost = coster.Total_Cost_()
+            corrosion_model = corrode.paikCorrosion(coatLife, locationCodePlate=i.qloc[0], locationCodeWeb=i.qloc[1], locationCodeFlange=i.qloc[2])
+            self.grillages.append(deterioratingStructure.TransTPanelDet(Midship_Repair_Cost(renewal_cost, recoat_cost),i,corrosion_model,limit_tp = limit_tp*i.gettp(), \
+                                                 limit_tws = limit_tws*i.gettw(), limit_tfs = limit_tfs*i.gettf(),limit_twf = limit_twf*i.gettwt(), limit_tff = 1))
         
         #Get basic data about midship section: Neutral axis, EI
         section_analysis = Section.section()

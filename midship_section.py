@@ -9,32 +9,33 @@ import math
 import sys
 import shutil
 import os
-from model.Plate import Plate
-from model.TPanel_trans import *
-from methods.analysis import Cost as Cost
-from methods.analysis.Section import *
+import Plate
+import TPanel_trans
+import Cost
+import Section
 #import c_msdl as SmithCollapse
-from methods.analysis import HansenC as HansenC
-from methods.analysis import Corrosion as corrode
-from methods.analysis import CrackDetailVL as CrackDetail
-from model.deterioratingStructure import *
+#from methods.analysis import HansenC as HansenC
+import Corrosion as corrode
+#from methods.analysis import CrackDetailVL as CrackDetail
+import deterioratingStructure
 from operator import itemgetter
 from scipy import integrate
-from methods.analysis import PaikCompression as PC
+#from methods.analysis import PaikCompression as PC
+import matplotlib as plt
 
-#class Midship_Repair_Cost(TPanel_Repair):
+class Midship_Repair_Cost(deterioratingStructure.TPanel_Repair):
     '''
     A repair class for the midship section class - can be extended to consider
     whatever overhaul, drydocking, or mainteance costs are neccessary
     '''
     
-    #def __init__(self, cost, recoat_cost):
+    def __init__(self, cost, recoat_cost):
         '''
         Constructor takes the renewal cost, crack repair cost, and recoat cost
         '''   
-        TPanel_Repair.__init__(self, cost, recoat_cost)
+        deterioratingStructure.TPanel_Repair.__init__(self, cost, recoat_cost)
     
-    #def dry_docked_repair(self, multiplier):
+    def dry_docked_repair(self, multiplier):
         '''
         Repair cost given that the repair must be done at dry dock
         
@@ -51,11 +52,11 @@ from methods.analysis import PaikCompression as PC
         '''
         
         renew_cost = self.cost
-        dry_dock_cost = renew_cost * multipler
+        dry_dock_cost = renew_cost * multiplier
         
         return dry_dock_cost
     
-    #def underway_repair_cost(self, multipler):
+    def underway_repair_cost(self, multiplier):
         '''
         Repair cost given that the repair must be done underway
         
@@ -72,7 +73,7 @@ from methods.analysis import PaikCompression as PC
         '''
         
         renew_cost = self.cost
-        underway_cost = renew_cost * multipler
+        underway_cost = renew_cost * multiplier
         
         return underway_cost
              
@@ -129,25 +130,25 @@ class Midship_Section(object):
             coster = Cost.Cost_trans(i)
             renewal_cost = coster.Total_Cost_()
             corrosion_model = corrode.paikCorrosion(coatLife, locationCodePlate=i.qloc[0], locationCodeWeb=i.qloc[1], locationCodeFlange=i.qloc[2])
-            self.grillages.append(TransTPanelDet(Midship_Repair_Cost(renewal_cost, recoat_cost),i,corrosion_model,limit_tp = limit_tp*i.gettp(), \
+            self.grillages.append(deterioratingStructure.TransTPanelDet(Midship_Repair_Cost(renewal_cost, recoat_cost),i,corrosion_model,limit_tp = limit_tp*i.gettp(), \
                                                  limit_tws = limit_tws*i.gettw(), limit_tfs = limit_tfs*i.gettf(),limit_twf = limit_twf*i.gettwt(), limit_tff = limit_tff*i.gettft(), age = age))
         
         #Get basic data about midship section: Neutral axis, EI
-        section_analysis = section()
+        section_analysis = Section.section()
         for grill in self.grillages:
             panel = grill.getTTPanRef()
             section_analysis.Append_Panels(panel)
         section_analysis.Explode()
         section_analysis._upCalcs()
         
-        compression = PC.PaikCReg()
-        self.EIT, self._NAy, self.area, self.volume = self.section_data()
-        self.EIT /= 10**9
-        self.fatigue_loaders = []
-        self.initial_SM = self.vessel_SM()
-        self.initial_fUCS = []
-        for panel in grillage_list:
-            self.initial_fUCS.append( (compression.ucs(panel)/panel.getYsavg()) )
+        #compression = PC.PaikCReg()
+        #self.EIT, self._NAy, self.area, self.volume = self.section_data()
+        #self.EIT /= 10**9
+        #self.fatigue_loaders = []
+        #self.initial_SM = self.vessel_SM()
+        #self.initial_fUCS = []
+        #for panel in grillage_list:
+            #self.initial_fUCS.append( (compression.ucs(panel)/panel.getYsavg()) )
     
     def section_modulii(self):
         '''
@@ -190,7 +191,7 @@ class Midship_Section(object):
         volume: Volume of the structure
         '''
 
-        section_analysis = section()
+        section_analysis = Section.section()
         volume = 0.0
         for grill in self.grillages:
             panel = grill.getTTPanRef()
@@ -228,7 +229,7 @@ class Midship_Section(object):
         
         return production_cost
             
-    def calculate_fatigue_loading(self, average_cycles, average_moment):
+    #def calculate_fatigue_loading(self, average_cycles, average_moment):
         '''
         Generates a list of FatigueLoading objects based for the fatigue details associated
         with the section.
@@ -277,7 +278,7 @@ class Midship_Section(object):
                     
             self.fatigue_loaders.append(loads)             
 
-    def generate_fatigue_details(self, crack_cost):
+    #def generate_fatigue_details(self, crack_cost):
         '''
         Adds fatigue details to each transverse TPanel based on the number of stiffeners.
         
@@ -371,7 +372,7 @@ class Midship_Section(object):
         
         return needs
     
-    def renew_grillages(self, grills, renew_fatigue_details=True):
+    #def renew_grillages(self, grills, renew_fatigue_details=True):
         '''
         Renews a set of grillages in the cross section.
         
@@ -405,7 +406,7 @@ class Midship_Section(object):
         
         return total_cost
     
-    def set_up_smith_collapse(self, extra_outputs=False):
+    #def set_up_smith_collapse(self, extra_outputs=False):
         '''
         Set up smith collapse analysis for the section
         
@@ -738,7 +739,7 @@ class Midship_Section(object):
         SM: Section modulus
         '''
         
-        sm_section = section()
+        sm_section = Section.section()
         for dpanel in self.grillages:
             tpanel = dpanel.getTTPanRef()
             sm_section.Append_Panels(tpanel)
@@ -759,7 +760,7 @@ class Midship_Section(object):
         
         return SM
             
-    def SM_regenerateSection(self, fracSM, fracUCS, already_drydocked=False):
+    #def SM_regenerateSection(self, fracSM, fracUCS, already_drydocked=False):
         '''
         This method will replace panels to maintain both a global section modulus and local buckling.  It will first 
         strategically replace panels to ensure that the section modulus of the structure is above a fraction of the 
@@ -820,7 +821,7 @@ class Midship_Section(object):
                 
                     kount += 1
                     if kount > 5:
-                        print 'Could not get ultimate strength to meet threshold after 5 iterations! Ending cycle.'
+                        print ("Could not get ultimate strength to meet threshold after 5 iterations! Ending cycle.")
                         checking_sm = False
         
             ###Next replace panels due to local losses in buckling strength
@@ -902,7 +903,7 @@ class Midship_Section(object):
                 
                 kount += 1
                 if kount > 5:
-                    print 'Could not get ultimate strength to meet threshold after 5 iterations! Ending cycle.'
+                    print ("Could not get ultimate strength to meet threshold after 5 iterations! Ending cycle.")
                     checking_strength = False
                 
         return regeneration_cost, repair_method
@@ -910,7 +911,7 @@ class Midship_Section(object):
     def plot_section(self, show=False, mirror=True, ax_obj=None):
         '''Plots the section'''
         
-        section_plot = section()
+        section_plot = Section.section()
         for grill in self.grillages:
             panel = grill.getTTPanRef()
             section_plot.Append_Panels(panel)
@@ -1037,13 +1038,13 @@ class Midship_Section(object):
         
         for year in range(int(self.section_age), end+service_extension):     
             if output:
-                print 'Analyzing vessel in year '+str(year)+':'
+                print ("Analyzing vessel in year "+str(year)+':')
                 
             yearly_scheduled[year], yearly_flat_rates[year], replaced = self.performScheduledMaintenance()
             #Perform scheduled maintenance for this timestep
             if yearly_flat_rates[year]: 
                 if output:
-                    print 'Performing scheduled maintenance. Replaced panels: '+str(replaced)
+                    print ("Performing scheduled maintenance. Replaced panels: "+str(replaced))
             else:
                 #If no scheduled maintenance is done then do any un-planned maintenance
                 
@@ -1052,9 +1053,9 @@ class Midship_Section(object):
     
                 if yearly_flat_rates[year]:
                     if output and yearly_flat_rates[year]==self.underway:
-                        print 'Replaced panels '+str(current_needs)+'. Performed repairs underway.'
+                        print ("Replaced panels "+str(current_needs)+". Performed repairs underway.")
                     if output and yearly_flat_rates[year]==self.emergency_dry_dock:
-                        print 'Replaced panels '+str(current_needs)+'. Needed to perform repairs at drydock.'
+                        print ("Replaced panels "+str(current_needs)+". Needed to perform repairs at drydock.")
                 
 #                Get the costs due to replacing panels to ensure that the ultimate moment stays above a given threshold
 #                regeneration_cost, repair_method = self.UM_regenerateSection(mmtLimit_sagging, mmtLimit_hogging, yearly_flat_rates[year]==self.emergency_dry_dock)
@@ -1063,15 +1064,15 @@ class Midship_Section(object):
                 if repair_method:
                     yearly_flat_rates[year] = repair_method
                     if output and yearly_flat_rates[year]==self.underway:
-                        print 'Replaced panels to increase ultimate moment.  Repairs could be done underway'
+                        print ("Replaced panels to increase ultimate moment.  Repairs could be done underway")
                     if output and yearly_flat_rates[year]==self.emergency_dry_dock:
-                        print 'Replaced panels to increase ultimate moment.  Repairs completed at dry dock'
+                        print ("Replaced panels to increase ultimate moment.  Repairs completed at dry dock")
 
             #Get the costs due to fatigue
             self.calculate_fatigue_loading(average_cycles, average_fatigue_moment)
             yearly_fatigue[year] = self.fatigueCost()
             if output:
-                print 'Costs due to fatigue damage: '+str(yearly_fatigue[year])
+                print ("Costs due to fatigue damage: "+str(yearly_fatigue[year]))
             
             #Apply multipler
             yearly_fatigue[year] *= (mult / ((1+discount_rate)**year)) 
