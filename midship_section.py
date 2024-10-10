@@ -3,6 +3,8 @@
 
 ### Based on the code by Matthew Lankowski and extended by Dylan Temple
 
+
+
 import numpy as np
 import copy
 import math
@@ -13,14 +15,14 @@ import Plate
 import TPanel_trans
 import Cost
 import Section
-#import c_msdl as SmithCollapse
-#from methods.analysis import HansenC as HansenC
+import SmithCollapse
+import HansenC
 import Corrosion as corrode
-#from methods.analysis import CrackDetailVL as CrackDetail
+import CrackDetailVL
 import deterioratingStructure
 from operator import itemgetter
 from scipy import integrate
-#from methods.analysis import PaikCompression as PC
+import PaikCompression as PC
 import matplotlib as plt
 
 class Midship_Repair_Cost(deterioratingStructure.TPanel_Repair):
@@ -141,14 +143,14 @@ class Midship_Section(object):
         section_analysis.Explode()
         section_analysis._upCalcs()
         
-        #compression = PC.PaikCReg()
-        #self.EIT, self._NAy, self.area, self.volume = self.section_data()
-        #self.EIT /= 10**9
-        #self.fatigue_loaders = []
-        #self.initial_SM = self.vessel_SM()
-        #self.initial_fUCS = []
-        #for panel in grillage_list:
-            #self.initial_fUCS.append( (compression.ucs(panel)/panel.getYsavg()) )
+        compression = PC.PaikCReg()
+        self.EIT, self._NAy, self.area, self.volume = self.section_data()
+        self.EIT /= 10**9
+        self.fatigue_loaders = []
+        self.initial_SM = self.vessel_SM()
+        self.initial_fUCS = []
+        for panel in grillage_list:
+            self.initial_fUCS.append( (compression.ucs(panel)/panel.getYsavg()) )
     
     def section_modulii(self):
         '''
@@ -229,7 +231,7 @@ class Midship_Section(object):
         
         return production_cost
             
-    #def calculate_fatigue_loading(self, average_cycles, average_moment):
+    def calculate_fatigue_loading(self, average_cycles, average_moment):
         '''
         Generates a list of FatigueLoading objects based for the fatigue details associated
         with the section.
@@ -273,12 +275,12 @@ class Midship_Section(object):
                     panel_stress = math.fabs(average_moment * (self._NAy - detail_y) / MoI)
                     Moment = panel_stress * area
                     stress_range = ((tpaneli.getTTPanRef().getmatlP().getE()/(10**9)) * Moment * math.fabs(detail_y - self._NAy)) / (self.EIT) / (10**6)  
-                    loading = Fatigue_Loading(stress_range, average_cycles)
+                    loading = deterioratingStructure.Fatigue_Loading(stress_range, average_cycles)
                     loads.append(loading)
                     
             self.fatigue_loaders.append(loads)             
 
-    #def generate_fatigue_details(self, crack_cost):
+    def generate_fatigue_details(self, crack_cost):
         '''
         Adds fatigue details to each transverse TPanel based on the number of stiffeners.
         
@@ -300,7 +302,7 @@ class Midship_Section(object):
                 numDetails = tpaneli.getTTPanRef().getnstiff() + 2
 
                 for j in range(numDetails):                    
-                    fatigue_detail = FatigueDetail(repairCost(crack_cost), CrackDetail.CrackDetailVL(Nrepair=0), tpaneli._age)
+                    fatigue_detail = deterioratingStructure(deterioratingStructure.repairCost(crack_cost), CrackDetailVL.CrackDetailVL(Nrepair=0), tpaneli._age)
                     tpaneli.add_fatigue_detail(fatigue_detail)
                   
     def age_structure(self, time, loading, fatigue_loading):
@@ -406,7 +408,7 @@ class Midship_Section(object):
         
         return total_cost
     
-    #def set_up_smith_collapse(self, extra_outputs=False):
+    def set_up_smith_collapse(self, extra_outputs=False):
         '''
         Set up smith collapse analysis for the section
         
@@ -436,7 +438,7 @@ class Midship_Section(object):
                             value is only returned if the 'extra_outputs' flag is set to true. 
         '''
               
-        collapse = SmithCollapse.SmithCollapseC('SmithCollapse', forcetol=200000.)
+        #collapse = SmithCollapse.SmithCollapseC('SmithCollapse', forcetol=200000.)
         #Discretize the elements
         total_moment = 0.0
         total_area = 0.0
@@ -760,7 +762,7 @@ class Midship_Section(object):
         
         return SM
             
-    #def SM_regenerateSection(self, fracSM, fracUCS, already_drydocked=False):
+    def SM_regenerateSection(self, fracSM, fracUCS, already_drydocked=False):
         '''
         This method will replace panels to maintain both a global section modulus and local buckling.  It will first 
         strategically replace panels to ensure that the section modulus of the structure is above a fraction of the 
@@ -917,8 +919,8 @@ class Midship_Section(object):
             section_plot.Append_Panels(panel)
         section_plot.Explode()
         section_plot.create_section_plot(show=False, mirror=mirror, ax_obj=None)
-        plt.xlabel('Longitudinal Position from Centerline (m)', fontsize=14)
-        plt.ylabel('Vertical Position from Keel (m)', fontsize=14)
+        plt.pyplot.xlabel('Longitudinal Position from Centerline (m)', fontsize=14)
+        plt.pyplot.ylabel('Vertical Position from Keel (m)', fontsize=14)
         if show:
             plt.show()
         
