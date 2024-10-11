@@ -1,8 +1,6 @@
-from distutils import setup
-from distutils import Extension
-from Cython.Distutils import build_ext
+from setuptools import setup
+from Cython.Build import cythonize
 
-ext = Extension("c_msdl", sources=["c_msdl.pyx"])
-
-setup(ext_modules=[ext],
-      cmdclass={'build_ext': build_ext})
+setup(
+    ext_modules = cythonize("c_msdl.pyx")
+)

@@ -4,7 +4,6 @@
 ### Based on the code by Matthew Lankowski and extended by Dylan Temple
 
 
-
 import numpy as np
 import copy
 import math
@@ -438,7 +437,7 @@ class Midship_Section(object):
                             value is only returned if the 'extra_outputs' flag is set to true. 
         '''
               
-        #collapse = SmithCollapse.SmithCollapseC('SmithCollapse', forcetol=200000.)
+        collapse = SmithCollapse.SmithCollapseC('SmithCollapse', forcetol=200000.)
         #Discretize the elements
         total_moment = 0.0
         total_area = 0.0

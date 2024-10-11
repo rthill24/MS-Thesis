@@ -229,7 +229,7 @@ cdef class SmithCollapseC:
                              curvTol, &NApos, &resultMom, &resultCurv, 
                              &elements[0])
         if retCode == 4:
-            print 'Endpoints do not enclose a minimum'
+            print ("Endpoints do not enclose a minimum")
             return [retCode]
         
         #Chek return code for a problem
