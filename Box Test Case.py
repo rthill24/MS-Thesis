@@ -80,7 +80,7 @@ twh_side = 0.1133
 twt_side = 0.005
 tft_side = 0.0064
 tfb_side = 0.05
-sloc_side = [B_bot-(tp_side/2),tp_bot,0]
+sloc_side = [B_bot,0,0]
 ornt_side = -90
 qloc_side = ['NA','NA','NA']
 eta_side = 0
@@ -99,10 +99,32 @@ twh_top = 0.1133
 twt_top = 0.005
 tft_top = 0.0064
 tfb_top = 0.05
-sloc_top = [0,tp_bot+(B_side-tp_side/2),0]
+sloc_top = [0,B_side,0]
 ornt_top = 180
 qloc_top = ['NA','NA','NA']
 eta_top = 0
+
+def check_corner_stiffs(tp_bot, hw_top, tf_top, B_side, nstiff_side, tw_side, bf_side):
+    """
+    Check that the corner stiffeners are not intersecting
+    """
+    stiff_spacing = (B_side)/(nstiff_side-1)
+
+    h_bot_side_stiff = tp_bot + stiff_spacing
+
+    h_bot_side_stiff_flange = h_bot_side_stiff - (tw_side/2) - (bf_side/2)
+
+    h_bot_stiff = tp_bot + hw_top + tf_top
+
+    print (stiff_spacing, h_bot_side_stiff, h_bot_side_stiff_flange, h_bot_stiff) 
+
+    if h_bot_stiff >= h_bot_side_stiff_flange:
+        print ("Corner stiffeners are intersecting") 
+    else:
+        print ("Corner stiffeners are not intersecting")
+
+check_corner_stiffs(tp_bot, hw_top, tf_top, B_side, nstiff_side, tw_side, bf_side)
+
 
 # Creation of TPanel_trans
 test_panel_bot = TPanel_trans.TPanel_trans(B_bot,L_bot,nstiff_bot,ntrans_bot,tp_bot,\
@@ -143,16 +165,16 @@ print (PC)
 plt.show()
 
 #check if the geometry is valid for each individual panel
-""" valid_bot = test_panel_bot.geoValid()
+valid_bot = test_panel_bot.geoValid()
 valid_side = test_panel_side.geoValid()
 valid_top = test_panel_top.geoValid()
-print(valid_bot, valid_side, valid_top) """
+print(valid_bot, valid_side, valid_top)
 
 #evaluate ABS buckling constraints
-""" ABS_constraints_bot = test_panel_bot.constraints()
+ABS_constraints_bot = test_panel_bot.constraints()
 ABS_constraints_side = test_panel_side.constraints()
 ABS_constraints_top = test_panel_top.constraints()
-print(ABS_constraints_bot, ABS_constraints_side, ABS_constraints_top) """
+print(ABS_constraints_bot, ABS_constraints_side, ABS_constraints_top)
 
 """ #set up the smith collapse curve
 collapse_data = structure.set_up_smith_collapse(True)
