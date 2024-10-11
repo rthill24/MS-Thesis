@@ -154,13 +154,13 @@ ABS_constraints_side = test_panel_side.constraints()
 ABS_constraints_top = test_panel_top.constraints()
 print(ABS_constraints_bot, ABS_constraints_side, ABS_constraints_top) """
 
-#set up the smith collapse curve
+""" #set up the smith collapse curve
 collapse_data = structure.set_up_smith_collapse(True)
     
 #get the curvature and moment curve    
 curve, moment = structure.curvature_moment_curve(-1e-3,1e-3,nC=4)
     
 #get the ultimate moment
-sag, hog = structure.get_ultimate_moment('s'), structure.get_ultimate_moment('h')
+sag, hog = structure.get_ultimate_moment('s'), structure.get_ultimate_moment('h') """
 
   

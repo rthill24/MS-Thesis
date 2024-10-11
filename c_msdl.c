@@ -3,10 +3,12 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [],
+        "depends": [
+            "C:\\Users\\Administrator\\Documents\\Michigan Documents\\First Term\\Master's Thesis\\Code\\Working\\MS-Thesis\\smith_collapse.h"
+        ],
         "name": "c_msdl",
         "sources": [
-            "c_msdl.pyx"
+            "C:\\Users\\Administrator\\Documents\\Michigan Documents\\First Term\\Master's Thesis\\Code\\Working\\MS-Thesis\\c_msdl.pyx"
         ]
     },
     "module_name": "c_msdl"
@@ -1261,7 +1263,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/.venv/Lib/site-packages/numpy/_core/include/numpy/ufuncobject.h"
 #include <stddef.h>
 #include "pythread.h"
-#include "smith_collapse.h"
+#include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/MS-Thesis/smith_collapse.h"
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
