@@ -6,6 +6,9 @@
         "depends": [
             "C:\\Users\\Administrator\\Documents\\Michigan Documents\\First Term\\Master's Thesis\\Code\\Working\\MS-Thesis\\smith_collapse.h"
         ],
+        "include_dirs": [
+            "C:\\Users\\Administrator\\Documents\\Michigan Documents\\First Term\\Master's Thesis\\Code\\Working\\MS-Thesis"
+        ],
         "name": "c_msdl",
         "sources": [
             "C:\\Users\\Administrator\\Documents\\Michigan Documents\\First Term\\Master's Thesis\\Code\\Working\\MS-Thesis\\c_msdl.pyx"

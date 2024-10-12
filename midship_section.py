@@ -24,6 +24,8 @@ from scipy import integrate
 import PaikCompression as PC
 import matplotlib as plt
 
+#import c_msdl as SmithCollapse
+
 class Midship_Repair_Cost(deterioratingStructure.TPanel_Repair):
     '''
     A repair class for the midship section class - can be extended to consider

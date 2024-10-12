@@ -6,7 +6,7 @@ cimport numpy as np
 import util.errors as errors
 from cpython cimport bool
 
-cdef extern from "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/MS-Thesis/smith_collapse.h":
+cdef extern from "smith_collapse.h":
     
     ctypedef struct comp:
         pass
