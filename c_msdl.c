@@ -31,7 +31,7 @@ END: Cython Metadata */
   #endif
 #endif
 
-#include "Python.h"
+#include "C:/Users/Administrator/AppData/Local/Programs/Python/Python312/include/Python.h"
 
     #if PY_MAJOR_VERSION >= 3
       #define __Pyx_PyFloat_FromString(obj)  PyFloat_FromString(obj)
@@ -892,7 +892,7 @@ static CYTHON_INLINE void *__Pyx_PyModule_GetState(PyObject *op)
   #define __Pyx_PyType_GetSlot(type, name, func_ctype)  ((type)->name)
 #endif
 #if PY_VERSION_HEX < 0x030700A2 && !defined(PyThread_tss_create) && !defined(Py_tss_NEEDS_INIT)
-#include "pythread.h"
+#include "C:/Users/Administrator/AppData/Local/Programs/Python/Python312/include/pythread.h"
 #define Py_tss_NEEDS_INIT 0
 typedef int Py_tss_t;
 static CYTHON_INLINE int PyThread_tss_create(Py_tss_t *key) {
@@ -1265,7 +1265,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/.venv/Lib/site-packages/numpy/_core/include/numpy/arrayscalars.h"
 #include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/.venv/Lib/site-packages/numpy/_core/include/numpy/ufuncobject.h"
 #include <stddef.h>
-#include "pythread.h"
+#include "C:/Users/Administrator/AppData/Local/Programs/Python/Python312/include/pythread.h"
 #include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/MS-Thesis/smith_collapse.h"
 #ifdef _OPENMP
 #include <omp.h>
@@ -2231,7 +2231,7 @@ static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
 static void __Pyx_RaiseBufferFallbackError(void);
 
 /* IncludeStructmemberH.proto */
-#include <structmember.h>
+#include "C:/Users/Administrator/AppData/Local/Programs/Python/Python312/include/structmember.h"
 
 /* FixUpExtensionType.proto */
 #if CYTHON_USE_TYPE_SPECS
@@ -12801,9 +12801,9 @@ static void __pyx_insert_code_object(int code_line, PyCodeObject* code_object) {
 #endif
 
 /* AddTraceback */
-  #include "compile.h"
-#include "frameobject.h"
-#include "traceback.h"
+  #include "C:/Users/Administrator/AppData/Local/Programs/Python/Python312/include/compile.h"
+#include "C:/Users/Administrator/AppData/Local/Programs/Python/Python312/include/frameobject.h"
+#include "C:/Users/Administrator/AppData/Local/Programs/Python/Python312/include/traceback.h"
 #if PY_VERSION_HEX >= 0x030b00a6 && !CYTHON_COMPILING_IN_LIMITED_API
   #ifndef Py_BUILD_CORE
     #define Py_BUILD_CORE 1
