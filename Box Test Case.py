@@ -171,10 +171,10 @@ valid_top = test_panel_top.geoValid()
 print(valid_bot, valid_side, valid_top)
 
 #evaluate ABS buckling constraints
-ABS_constraints_bot = test_panel_bot.constraints()
+""" ABS_constraints_bot = test_panel_bot.constraints()
 ABS_constraints_side = test_panel_side.constraints()
 ABS_constraints_top = test_panel_top.constraints()
-print(ABS_constraints_bot, ABS_constraints_side, ABS_constraints_top)
+print(ABS_constraints_bot, ABS_constraints_side, ABS_constraints_top) """
 
 #set up the smith collapse curve
 collapse_data = structure.set_up_smith_collapse(True)
