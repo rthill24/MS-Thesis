@@ -43,16 +43,16 @@ def MUltimate(XSection, output=1):
     E = Section[0]._panel._pmatl.getE()
     YldCrv = Ys/(c*E)
     
-#    I=0
-#    for el in Section:
-#        el.MoI = el._panel.getINA() + el._panel.getArea()*(NA0 - el.getYloc())**2
-#        I+=el.MoI
-#    print 'My:', (Ys*I)/c
+    I=0
+    for el in Section:
+        el.MoI = el._panel.getINA() + el._panel.getArea()*(NA0 - el.getYloc())**2
+        I+=el.MoI
+    print ("My:", (Ys*I)/c)
 
     crvMin = YldCrv/10
     crvMax = 2*YldCrv
 
-#    crvStep = crvMax/50
+    crvStep = crvMax/50
 
     global NAi
     NAi = 0
@@ -61,61 +61,51 @@ def MUltimate(XSection, output=1):
     getMomentCurrent = 0
     getMomentPrevious = 0
     
-#    global showstats
-#    showstats = 0
+    global showstats
+    showstats = 0
 #################################################################################
 #### THE FOLLOWING IS FOR DEBUGGING- PLOTS THE ENTIRE CURVE INSTEAD OF        ###
 #### OPTIMIZING FOR MAX MOMENT                                                ###
 ################################################################################# 
-#    crvtr_pos = [0]
-#    posMom = [0]
-#    ultcheck = 0
-#    while ultcheck < 30:
-#        maxMom = max(posMom)
-#        crvtr_pos.append(crvtr_pos[-1]+crvStep)
-#        posMom.append(-getMoment(crvtr_pos[-1],Section,'pos',NAmin,NAmax,NAiTol))
-##        print crvtr_neg[-1], negMom[-1]
-#        if posMom[-1] < maxMom:
-#            ultcheck += 1    
-#    
-#    crvtr_neg = [0]
-#    negMom = [0]
-#    ultcheck = 0
-#    while ultcheck < 30:
-#        minMom = min(negMom)
-#        crvtr_neg.append(crvtr_neg[-1]-crvStep)
-#        negMom.append(getMoment(crvtr_neg[-1],Section,'neg',NAmin,NAmax,NAiTol))
-##        print crvtr_neg[-1], negMom[-1]
-#        if negMom[-1] > minMom:
-#            ultcheck += 1
-#    
-#    posmoments = np.array(posMom)
-#    negmoments = np.array(negMom)
-#    print '\nSTEPPING:'
-#    print 'max pos mom:',2*int(max(posMom))
-#    print 'max neg mom:',2*int(min(negMom))
-#    plt.plot(crvtr_neg, 2*negmoments, 'k')
-#    plt.plot(crvtr_pos, 2*posmoments, 'k')
-#    plt.xlabel('Curvature (1/m)')
-#    plt.ylabel('Moment (N-m)')
-#    plt.axhline(color = 'k')
-#    plt.axvline(color = 'k')
-#    plt.text(0.00025, 0.7e9, 'SAG')
-#    plt.text(-0.00055, -1.8e9, 'HOG')
-#    plt.grid()
-#    plt.show()    
-#    ult_mmt_neg = max(negMom)
-#    print 'Crv at max pos mom:',crvtr_pos[posmoments.argmax()]
-#    
-#    showstats = 1
-##    print 'HEY'
-##    print posmoments
-##    print 'argmax:',posmoments.argmax()
-##    print 'crvtr_pos[argmax]',crvtr_pos[posmoments.argmax()]
-#    print 'Max Pos Mom:',2*getMoment(crvtr_pos[posmoments.argmax()],Section,'pos',NAmin,NAmax,NAiTol)
-##    print 'YO'
-#    showstats = 0
-#    
+    crvtr_pos = [0]
+    crvtr_neg = [0]
+    posMom = [0]
+    negMom = [0]
+    ultcheck = 0
+    while ultcheck < 30:
+        maxMom = max(posMom)
+        crvtr_pos.append(crvtr_pos[-1]+crvStep)
+        posMom.append(-getMoment(crvtr_pos[-1],Section,'pos',NAmin,NAmax,NAiTol))
+        if posMom[-1] < maxMom:
+            ultcheck += 1    
+    
+    crvtr_neg = [0]
+    negMom = [0]
+    ultcheck = 0
+    while ultcheck < 30:
+        minMom = min(negMom)
+        crvtr_neg.append(crvtr_neg[-1]-crvStep)
+        negMom.append(getMoment(crvtr_neg[-1],Section,'neg',NAmin,NAmax,NAiTol))
+        if negMom[-1] > minMom:
+            ultcheck += 1
+    
+    posmoments = np.array(posMom)
+    negmoments = np.array(negMom)
+    plt.plot(crvtr_neg, 2*negmoments, 'k')
+    plt.plot(crvtr_pos, 2*posmoments, 'k')
+    plt.xlabel('Curvature (1/m)')
+    plt.ylabel('Moment (N-m)')
+    plt.axhline(color = 'k')
+    plt.axvline(color = 'k')
+    plt.text(0.00025, 0.7e9, 'SAG')
+    plt.text(-0.00055, -1.8e9, 'HOG')
+    plt.grid()
+    plt.show()    
+    ult_mmt_neg = max(negMom)
+    showstats = 1
+    print ("Max Pos Mom:",2*getMoment(crvtr_pos[posmoments.argmax()],Section,'pos',NAmin,NAmax,NAiTol))
+    showstats = 0
+     
 #################################################################################      
     
     '''Find the ultimate strength and NA for positive curvature'''
