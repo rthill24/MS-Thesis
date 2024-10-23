@@ -1259,17 +1259,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 
     /* Using NumPy API declarations from "numpy/__init__.cython-30.pxd" */
     
-#include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/.venv/Lib/site-packages/numpy/_core/include/numpy/arrayobject.h"
-#include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/.venv/Lib/site-packages/numpy/_core/include/numpy/ndarrayobject.h"
-#include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/.venv/Lib/site-packages/numpy/_core/include/numpy/ndarraytypes.h"
-#include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/.venv/Lib/site-packages/numpy/_core/include/numpy/arrayscalars.h"
-#include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/.venv/Lib/site-packages/numpy/_core/include/numpy/ufuncobject.h"
-#include <stddef.h>
-#include "pythread.h"
-#include "C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/MS-Thesis/smith_collapse.h"
-#ifdef _OPENMP
-#include <omp.h>
-#endif /* _OPENMP */
+MS-Thesis/References for numpy array.txt
 
 #if defined(PYREX_WITHOUT_ASSERTIONS) && !defined(CYTHON_WITHOUT_ASSERTIONS)
 #define CYTHON_WITHOUT_ASSERTIONS
