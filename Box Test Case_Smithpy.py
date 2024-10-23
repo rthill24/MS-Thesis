@@ -18,6 +18,9 @@ import matplotlib.pyplot as plt
 from operator import itemgetter
 from scipy import integrate
 import deterioratingStructure
+import SmithCollapse
+import HansenC as HC
+import Element
 
 # Define the material properties
 pmatl = Structures.EPMatl(95e6, 70e9, 0.34)
@@ -125,7 +128,6 @@ def check_corner_stiffs(tp_bot, hw_top, tf_top, B_side, nstiff_side, tw_side, bf
 
 check_corner_stiffs(tp_bot, hw_top, tf_top, B_side, nstiff_side, tw_side, bf_side)
 
-
 # Creation of TPanel_trans
 test_panel_bot = TPanel_trans.TPanel_trans(B_bot,L_bot,nstiff_bot,ntrans_bot,tp_bot,\
                                         tw_bot,hw_bot,tf_bot,bf_bot,twh_bot,twt_bot,\
@@ -176,13 +178,17 @@ ABS_constraints_side = test_panel_side.constraints()
 ABS_constraints_top = test_panel_top.constraints()
 print(ABS_constraints_bot, ABS_constraints_side, ABS_constraints_top) """
 
-#set up the smith collapse curve
-""" collapse_data = structure.set_up_smith_collapse(True) """
-    
-#get the curvature and moment curve    
-#curve, moment = structure.curvature_moment_curve(-1e-3,1e-3,nC=4)
-    
-#get the ultimate moment
-#sag, hog = structure.get_ultimate_moment('s'), structure.get_ultimate_moment('h')
+#get the moment curve and the ultimate moment 
+H = HC.HansenC([test_panel_bot,test_panel_side,test_panel_top])
+strn = H._strn
+strs = H._strss
+AE = H._AE
+XSection = []
+for i in range(0,200):
+    XSection.append(Element.Element([test_panel_bot,test_panel_side,test_panel_top], strn, strs, AE, yloc = i)) #create an element object with the strain, stress, AE and zloc data
+UltMmt = SmithCollapse.MUltimate(structure._XSection)
+print (UltMmt)
+
+
 
   
