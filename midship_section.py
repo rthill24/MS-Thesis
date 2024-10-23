@@ -24,11 +24,6 @@ from scipy import integrate
 import PaikCompression as PC
 import matplotlib as plt
 
-sys.path.append("C:/Users/Administrator/Documents/Michigan Documents/First Term/Master's Thesis/Code/Working/MS-Thesis")
-import pyximport
-pyximport.install()
-import c_msdl as SmithCollapse
-
 #import c_msdl as SmithCollapse
 
 class Midship_Repair_Cost(deterioratingStructure.TPanel_Repair):
