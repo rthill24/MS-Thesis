@@ -1,0 +1,1071 @@
+﻿  pch.cpp
+  c_msdl.c
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(24,15): warning C4005: 'Py_LIMITED_API': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(22,15):
+      see previous definition of 'Py_LIMITED_API'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(34,15): warning C4005: '__Pyx_PyFloat_FromString': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(32,15):
+      see previous definition of '__Pyx_PyFloat_FromString'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(55,9): warning C4005: '__PYX_EXTRA_ABI_MODULE_NAME': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(53,9):
+      see previous definition of '__PYX_EXTRA_ABI_MODULE_NAME'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(112,13): warning C4005: 'CYTHON_USE_ASYNC_SLOTS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(110,13):
+      see previous definition of 'CYTHON_USE_ASYNC_SLOTS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(155,11): warning C4005: 'CYTHON_COMPILING_IN_PYPY': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(97,11):
+      see previous definition of 'CYTHON_COMPILING_IN_PYPY'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(158,11): warning C4005: 'CYTHON_COMPILING_IN_GRAAL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(100,11):
+      see previous definition of 'CYTHON_COMPILING_IN_GRAAL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(169,13): warning C4005: 'CYTHON_USE_ASYNC_SLOTS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(112,13):
+      see previous definition of 'CYTHON_USE_ASYNC_SLOTS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(171,13): warning C4005: 'CYTHON_USE_ASYNC_SLOTS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(169,13):
+      see previous definition of 'CYTHON_USE_ASYNC_SLOTS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(200,13): warning C4005: 'CYTHON_PEP489_MULTI_PHASE_INIT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(140,11):
+      see previous definition of 'CYTHON_PEP489_MULTI_PHASE_INIT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(202,13): warning C4005: 'CYTHON_PEP489_MULTI_PHASE_INIT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(200,13):
+      see previous definition of 'CYTHON_PEP489_MULTI_PHASE_INIT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(207,11): warning C4005: 'CYTHON_USE_TP_FINALIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(144,11):
+      see previous definition of 'CYTHON_USE_TP_FINALIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(220,13): warning C4005: '__PYX_LIMITED_VERSION_HEX': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(93,9):
+      see previous definition of '__PYX_LIMITED_VERSION_HEX'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(222,11): warning C4005: 'CYTHON_COMPILING_IN_PYPY': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(155,11):
+      see previous definition of 'CYTHON_COMPILING_IN_PYPY'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(224,11): warning C4005: 'CYTHON_COMPILING_IN_LIMITED_API': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(99,11):
+      see previous definition of 'CYTHON_COMPILING_IN_LIMITED_API'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(232,11): warning C4005: 'CYTHON_USE_TYPE_SPECS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(105,11):
+      see previous definition of 'CYTHON_USE_TYPE_SPECS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(236,11): warning C4005: 'CYTHON_USE_ASYNC_SLOTS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(171,13):
+      see previous definition of 'CYTHON_USE_ASYNC_SLOTS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(247,13): warning C4005: 'CYTHON_AVOID_BORROWED_REFS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(123,11):
+      see previous definition of 'CYTHON_AVOID_BORROWED_REFS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(262,13): warning C4005: 'CYTHON_PEP487_INIT_SUBCLASS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(137,13):
+      see previous definition of 'CYTHON_PEP487_INIT_SUBCLASS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(265,11): warning C4005: 'CYTHON_PEP489_MULTI_PHASE_INIT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(202,13):
+      see previous definition of 'CYTHON_PEP489_MULTI_PHASE_INIT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(267,11): warning C4005: 'CYTHON_USE_MODULE_STATE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(142,11):
+      see previous definition of 'CYTHON_USE_MODULE_STATE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(269,13): warning C4005: 'CYTHON_USE_TP_FINALIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(207,11):
+      see previous definition of 'CYTHON_USE_TP_FINALIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(283,11): warning C4005: 'CYTHON_COMPILING_IN_LIMITED_API': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(224,11):
+      see previous definition of 'CYTHON_COMPILING_IN_LIMITED_API'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(285,11): warning C4005: 'CYTHON_COMPILING_IN_NOGIL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(101,11):
+      see previous definition of 'CYTHON_COMPILING_IN_NOGIL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(287,13): warning C4005: 'CYTHON_USE_TYPE_SLOTS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(103,11):
+      see previous definition of 'CYTHON_USE_TYPE_SLOTS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(290,13): warning C4005: 'CYTHON_USE_TYPE_SPECS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(232,11):
+      see previous definition of 'CYTHON_USE_TYPE_SPECS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(295,13): warning C4005: 'CYTHON_USE_ASYNC_SLOTS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(236,11):
+      see previous definition of 'CYTHON_USE_ASYNC_SLOTS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(303,13): warning C4005: 'CYTHON_USE_UNICODE_INTERNALS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(117,11):
+      see previous definition of 'CYTHON_USE_UNICODE_INTERNALS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(311,13): warning C4005: 'CYTHON_ASSUME_SAFE_MACROS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(125,11):
+      see previous definition of 'CYTHON_ASSUME_SAFE_MACROS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(314,13): warning C4005: 'CYTHON_UNPACK_METHODS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(127,11):
+      see previous definition of 'CYTHON_UNPACK_METHODS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(321,13): warning C4005: 'CYTHON_METH_FASTCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(133,11):
+      see previous definition of 'CYTHON_METH_FASTCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(329,13): warning C4005: 'CYTHON_PEP489_MULTI_PHASE_INIT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(265,11):
+      see previous definition of 'CYTHON_PEP489_MULTI_PHASE_INIT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(332,13): warning C4005: 'CYTHON_USE_MODULE_STATE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(267,11):
+      see previous definition of 'CYTHON_USE_MODULE_STATE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(335,13): warning C4005: 'CYTHON_USE_TP_FINALIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(269,13):
+      see previous definition of 'CYTHON_USE_TP_FINALIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(342,13): warning C4005: 'CYTHON_UPDATE_DESCRIPTOR_DOC': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(150,13):
+      see previous definition of 'CYTHON_UPDATE_DESCRIPTOR_DOC'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(349,11): warning C4005: 'CYTHON_COMPILING_IN_CPYTHON': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(98,11):
+      see previous definition of 'CYTHON_COMPILING_IN_CPYTHON'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(352,11): warning C4005: 'CYTHON_COMPILING_IN_NOGIL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(285,11):
+      see previous definition of 'CYTHON_COMPILING_IN_NOGIL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(360,13): warning C4005: 'CYTHON_USE_PYTYPE_LOOKUP': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(107,11):
+      see previous definition of 'CYTHON_USE_PYTYPE_LOOKUP'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(364,13): warning C4005: 'CYTHON_USE_ASYNC_SLOTS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(295,13):
+      see previous definition of 'CYTHON_USE_ASYNC_SLOTS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(366,13): warning C4005: 'CYTHON_USE_ASYNC_SLOTS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(364,13):
+      see previous definition of 'CYTHON_USE_ASYNC_SLOTS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(369,13): warning C4005: 'CYTHON_USE_PYLONG_INTERNALS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(121,11):
+      see previous definition of 'CYTHON_USE_PYLONG_INTERNALS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(372,13): warning C4005: 'CYTHON_USE_PYLIST_INTERNALS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(115,11):
+      see previous definition of 'CYTHON_USE_PYLIST_INTERNALS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(381,13): warning C4005: 'CYTHON_USE_UNICODE_WRITER': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(119,11):
+      see previous definition of 'CYTHON_USE_UNICODE_WRITER'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(393,13): warning C4005: 'CYTHON_FAST_THREAD_STATE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(129,11):
+      see previous definition of 'CYTHON_FAST_THREAD_STATE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(396,13): warning C4005: 'CYTHON_FAST_GIL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(131,11):
+      see previous definition of 'CYTHON_FAST_GIL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(399,13): warning C4005: 'CYTHON_METH_FASTCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(321,13):
+      see previous definition of 'CYTHON_METH_FASTCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(402,13): warning C4005: 'CYTHON_FAST_PYCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(135,11):
+      see previous definition of 'CYTHON_FAST_PYCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(409,13): warning C4005: 'CYTHON_PEP489_MULTI_PHASE_INIT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(329,13):
+      see previous definition of 'CYTHON_PEP489_MULTI_PHASE_INIT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(411,13): warning C4005: 'CYTHON_PEP489_MULTI_PHASE_INIT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(409,13):
+      see previous definition of 'CYTHON_PEP489_MULTI_PHASE_INIT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(418,13): warning C4005: 'CYTHON_USE_TP_FINALIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(335,13):
+      see previous definition of 'CYTHON_USE_TP_FINALIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(420,13): warning C4005: 'CYTHON_USE_TP_FINALIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(418,13):
+      see previous definition of 'CYTHON_USE_TP_FINALIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(426,13): warning C4005: 'CYTHON_USE_DICT_VERSIONS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(146,11):
+      see previous definition of 'CYTHON_USE_DICT_VERSIONS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(432,13): warning C4005: 'CYTHON_USE_EXC_INFO_STACK': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(148,11):
+      see previous definition of 'CYTHON_USE_EXC_INFO_STACK'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(438,13): warning C4005: 'CYTHON_USE_FREELISTS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(153,11):
+      see previous definition of 'CYTHON_USE_FREELISTS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(469,13): warning C4005: 'CYTHON_RESTRICT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(467,13):
+      see previous definition of 'CYTHON_RESTRICT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(471,13): warning C4005: 'CYTHON_RESTRICT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(469,13):
+      see previous definition of 'CYTHON_RESTRICT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(473,13): warning C4005: 'CYTHON_RESTRICT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(471,13):
+      see previous definition of 'CYTHON_RESTRICT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(490,14): warning C4005: 'CYTHON_UNUSED': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(482,17):
+      see previous definition of 'CYTHON_UNUSED'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(492,14): warning C4005: 'CYTHON_UNUSED': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(490,14):
+      see previous definition of 'CYTHON_UNUSED'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(495,12): warning C4005: 'CYTHON_UNUSED': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(492,14):
+      see previous definition of 'CYTHON_UNUSED'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(497,12): warning C4005: 'CYTHON_UNUSED': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(495,12):
+      see previous definition of 'CYTHON_UNUSED'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(514,11): warning C4005: 'CYTHON_NCP_UNUSED': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(512,11):
+      see previous definition of 'CYTHON_NCP_UNUSED'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(522,13): warning C4005: 'CYTHON_USE_CPP_STD_MOVE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(520,13):
+      see previous definition of 'CYTHON_USE_CPP_STD_MOVE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(566,17): warning C4005: 'CYTHON_FALLTHROUGH': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(561,17):
+      see previous definition of 'CYTHON_FALLTHROUGH'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(568,17): warning C4005: 'CYTHON_FALLTHROUGH': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(566,17):
+      see previous definition of 'CYTHON_FALLTHROUGH'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(574,15): warning C4005: 'CYTHON_FALLTHROUGH': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(568,17):
+      see previous definition of 'CYTHON_FALLTHROUGH'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(576,15): warning C4005: 'CYTHON_FALLTHROUGH': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(574,15):
+      see previous definition of 'CYTHON_FALLTHROUGH'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(591,11): warning C4005: '__PYX_IS_UNSIGNED': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(589,11):
+      see previous definition of '__PYX_IS_UNSIGNED'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(596,11): warning C4005: '__PYX_NEED_TP_PRINT_SLOT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(594,11):
+      see previous definition of '__PYX_NEED_TP_PRINT_SLOT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(604,13): warning C4005: 'CYTHON_INLINE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(602,13):
+      see previous definition of 'CYTHON_INLINE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(606,13): warning C4005: 'CYTHON_INLINE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(604,13):
+      see previous definition of 'CYTHON_INLINE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(608,13): warning C4005: 'CYTHON_INLINE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(606,13):
+      see previous definition of 'CYTHON_INLINE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(610,13): warning C4005: 'CYTHON_INLINE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(608,13):
+      see previous definition of 'CYTHON_INLINE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(622,11): warning C4005: '__Pyx_BUILTIN_MODULE_NAME': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(617,11):
+      see previous definition of '__Pyx_BUILTIN_MODULE_NAME'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(623,11): warning C4005: '__Pyx_DefaultClassType': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(618,11):
+      see previous definition of '__Pyx_DefaultClassType'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(710,11): warning C4005: '__Pyx_PyCode_New': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(619,11):
+      see previous definition of '__Pyx_PyCode_New'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(713,11): warning C4005: '__Pyx_PyCode_New': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(710,11):
+      see previous definition of '__Pyx_PyCode_New'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(720,11): warning C4005: '__Pyx_IS_TYPE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(718,11):
+      see previous definition of '__Pyx_IS_TYPE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(725,11): warning C4005: '__Pyx_Py_Is': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(723,11):
+      see previous definition of '__Pyx_Py_Is'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(730,11): warning C4005: '__Pyx_Py_IsNone': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(728,11):
+      see previous definition of '__Pyx_Py_IsNone'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(735,11): warning C4005: '__Pyx_Py_IsTrue': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(733,11):
+      see previous definition of '__Pyx_Py_IsTrue'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(740,11): warning C4005: '__Pyx_Py_IsFalse': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(738,11):
+      see previous definition of '__Pyx_Py_IsFalse'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(746,11): warning C4005: '__Pyx_PyObject_GC_IsFinalized': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(744,11):
+      see previous definition of '__Pyx_PyObject_GC_IsFinalized'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(749,11): warning C4005: 'CO_COROUTINE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(689,13):
+      see previous definition of 'CO_COROUTINE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(752,11): warning C4005: 'CO_ASYNC_GENERATOR': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(683,13):
+      see previous definition of 'CO_ASYNC_GENERATOR'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(787,13): warning C4005: '__Pyx_PyCFunctionFast': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(784,13):
+      see previous definition of '__Pyx_PyCFunctionFast'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(788,13): warning C4005: '__Pyx_PyCFunctionFastWithKeywords': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(785,13):
+      see previous definition of '__Pyx_PyCFunctionFastWithKeywords'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(796,11): warning C4005: '__Pyx_METH_FASTCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(792,11):
+      see previous definition of '__Pyx_METH_FASTCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(797,11): warning C4005: '__Pyx_PyCFunction_FastCall': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(793,11):
+      see previous definition of '__Pyx_PyCFunction_FastCall'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(798,11): warning C4005: '__Pyx_PyCFunction_FastCallWithKeywords': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(794,11):
+      see previous definition of '__Pyx_PyCFunction_FastCallWithKeywords'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(807,11): warning C4005: '__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(802,11):
+      see previous definition of '__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(808,11): warning C4005: '__Pyx_PyVectorcall_NARGS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(803,11):
+      see previous definition of '__Pyx_PyVectorcall_NARGS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(810,11): warning C4005: '__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(807,11):
+      see previous definition of '__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(811,11): warning C4005: '__Pyx_PyVectorcall_NARGS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(808,11):
+      see previous definition of '__Pyx_PyVectorcall_NARGS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(816,9): warning C4005: '__Pyx_PyCFunction_CheckExact': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(814,9):
+      see previous definition of '__Pyx_PyCFunction_CheckExact'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(822,9): warning C4005: '__Pyx_CyOrPyCFunction_GET_FUNCTION': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(820,9):
+      see previous definition of '__Pyx_CyOrPyCFunction_GET_FUNCTION'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(842,11): warning C4005: '__Pyx_PyType_FromModuleAndSpec': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(839,11):
+      see previous definition of '__Pyx_PyType_FromModuleAndSpec'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(858,11): warning C4005: '__Pyx_PyFrame_SetLineNumber': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(855,11):
+      see previous definition of '__Pyx_PyFrame_SetLineNumber'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(863,11): warning C4005: '__Pyx_PyThreadState_Current': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(861,11):
+      see previous definition of '__Pyx_PyThreadState_Current'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(865,11): warning C4005: '__Pyx_PyThreadState_Current': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(863,11):
+      see previous definition of '__Pyx_PyThreadState_Current'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(867,11): warning C4005: '__Pyx_PyThreadState_Current': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(865,11):
+      see previous definition of '__Pyx_PyThreadState_Current'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(869,11): warning C4005: '__Pyx_PyThreadState_Current': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(867,11):
+      see previous definition of '__Pyx_PyThreadState_Current'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(871,11): warning C4005: '__Pyx_PyThreadState_Current': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(869,11):
+      see previous definition of '__Pyx_PyThreadState_Current'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(887,11): warning C4005: '__Pyx_PyType_GetSlot': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(885,11):
+      see previous definition of '__Pyx_PyType_GetSlot'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(944,9): warning C4005: '__Pyx_PyDict_NewPresized': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(942,9):
+      see previous definition of '__Pyx_PyDict_NewPresized'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(950,11): warning C4005: '__Pyx_PyNumber_Divide': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(947,11):
+      see previous definition of '__Pyx_PyNumber_Divide'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(951,11): warning C4005: '__Pyx_PyNumber_InPlaceDivide': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(948,11):
+      see previous definition of '__Pyx_PyNumber_InPlaceDivide'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(961,9): warning C4005: '__Pyx_PyDict_GetItemStrWithError': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(954,9):
+      see previous definition of '__Pyx_PyDict_GetItemStrWithError'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(986,11): warning C4005: '__Pyx_PyType_GetFlags': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(982,11):
+      see previous definition of '__Pyx_PyType_GetFlags'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(987,11): warning C4005: '__Pyx_PyType_HasFeature': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(983,11):
+      see previous definition of '__Pyx_PyType_HasFeature'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(988,11): warning C4005: '__Pyx_PyObject_GetIterNextFunc': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(984,11):
+      see previous definition of '__Pyx_PyObject_GetIterNextFunc'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(993,11): warning C4005: '__Pyx_SetItemOnTypeDict': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(991,11):
+      see previous definition of '__Pyx_SetItemOnTypeDict'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1003,9): warning C4005: '__Pyx_PyHeapTypeObject_GC_Del': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(996,9):
+      see previous definition of '__Pyx_PyHeapTypeObject_GC_Del'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1020,13): warning C4005: '__Pyx_PyUnicode_READY': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1007,11):
+      see previous definition of '__Pyx_PyUnicode_READY'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1023,11): warning C4005: '__Pyx_PyUnicode_GET_LENGTH': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1008,11):
+      see previous definition of '__Pyx_PyUnicode_GET_LENGTH'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1024,11): warning C4005: '__Pyx_PyUnicode_READ_CHAR': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1009,11):
+      see previous definition of '__Pyx_PyUnicode_READ_CHAR'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1025,11): warning C4005: '__Pyx_PyUnicode_MAX_CHAR_VALUE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1010,11):
+      see previous definition of '__Pyx_PyUnicode_MAX_CHAR_VALUE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1026,11): warning C4005: '__Pyx_PyUnicode_KIND': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1011,11):
+      see previous definition of '__Pyx_PyUnicode_KIND'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1027,11): warning C4005: '__Pyx_PyUnicode_DATA': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1012,11):
+      see previous definition of '__Pyx_PyUnicode_DATA'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1028,11): warning C4005: '__Pyx_PyUnicode_READ': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1013,11):
+      see previous definition of '__Pyx_PyUnicode_READ'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1031,13): warning C4005: '__Pyx_PyUnicode_IS_TRUE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1014,11):
+      see previous definition of '__Pyx_PyUnicode_IS_TRUE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1034,13): warning C4005: '__Pyx_PyUnicode_IS_TRUE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1031,13):
+      see previous definition of '__Pyx_PyUnicode_IS_TRUE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1036,13): warning C4005: '__Pyx_PyUnicode_IS_TRUE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1034,13):
+      see previous definition of '__Pyx_PyUnicode_IS_TRUE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1040,11): warning C4005: 'CYTHON_PEP393_ENABLED': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1006,11):
+      see previous definition of 'CYTHON_PEP393_ENABLED'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1044,11): warning C4005: '__Pyx_PyUnicode_READY': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1020,13):
+      see previous definition of '__Pyx_PyUnicode_READY'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1045,11): warning C4005: '__Pyx_PyUnicode_GET_LENGTH': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1023,11):
+      see previous definition of '__Pyx_PyUnicode_GET_LENGTH'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1046,11): warning C4005: '__Pyx_PyUnicode_READ_CHAR': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1024,11):
+      see previous definition of '__Pyx_PyUnicode_READ_CHAR'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1047,11): warning C4005: '__Pyx_PyUnicode_MAX_CHAR_VALUE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1025,11):
+      see previous definition of '__Pyx_PyUnicode_MAX_CHAR_VALUE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1048,11): warning C4005: '__Pyx_PyUnicode_KIND': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1026,11):
+      see previous definition of '__Pyx_PyUnicode_KIND'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1049,11): warning C4005: '__Pyx_PyUnicode_DATA': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1027,11):
+      see previous definition of '__Pyx_PyUnicode_DATA'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1050,11): warning C4005: '__Pyx_PyUnicode_READ': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1028,11):
+      see previous definition of '__Pyx_PyUnicode_READ'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1051,11): warning C4005: '__Pyx_PyUnicode_WRITE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1029,11):
+      see previous definition of '__Pyx_PyUnicode_WRITE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1052,11): warning C4005: '__Pyx_PyUnicode_IS_TRUE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1036,13):
+      see previous definition of '__Pyx_PyUnicode_IS_TRUE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1058,11): warning C4005: '__Pyx_PyUnicode_Concat': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1055,11):
+      see previous definition of '__Pyx_PyUnicode_Concat'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1059,11): warning C4005: '__Pyx_PyUnicode_ConcatSafe': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1056,11):
+      see previous definition of '__Pyx_PyUnicode_ConcatSafe'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1082,11): warning C4005: '__Pyx_PyString_Format': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1080,11):
+      see previous definition of '__Pyx_PyString_Format'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1101,11): warning C4005: '__Pyx_PyBaseString_Check': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1098,11):
+      see previous definition of '__Pyx_PyBaseString_Check'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1102,11): warning C4005: '__Pyx_PyBaseString_CheckExact': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1099,11):
+      see previous definition of '__Pyx_PyBaseString_CheckExact'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1108,11): warning C4005: '__Pyx_PySequence_ListKeepNew': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1105,11):
+      see previous definition of '__Pyx_PySequence_ListKeepNew'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1117,11): warning C4005: '__Pyx_SET_REFCNT': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1114,11):
+      see previous definition of '__Pyx_SET_REFCNT'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1118,11): warning C4005: '__Pyx_SET_SIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1115,11):
+      see previous definition of '__Pyx_SET_SIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1131,11): warning C4005: '__Pyx_PySequence_ITEM': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1121,11):
+      see previous definition of '__Pyx_PySequence_ITEM'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1132,11): warning C4005: '__Pyx_PySequence_SIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1122,11):
+      see previous definition of '__Pyx_PySequence_SIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1133,11): warning C4005: '__Pyx_PyTuple_SET_ITEM': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1123,11):
+      see previous definition of '__Pyx_PyTuple_SET_ITEM'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1134,11): warning C4005: '__Pyx_PyList_SET_ITEM': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1124,11):
+      see previous definition of '__Pyx_PyList_SET_ITEM'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1135,11): warning C4005: '__Pyx_PyTuple_GET_SIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1125,11):
+      see previous definition of '__Pyx_PyTuple_GET_SIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1136,11): warning C4005: '__Pyx_PyList_GET_SIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1126,11):
+      see previous definition of '__Pyx_PyList_GET_SIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1137,11): warning C4005: '__Pyx_PySet_GET_SIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1127,11):
+      see previous definition of '__Pyx_PySet_GET_SIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1138,11): warning C4005: '__Pyx_PyBytes_GET_SIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1128,11):
+      see previous definition of '__Pyx_PyBytes_GET_SIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1139,11): warning C4005: '__Pyx_PyByteArray_GET_SIZE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1129,11):
+      see previous definition of '__Pyx_PyByteArray_GET_SIZE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1169,11): warning C4005: '__Pyx_Py3Int_Check': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1155,11):
+      see previous definition of '__Pyx_Py3Int_Check'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1170,11): warning C4005: '__Pyx_Py3Int_CheckExact': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1156,11):
+      see previous definition of '__Pyx_Py3Int_CheckExact'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1185,11): warning C4005: '__Pyx_PyInt_FromHash_t': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1182,11):
+      see previous definition of '__Pyx_PyInt_FromHash_t'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1186,11): warning C4005: '__Pyx_PyInt_AsHash_t': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1183,11):
+      see previous definition of '__Pyx_PyInt_AsHash_t'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1193,13): warning C4005: '__Pyx_PyType_AsAsync': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1191,13):
+      see previous definition of '__Pyx_PyType_AsAsync'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1196,11): warning C4005: '__Pyx_PyType_AsAsync': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1193,13):
+      see previous definition of '__Pyx_PyType_AsAsync'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1224,9): warning C4005: '__Pyx_truncl': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1222,9):
+      see previous definition of '__Pyx_truncl'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1243,13): warning C4005: '__PYX_EXTERN_C': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1234,13):
+      see previous definition of '__PYX_EXTERN_C'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1245,13): warning C4005: '__PYX_EXTERN_C': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1243,13):
+      see previous definition of '__PYX_EXTERN_C'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1301,13): warning C4005: '__Pyx_sst_abs': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1299,13):
+      see previous definition of '__Pyx_sst_abs'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1303,13): warning C4005: '__Pyx_sst_abs': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1301,13):
+      see previous definition of '__Pyx_sst_abs'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1305,13): warning C4005: '__Pyx_sst_abs': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1303,13):
+      see previous definition of '__Pyx_sst_abs'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1307,13): warning C4005: '__Pyx_sst_abs': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1305,13):
+      see previous definition of '__Pyx_sst_abs'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1309,13): warning C4005: '__Pyx_sst_abs': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1307,13):
+      see previous definition of '__Pyx_sst_abs'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1311,13): warning C4005: '__Pyx_sst_abs': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1309,13):
+      see previous definition of '__Pyx_sst_abs'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1325,13): warning C4005: '__Pyx_PyStr_FromString': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1322,13):
+      see previous definition of '__Pyx_PyStr_FromString'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1326,13): warning C4005: '__Pyx_PyStr_FromStringAndSize': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1323,13):
+      see previous definition of '__Pyx_PyStr_FromStringAndSize'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1360,9): warning C4005: '__pyx_PyFloat_AsDouble': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1358,9):
+      see previous definition of '__pyx_PyFloat_AsDouble'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1366,9): warning C4005: '__Pyx_PyNumber_Int': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1364,9):
+      see previous definition of '__Pyx_PyNumber_Int'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1389,13): warning C4005: '__Pyx_PyLong_IsCompact': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1386,13):
+      see previous definition of '__Pyx_PyLong_IsCompact'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1390,13): warning C4005: '__Pyx_PyLong_CompactValue': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1387,13):
+      see previous definition of '__Pyx_PyLong_CompactValue'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1395,11): warning C4005: '__Pyx_PyLong_IsNeg': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1377,11):
+      see previous definition of '__Pyx_PyLong_IsNeg'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1396,11): warning C4005: '__Pyx_PyLong_IsNonNeg': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1378,11):
+      see previous definition of '__Pyx_PyLong_IsNonNeg'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1397,11): warning C4005: '__Pyx_PyLong_IsZero': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1379,11):
+      see previous definition of '__Pyx_PyLong_IsZero'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1398,11): warning C4005: '__Pyx_PyLong_IsPos': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1380,11):
+      see previous definition of '__Pyx_PyLong_IsPos'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1399,11): warning C4005: '__Pyx_PyLong_CompactValueUnsigned': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1381,11):
+      see previous definition of '__Pyx_PyLong_CompactValueUnsigned'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1400,11): warning C4005: '__Pyx_PyLong_DigitCount': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1382,11):
+      see previous definition of '__Pyx_PyLong_DigitCount'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1401,11): warning C4005: '__Pyx_PyLong_SignedDigitCount': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1383,11):
+      see previous definition of '__Pyx_PyLong_SignedDigitCount'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1402,11): warning C4005: '__Pyx_PyLong_IsCompact': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1389,13):
+      see previous definition of '__Pyx_PyLong_IsCompact'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1403,11): warning C4005: '__Pyx_PyLong_CompactValue': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1390,13):
+      see previous definition of '__Pyx_PyLong_CompactValue'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1411,11): warning C4005: '__Pyx_PyLong_Digits': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1409,11):
+      see previous definition of '__Pyx_PyLong_Digits'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1464,9): warning C4005: '__Pyx_PyUnicode_FromStringAndSize': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1462,9):
+      see previous definition of '__Pyx_PyUnicode_FromStringAndSize'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1497,11): warning C4005: 'likely': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1494,11):
+      see previous definition of 'likely'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1498,11): warning C4005: 'unlikely': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1495,11):
+      see previous definition of 'unlikely'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1517,13): warning C4005: 'CYTHON_CCOMPLEX': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1513,13):
+      see previous definition of 'CYTHON_CCOMPLEX'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1874,11): warning C4005: '__Pyx_RefNannySetupContext': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1860,11):
+      see previous definition of '__Pyx_RefNannySetupContext'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1876,11): warning C4005: '__Pyx_RefNannyFinishContextNogil': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1868,11):
+      see previous definition of '__Pyx_RefNannyFinishContextNogil'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1878,11): warning C4005: '__Pyx_RefNannyFinishContextNogil': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1876,11):
+      see previous definition of '__Pyx_RefNannyFinishContextNogil'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1894,11): warning C4005: '__Pyx_RefNannyDeclarations': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1858,11):
+      see previous definition of '__Pyx_RefNannyDeclarations'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1895,11): warning C4005: '__Pyx_RefNannySetupContext': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1874,11):
+      see previous definition of '__Pyx_RefNannySetupContext'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1896,11): warning C4005: '__Pyx_RefNannyFinishContextNogil': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1878,11):
+      see previous definition of '__Pyx_RefNannyFinishContextNogil'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1897,11): warning C4005: '__Pyx_RefNannyFinishContext': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1883,11):
+      see previous definition of '__Pyx_RefNannyFinishContext'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1898,11): warning C4005: '__Pyx_INCREF': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1885,11):
+      see previous definition of '__Pyx_INCREF'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1899,11): warning C4005: '__Pyx_DECREF': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1886,11):
+      see previous definition of '__Pyx_DECREF'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1900,11): warning C4005: '__Pyx_GOTREF': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1887,11):
+      see previous definition of '__Pyx_GOTREF'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1901,11): warning C4005: '__Pyx_GIVEREF': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1888,11):
+      see previous definition of '__Pyx_GIVEREF'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1902,11): warning C4005: '__Pyx_XINCREF': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1889,11):
+      see previous definition of '__Pyx_XINCREF'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1903,11): warning C4005: '__Pyx_XDECREF': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1890,11):
+      see previous definition of '__Pyx_XDECREF'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1904,11): warning C4005: '__Pyx_XGOTREF': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1891,11):
+      see previous definition of '__Pyx_XGOTREF'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1905,11): warning C4005: '__Pyx_XGIVEREF': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1892,11):
+      see previous definition of '__Pyx_XGIVEREF'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1927,9): warning C4005: '__Pyx_PyErr_ExceptionMatches': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1924,9):
+      see previous definition of '__Pyx_PyErr_ExceptionMatches'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1938,9): warning C4005: '__Pyx_PyErr_Occurred': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1935,9):
+      see previous definition of '__Pyx_PyErr_Occurred'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1939,9): warning C4005: '__Pyx_PyErr_CurrentExceptionType': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1936,9):
+      see previous definition of '__Pyx_PyErr_CurrentExceptionType'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1942,9): warning C4005: '__Pyx_PyThreadState_declare': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1932,9):
+      see previous definition of '__Pyx_PyThreadState_declare'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1943,9): warning C4005: '__Pyx_PyThreadState_assign': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1933,9):
+      see previous definition of '__Pyx_PyThreadState_assign'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1944,9): warning C4005: '__Pyx_PyErr_Occurred': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1938,9):
+      see previous definition of '__Pyx_PyErr_Occurred'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1945,9): warning C4005: '__Pyx_PyErr_CurrentExceptionType': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1939,9):
+      see previous definition of '__Pyx_PyErr_CurrentExceptionType'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1960,9): warning C4005: '__Pyx_PyErr_SetNone': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1958,9):
+      see previous definition of '__Pyx_PyErr_SetNone'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1963,9): warning C4005: '__Pyx_PyErr_Clear': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1950,9):
+      see previous definition of '__Pyx_PyErr_Clear'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1965,9): warning C4005: '__Pyx_ErrRestoreWithState': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1951,9):
+      see previous definition of '__Pyx_ErrRestoreWithState'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1966,9): warning C4005: '__Pyx_ErrFetchWithState': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1952,9):
+      see previous definition of '__Pyx_ErrFetchWithState'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1969,9): warning C4005: '__Pyx_ErrRestore': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1953,9):
+      see previous definition of '__Pyx_ErrRestore'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1970,9): warning C4005: '__Pyx_ErrFetch': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1954,9):
+      see previous definition of '__Pyx_ErrFetch'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1998,9): warning C4005: '__Pyx_ExceptionSave': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1993,9):
+      see previous definition of '__Pyx_ExceptionSave'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1999,9): warning C4005: '__Pyx_ExceptionReset': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(1995,9):
+      see previous definition of '__Pyx_ExceptionReset'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2039,13): warning C4005: '__Pyx_Arg_VARARGS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2037,13):
+      see previous definition of '__Pyx_Arg_VARARGS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2041,13): warning C4005: '__Pyx_Arg_VARARGS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2039,13):
+      see previous definition of '__Pyx_Arg_VARARGS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2047,13): warning C4005: '__Pyx_Arg_NewRef_VARARGS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2044,13):
+      see previous definition of '__Pyx_Arg_NewRef_VARARGS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2048,13): warning C4005: '__Pyx_Arg_XDECREF_VARARGS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2045,13):
+      see previous definition of '__Pyx_Arg_XDECREF_VARARGS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2068,13): warning C4005: '__Pyx_Arg_FASTCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2055,13):
+      see previous definition of '__Pyx_Arg_FASTCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2069,13): warning C4005: '__Pyx_NumKwargs_FASTCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2056,13):
+      see previous definition of '__Pyx_NumKwargs_FASTCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2070,13): warning C4005: '__Pyx_KwValues_FASTCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2057,13):
+      see previous definition of '__Pyx_KwValues_FASTCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2072,13): warning C4005: '__Pyx_KwargsAsDict_FASTCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2062,13):
+      see previous definition of '__Pyx_KwargsAsDict_FASTCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2073,13): warning C4005: '__Pyx_Arg_NewRef_FASTCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2064,13):
+      see previous definition of '__Pyx_Arg_NewRef_FASTCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2074,13): warning C4005: '__Pyx_Arg_XDECREF_FASTCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2066,13):
+      see previous definition of '__Pyx_Arg_XDECREF_FASTCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2080,9): warning C4005: '__Pyx_ArgsSlice_VARARGS': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2077,9):
+      see previous definition of '__Pyx_ArgsSlice_VARARGS'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2081,9): warning C4005: '__Pyx_ArgsSlice_FASTCALL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2078,9):
+      see previous definition of '__Pyx_ArgsSlice_FASTCALL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2149,9): warning C4005: '__PYX_GET_DICT_VERSION': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2131,9):
+      see previous definition of '__PYX_GET_DICT_VERSION'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2150,9): warning C4005: '__PYX_UPDATE_DICT_CACHE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2132,9):
+      see previous definition of '__PYX_UPDATE_DICT_CACHE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2151,9): warning C4005: '__PYX_PY_DICT_LOOKUP_IF_MODIFIED': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2135,9):
+      see previous definition of '__PYX_PY_DICT_LOOKUP_IF_MODIFIED'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2170,9): warning C4005: '__Pyx_GetModuleGlobalName': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2156,9):
+      see previous definition of '__Pyx_GetModuleGlobalName'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2171,9): warning C4005: '__Pyx_GetModuleGlobalNameUncached': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2163,9):
+      see previous definition of '__Pyx_GetModuleGlobalNameUncached'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2201,11): warning C4005: '__Pxy_PyFrame_Initialize_Offsets': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2196,11):
+      see previous definition of '__Pxy_PyFrame_Initialize_Offsets'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2204,11): warning C4005: '__Pyx_PyFrame_GetLocalsplus': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2197,11):
+      see previous definition of '__Pyx_PyFrame_GetLocalsplus'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2284,9): warning C4005: '__PYX_GET_STRUCT_ALIGNMENT_3_0_11': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2282,9):
+      see previous definition of '__PYX_GET_STRUCT_ALIGNMENT_3_0_11'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2357,11): warning C4005: '__Pyx_CyFunction_GetClassObj': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2354,11):
+      see previous definition of '__Pyx_CyFunction_GetClassObj'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2403,9): warning C4005: '__Pyx_CyOrPyCFunction_Check': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(818,9):
+      see previous definition of '__Pyx_CyOrPyCFunction_Check'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2407,9): warning C4005: '__Pyx_IsSameCFunction': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(837,9):
+      see previous definition of '__Pyx_IsSameCFunction'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2432,9): warning C4005: '__Pyx_CyFunction_func_vectorcall': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2430,9):
+      see previous definition of '__Pyx_CyFunction_func_vectorcall'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2505,13): warning C4005: '__Pyx_CREAL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2502,13):
+      see previous definition of '__Pyx_CREAL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2506,13): warning C4005: '__Pyx_CIMAG': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2503,13):
+      see previous definition of '__Pyx_CIMAG'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2509,13): warning C4005: '__Pyx_CREAL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2505,13):
+      see previous definition of '__Pyx_CREAL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2510,13): warning C4005: '__Pyx_CIMAG': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2506,13):
+      see previous definition of '__Pyx_CIMAG'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2517,13): warning C4005: '__Pyx_SET_CREAL': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2514,13):
+      see previous definition of '__Pyx_SET_CREAL'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2518,13): warning C4005: '__Pyx_SET_CIMAG': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2515,13):
+      see previous definition of '__Pyx_SET_CIMAG'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2537,13): warning C4005: '__Pyx_c_is_zero_float': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2530,13):
+      see previous definition of '__Pyx_c_is_zero_float'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2538,13): warning C4005: '__Pyx_c_conj_float': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2531,13):
+      see previous definition of '__Pyx_c_conj_float'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2540,17): warning C4005: '__Pyx_c_abs_float': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2533,17):
+      see previous definition of '__Pyx_c_abs_float'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2541,17): warning C4005: '__Pyx_c_pow_float': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2534,17):
+      see previous definition of '__Pyx_c_pow_float'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2575,13): warning C4005: '__Pyx_c_is_zero_double': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2568,13):
+      see previous definition of '__Pyx_c_is_zero_double'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2576,13): warning C4005: '__Pyx_c_conj_double': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2569,13):
+      see previous definition of '__Pyx_c_conj_double'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2578,17): warning C4005: '__Pyx_c_abs_double': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2571,17):
+      see previous definition of '__Pyx_c_abs_double'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2579,17): warning C4005: '__Pyx_c_pow_double': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2572,17):
+      see previous definition of '__Pyx_c_pow_double'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2613,13): warning C4005: '__Pyx_c_is_zero_long__double': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2606,13):
+      see previous definition of '__Pyx_c_is_zero_long__double'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2614,13): warning C4005: '__Pyx_c_conj_long__double': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2607,13):
+      see previous definition of '__Pyx_c_conj_long__double'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2616,17): warning C4005: '__Pyx_c_abs_long__double': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2609,17):
+      see previous definition of '__Pyx_c_abs_long__double'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2617,17): warning C4005: '__Pyx_c_pow_long__double': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2610,17):
+      see previous definition of '__Pyx_c_pow_long__double'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2646,9): warning C4005: '__Pyx_FMT_TYPENAME': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2641,9):
+      see previous definition of '__Pyx_FMT_TYPENAME'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2648,9): warning C4005: '__Pyx_DECREF_TypeName': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2643,9):
+      see previous definition of '__Pyx_DECREF_TypeName'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2669,9): warning C4005: '__Pyx_TypeCheck': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2662,9):
+      see previous definition of '__Pyx_TypeCheck'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2670,9): warning C4005: '__Pyx_TypeCheck2': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(2663,9):
+      see previous definition of '__Pyx_TypeCheck2'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(7851,13): warning C4005: 'CYTHON_SMALL_CODE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(7849,13):
+      see previous definition of 'CYTHON_SMALL_CODE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(7853,13): warning C4005: 'CYTHON_SMALL_CODE': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(7851,13):
+      see previous definition of 'CYTHON_SMALL_CODE'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(8344,9): warning C4005: '__Pyx_PyMODINIT_FUNC': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(8341,9):
+      see previous definition of '__Pyx_PyMODINIT_FUNC'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(8346,9): warning C4005: '__Pyx_PyMODINIT_FUNC': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(8344,9):
+      see previous definition of '__Pyx_PyMODINIT_FUNC'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(8350,9): warning C4005: '__Pyx_PyMODINIT_FUNC': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(8346,9):
+      see previous definition of '__Pyx_PyMODINIT_FUNC'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(8352,9): warning C4005: '__Pyx_PyMODINIT_FUNC': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(8350,9):
+      see previous definition of '__Pyx_PyMODINIT_FUNC'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(12057,9): warning C4005: '__Pyx_CyFunction_weakreflist': macro redefinition
+      C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(12055,9):
+      see previous definition of '__Pyx_CyFunction_weakreflist'
+  
+C:\Users\Administrator\Documents\Michigan Documents\First Term\Master's Thesis\Code\Working\MS-Thesis\c_msdl.c(14664,1): error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?

@@ -18,9 +18,9 @@ import TPanel_trans as TPT
 print ("Generating Cross Section...")
 XSection = []
 
-top_pmatl = Structures.EPMatl(317e6,70.3e9,0.33)
-top_smatl = Structures.EPMatl(317e6,70.3e9,0.33)
-top_panels = Structures.TPanel(0.3, 0.006, 0.004, 0.07, 0.0061, 0.04, 1.0, top_pmatl, top_smatl)
+bot_pmatl = Structures.EPMatl(317e6,70.3e9,0.33)
+bot_smatl = Structures.EPMatl(317e6,70.3e9,0.33)
+bot_panels = Structures.TPanel(0.3, 0.006, 0.004, 0.07, 0.0061, 0.04, 1.0, bot_pmatl, bot_smatl)
 #Test Panel
 BC3_pmatl = Structures.EPMatl(552e6,205e9,0.28)
 BC3_smatl = Structures.EPMatl(552e6,205e9,0.28)
@@ -29,14 +29,23 @@ print (BC3_panel.getNA())
 
 nstiff = 2
 ntrans = 1
-B = top_panels.getb() * (nstiff + 1)
-L = top_panels.geta() * ntrans
+B = bot_panels.getb() * (nstiff + 1)
+L = bot_panels.geta() * ntrans
 twh = 0.14
 twt = 0.008
 tft = 0.0122
 tfb = 0.08
+sloc_bot = [0,0,0]
+ornt_bot = 0
+qloc_bot = ['NA','NA','NA']
+eta_bot = 0
+
 BC3_tmatl = Structures.EPMatl(552e6,205e9,0.28)
-BC3_TPanel = TPT.TPanel_trans(B, L, nstiff, ntrans, 0.0103794449203, 0.00729250565438, 0.0971509509464, 0.00353208497908, 0.0769507383005, twh, twt, tft, tfb, BC3_pmatl, BC3_smatl, BC3_tmatl)
+#BC3_TPanel = TPT.TPanel_trans(B, L, nstiff, ntrans, 0.0103794449203, 0.00729250565438, 0.0971509509464, 0.00353208497908, 0.0769507383005, twh, twt, tft, tfb, BC3_pmatl, BC3_smatl, BC3_tmatl)
+
+BC3_TPanel = TPT.TPanel_trans(B, L, nstiff, ntrans, 0.0103794449203, 0.00729250565438, 0.0971509509464, 0.00353208497908, 0.0769507383005, twh, twt, tft, tfb,sloc_bot,ornt_bot,qloc_bot,BC3_pmatl,BC3_smatl,BC3_tmatl,eta_bot)
+
+
 
 H = HC.HansenC(BC3_TPanel)
 strn = H._strn
@@ -52,8 +61,10 @@ for i in range(0,200):
 print ("Running Smith Progressive Collapse Method...")
 UltMmt = SC.MUltimate(XSection) #Run Smith Method
 print ("Curvature/moment data generated, ultimate moment on cross-section =',UltMmt,'N-m'")
+print (UltMmt)
 
-#plt.plot(curvature,moment)
-#plt.xlabel('curvature (radians)')
-#plt.ylabel('Moment (N-m)')
-#plt.show()
+
+""" plt.plot(curvature,moment)
+plt.xlabel('curvature (radians)')
+plt.ylabel('Moment (N-m)')
+plt.show() """
