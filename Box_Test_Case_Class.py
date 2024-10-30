@@ -36,8 +36,6 @@ class Box_Test_Case(nsga2.Problem):
         self.smatl = Structures.EPMatl(95e6, 70e9, 0.34)
         self.tmatl = Structures.EPMatl(95e6, 70e9, 0.34)
 
-
-
         # for bottom panel
         self.B_bot  =  1
         self.L_bot = 1
@@ -139,3 +137,4 @@ class Box_Test_Case(nsga2.Problem):
 test_problem = Box_Test_Case(2, 1, 6, [1,0.001,1,0.001,1,0.001], [8,0.012,8,0.012,8,0.012])
 opt = nsga2.Optimizer(test_problem)
 opt.run("test_sql", "initial_test", 48109, 100, 100)
+
