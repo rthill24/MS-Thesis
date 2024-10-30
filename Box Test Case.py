@@ -18,6 +18,8 @@ import matplotlib.pyplot as plt
 from operator import itemgetter
 from scipy import integrate
 import deterioratingStructure
+import Allowable_Permanent_Set
+import Box_Checker
 
 # Define the material properties
 pmatl = Structures.EPMatl(95e6, 70e9, 0.34)
@@ -104,28 +106,6 @@ ornt_top = 180
 qloc_top = ['NA','NA','NA']
 eta_top = 0
 
-def check_corner_stiffs(tp_bot, hw_top, tf_top, B_side, nstiff_side, tw_side, bf_side):
-    """
-    Check that the corner stiffeners are not intersecting
-    """
-    stiff_spacing = (B_side)/(nstiff_side-1)
-
-    h_bot_side_stiff = tp_bot + stiff_spacing
-
-    h_bot_side_stiff_flange = h_bot_side_stiff - (tw_side/2) - (bf_side/2)
-
-    h_bot_stiff = tp_bot + hw_top + tf_top
-
-    print (stiff_spacing, h_bot_side_stiff, h_bot_side_stiff_flange, h_bot_stiff) 
-
-    if h_bot_stiff >= h_bot_side_stiff_flange:
-        print ("Corner stiffeners are intersecting") 
-    else:
-        print ("Corner stiffeners are not intersecting")
-
-check_corner_stiffs(tp_bot, hw_top, tf_top, B_side, nstiff_side, tw_side, bf_side)
-
-
 # Creation of TPanel_trans
 test_panel_bot = TPanel_trans.TPanel_trans(B_bot,L_bot,nstiff_bot,ntrans_bot,tp_bot,\
                                         tw_bot,hw_bot,tf_bot,bf_bot,twh_bot,twt_bot,\
@@ -136,6 +116,11 @@ test_panel_side = TPanel_trans.TPanel_trans(B_side,L_side,nstiff_side,ntrans_sid
 test_panel_top = TPanel_trans.TPanel_trans(B_top,L_top,nstiff_top,ntrans_top,tp_top,\
                                         tw_top,hw_top,tf_top,bf_top,twh_top,twt_top,\
                                         tft_top,tfb_top,sloc_top,ornt_top,qloc_top,pmatl,smatl,tmatl,eta_top)
+
+# Check the box for corner stiffener intersections
+check_my_box = Box_Checker.boxchecker(tp_bot,hw_top,tf_top,B_side,nstiff_side,tw_side,bf_side, test_panel_bot, test_panel_side, test_panel_top)
+check_my_box.check_corner_stiffs()
+check_my_box.check_geometry()
 
 # Create the midship section    
 structure = midship_section.Midship_Section([test_panel_bot,test_panel_side,test_panel_top],0)
@@ -177,12 +162,12 @@ ABS_constraints_top = test_panel_top.constraints()
 print(ABS_constraints_bot, ABS_constraints_side, ABS_constraints_top) """
 
 #set up the smith collapse curve
-collapse_data = structure.set_up_smith_collapse(True)
-    
+""" collapse_data = structure.set_up_smith_collapse(True) 
 #get the curvature and moment curve    
-#curve, moment = structure.curvature_moment_curve(-1e-3,1e-3,nC=4)
-    
+curve, moment = structure.curvature_moment_curve(-1e-3,1e-3,nC=4)
 #get the ultimate moment
-#sag, hog = structure.get_ultimate_moment('s'), structure.get_ultimate_moment('h')
+sag, hog = structure.get_ultimate_moment('s'), structure.get_ultimate_moment('h') """
 
-  
+#get pressure for allowable permanent set
+press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10.)._p_aps(test_panel_bot)
+print ("here's the pressure': ", press_bot)

@@ -23,7 +23,7 @@ class HansenC:
         self._b = panel.getb()
         self._A = panel.getArea()
         self._L = panel.geta()
-        self._E = panel.getpmatl().getE()
+        self._E = panel.getmatlP().getE()
         self._s0 = panel.getYsavg()
         self._NA = panel.getNA()
         self._matlP = panel.getmatlP()

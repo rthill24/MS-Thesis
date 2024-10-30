@@ -5,7 +5,7 @@ import math
 import Structures
 import logging
 from numpy import zeros
-import midship_section
+import midship_section_newSmith
 import Plate
 import Cost
 import sys
@@ -140,7 +140,7 @@ test_panel_top = TPanel_trans.TPanel_trans(B_top,L_top,nstiff_top,ntrans_top,tp_
                                         tft_top,tfb_top,sloc_top,ornt_top,qloc_top,pmatl,smatl,tmatl,eta_top)
 
 # Create the midship section    
-structure = midship_section.Midship_Section([test_panel_bot,test_panel_side,test_panel_top],0)
+structure = midship_section_newSmith.Midship_Section([test_panel_bot,test_panel_side,test_panel_top],0)
 
 #get the section modulii
 SM = structure.section_modulii()
@@ -178,17 +178,21 @@ ABS_constraints_side = test_panel_side.constraints()
 ABS_constraints_top = test_panel_top.constraints()
 print(ABS_constraints_bot, ABS_constraints_side, ABS_constraints_top) """
 
-#get the moment curve and the ultimate moment 
+""" #get the moment curve and the ultimate moment 
 H = HC.HansenC([test_panel_bot,test_panel_side,test_panel_top])
+#H = HC.HansenC(test_panel_bot)
 strn = H._strn
 strs = H._strss
 AE = H._AE
 XSection = []
 for i in range(0,200):
     XSection.append(Element.Element([test_panel_bot,test_panel_side,test_panel_top], strn, strs, AE, yloc = i)) #create an element object with the strain, stress, AE and zloc data
-UltMmt = SmithCollapse.MUltimate(structure._XSection)
+    #Section.append(Element.Element(test_panel_bot, strn, strs, AE, yloc = i))
+UltMmt = SmithCollapse.MUltimate(XSection)
+print (UltMmt) """
+
+
+XSection = structure.set_up_smith_collapse
+XSection
+UltMmt = SmithCollapse.MUltimate(XSection)
 print (UltMmt)
-
-
-
-  
