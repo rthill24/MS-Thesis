@@ -10,6 +10,12 @@ import math
 import kriging
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
+from PIL import Image
+import glob
+import time
+import os
+import matplotlib.image as mpimg
+from operator import itemgetter
 
 
 
@@ -137,6 +143,7 @@ class NSGA_PostProcess:
         -------
         None
         '''
+
         #First, reformat the data from lists-of-lists to np arrays.
         num_pts = len(front_list)
         x_vals = np.empty((num_pts,1))
@@ -415,7 +422,7 @@ class NSGA_PostProcess:
                 if returned_front_data[i][j + 1] != 'Infeasible':
                     new_data[i][j] = returned_front_data[i][j + 1]*scale_factor[j]
                     
-        if (numpy_data == None):
+        if numpy_data is None:
             ret_data = new_data
         else:
             ret_data = np.vstack((numpy_data, new_data))
@@ -455,9 +462,14 @@ class NSGA_PostProcess:
             raise Exception('opt - post_process - GenPlot argument error')
             
         #Do the basic plotting set-up
-        plt.xlabel('Objective ' + str(obj_functions[0]))
-        plt.ylabel('Objective ' + str(obj_functions[1]))
-        plt.title('Generation ' + str(gen_num))
+        #Internal parameters
+        ylabel_2D = "Volume [m$^3$]"
+        xlabel_2D = "Cost [$]"
+        title_2D = "All Pareto Fronts"
+
+        plt.xlabel(xlabel_2D)
+        plt.ylabel(ylabel_2D)
+        plt.title(title_2D + ' For Generation ' + str(gen_num))
  
         data_flag = True
         current_front = 0
@@ -488,11 +500,15 @@ class NSGA_PostProcess:
             current_front += 1
         #Out of loop, if we had more than 7 fronts, plot the rest
         if (reserve_data != None):
-            self.addFrontTo2DPlot(reserve_data, 'ko')
+            self.addFrontTo2DPlot(reserve_data, format_string = 'ko')
         plt.legend(legend)
                            
         plt.savefig(filename + '.png', dpi=144)
         plt.close()
+        image_path = "C:/Users/rthill/Documents/MS-Thesis/SingleGen_All_Fronts_Plot.png"
+        img = mpimg.imread(image_path)
+        plt.imshow(img)
+        plt.axis('off')
     
     
     def KrigingStats(self, generations, ident, tol= 1.e-4):
@@ -852,6 +868,9 @@ class NSGA_PostProcess:
         
         #Internal parameters
         delay = 20 #Delay in hundreths of second between frames
+        ylabel_movie = "Volume [m$^3$]"
+        xlabel_movie = "Cost [$]"
+        title_movie = "Pareto Front Development"
         
         #Check to see if num_obj is reasonable
         num_obj = len(obj_functions)
@@ -906,7 +925,7 @@ class NSGA_PostProcess:
         
         #Now do the plots
         index = 0
-        for frame in frame_data:
+        for frame in frame_data: #= number of generations
             temp_filename = filename + '_gen_' + str('%05d' % index) + '.png'
             if (num_obj == 2):
                 if refResult is not None:
@@ -921,9 +940,9 @@ class NSGA_PostProcess:
                     plt.axis([axis_min[0], axis_max[0], axis_min[1], axis_max[1]])
                 else:
                     plt.axis(forced_axis)
-                plt.xlabel('Objective ' + str(obj_functions[0]))
-                plt.ylabel('Objective ' + str(obj_functions[1]))
-                plt.title('Generation ' + str(start_gen + index))
+                plt.xlabel(xlabel_movie)
+                plt.ylabel(ylabel_movie)
+                plt.title(title_movie + ' Generation ' + str(start_gen + index))
                 plt.savefig(temp_filename, dpi=144)
                 plt.close('all')
             elif (num_obj == 3):
@@ -947,9 +966,9 @@ class NSGA_PostProcess:
                           '.png'
                 plt.plot( frame[:,0], frame[:,1], 'ro')
                 plt.axis((axis_min[0], axis_max[0], axis_min[1], axis_max[1]))
-                plt.xlabel('Objective ' + str(obj_functions[0]))
-                plt.ylabel('Objective ' + str(obj_functions[1]))
-                plt.title('Generation ' + str(start_gen + index))  
+                plt.xlabel(xlabel_movie)
+                plt.ylabel(ylabel_movie)
+                plt.title(title_movie + ' Generation ' + str(start_gen + index)) 
                 
                 plt.subplot(312)
                 plt.plot( frame[:,1], frame[:,2], 'ro')
@@ -972,13 +991,35 @@ class NSGA_PostProcess:
                 print('This line should not be reachable')
             index = index + 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
         
-        #Make the movie
-        subprocess.check_call('convert -delay '+ str(delay) +\
-                              ' ' + filename + '_gen_*.png ' +filename +'.gif',
-                              shell=True)
-        if (num_obj == 3):
-            subprocess.check_call('convert -delay '+ str(delay) +\
-                              ' ' + filename + '_gen2D_*.png ' +filename +
-                              '2D.gif',
-                              shell=True)            
+
+        #Now build the movie
+        images = []
         
+        for filename in sorted(glob.glob("C:/Users/rthill/Documents/MS-Thesis/All_Fronts_Movie*.png")): # loop through all png files in the folder
+            im = Image.open(filename) # open the image
+            images.append(im) # add the image to the list
+        last_frame = (len(images))
+
+        for x in range(0, 9):
+            im = images[last_frame-1]
+            images.append(im)
+
+        images[0].save("Pareto_Movie.gif",
+               save_all=True, append_images=images[1:], optimize=False, duration=500, loop=0)
+    
+    def SingleFront (self, gen_number,front_number, obj_functions, scalefactor):
+
+        #Internal parameters
+        ylabel_S = "Volume [m$^3$]"
+        xlabel_S = "Cost [$]"
+        title_S = "Pareto Front"
+
+        self.plot_data = self.frontPlotFormat(gen_number,front_number, obj_functions)
+        self.xvector = list(map(itemgetter(0), self.plot_data))
+        self.yvector = list(map(itemgetter(1), self.plot_data))
+        plt.plot(self.xvector, self.yvector, 'ro')
+        plt.xlabel(xlabel_S)
+        plt.ylabel(ylabel_S)
+        plt.title(title_S + ' For Generation ' + str(gen_number))
+        plt.axis([min(self.xvector)/scalefactor, max(self.xvector)*scalefactor, min(self.yvector)/scalefactor, max(self.yvector)*scalefactor])
+

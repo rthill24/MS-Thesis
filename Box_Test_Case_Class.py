@@ -136,5 +136,5 @@ class Box_Test_Case(nsga2.Problem):
     
 test_problem = Box_Test_Case(2, 1, 6, [1,0.001,1,0.001,1,0.001], [8,0.012,8,0.012,8,0.012])
 opt = nsga2.Optimizer(test_problem)
-opt.run("test_sql", "initial_test", 48109, 100, 100)
+opt.run("Optimizer_Output", "initial_test", 48109, 100, 100)
 

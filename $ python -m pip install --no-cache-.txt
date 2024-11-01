@@ -1,0 +1,2 @@
+$ python -m pip install --no-cache-dir mpi4py
+https://www.microsoft.com/en-us/download/details.aspx?id=57467.

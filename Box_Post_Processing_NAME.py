@@ -1,23 +1,17 @@
 import post_process
 import matplotlib.pyplot as plt
-from operator import itemgetter
 
-dbname = "C:/Users/rthill/Documents/MS-Thesis/test_sql_good"
+dbname = "C:/Users/rthill/Documents/MS-Thesis/Optimizer_Output"
 testobj = post_process.NSGA_PostProcess(dbname)
-retlist = testobj.getFront(100,0,[1,2])
-inputs = testobj.getIndVariables(retlist)
+optvar_front = testobj.getFront(100,0,[1,2])
+optvars = testobj.getIndVariables(optvar_front)
 
-plot_data = testobj.frontPlotFormat(100,1,[1,2])
-
-xvector = list(map(itemgetter(0), plot_data))
-yvector = list(map(itemgetter(1), plot_data))
-
-plt.plot(xvector, yvector, 'ro')
-plt.xlabel("Production Cost")
-plt.ylabel("Volume")
-plt.title("Pareto Front")
-plt.axis([min(xvector)/1.15, max(xvector)*1.15, min(yvector)/1.15, max(yvector)*1.15])
+#generate just Pareto front for single generation
+plot_pareto = testobj.SingleFront(dbname, 10,1, [1,2], 1)
 plt.show()
 
-""" plot_data = testobj.GenPlot2D(100, [1,2], [1,1], "Pareto_Test_Plot")
-plt.show(plot_data) """
+#generate and show all fronts for single generation
+plot_data = testobj.GenPlot2D(10, [1,2], [1,1], "SingleGen_All_Fronts_Plot")
+plt.show()
+
+movie = testobj.ObjMovie(1,10,[1,2],[1,1],"All_Fronts_Movie")
