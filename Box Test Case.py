@@ -52,7 +52,7 @@ tmatl = Structures.EPMatl(95e6, 70e9, 0.34)
 # Dimensions for TPanel_trans_bot
 B_bot = 1
 L_bot = 1
-nstiff_bot = 8
+nstiff_bot = 1
 ntrans_bot = 1
 tp_bot = 0.004
 tw_bot = 0.005
@@ -118,9 +118,9 @@ test_panel_top = TPanel_trans.TPanel_trans(B_top,L_top,nstiff_top,ntrans_top,tp_
                                         tft_top,tfb_top,sloc_top,ornt_top,qloc_top,pmatl,smatl,tmatl,eta_top)
 
 # Check the box for corner stiffener intersections
-check_my_box = Box_Checker.boxchecker(tp_bot,hw_top,tf_top,B_side,nstiff_side,tw_side,bf_side, test_panel_bot, test_panel_side, test_panel_top)
+""" check_my_box = Box_Checker.boxchecker(tp_bot,hw_top,tf_top,B_side,nstiff_side,tw_side,bf_side, test_panel_bot, test_panel_side, test_panel_top)
 check_my_box.check_corner_stiffs()
-check_my_box.check_geometry()
+check_my_box.check_geometry() """
 
 # Create the midship section    
 structure = midship_section.Midship_Section([test_panel_bot,test_panel_side,test_panel_top],0)
@@ -150,10 +150,10 @@ print (PC)
 plt.show()
 
 #check if the geometry is valid for each individual panel
-valid_bot = test_panel_bot.geoValid()
+""" valid_bot = test_panel_bot.geoValid()
 valid_side = test_panel_side.geoValid()
 valid_top = test_panel_top.geoValid()
-print(valid_bot, valid_side, valid_top)
+print(valid_bot, valid_side, valid_top) """
 
 #evaluate ABS buckling constraints
 """ ABS_constraints_bot = test_panel_bot.constraints()

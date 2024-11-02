@@ -23,6 +23,7 @@ from scipy import integrate
 import deterioratingStructure
 import Allowable_Permanent_Set
 import nsga2_michigan_threaded as nsga2
+import Box_Checker
 
 class Box_Test_Case(nsga2.Problem):
 
@@ -123,18 +124,62 @@ class Box_Test_Case(nsga2.Problem):
     def constraint(self, individual_instance, metamodel=None):
         if individual_instance != self.current_individual:
             self.Eval(individual_instance)
+        
+        #evaluate SM
         SM_all = self.structure.section_modulii()
         SM = SM_all[0]
         SM_R = 0.0000303043931 #section modulus of reference box from "Box Test Case.py"
         frac_SM = (SM_R-SM)/SM_R
-        constraints = []
+
+        #evaluate allowable set pressure
+        press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10.)._p_aps(self.test_panel_bot)
+        press_R = 154092789.79149616 #allowable set pressure of reference box from "Box Test Case.py"
+        frac_press = (press_R-press_bot)/press_R
+
+        #determine if geometry is valid for individual panels
+        valid_bot = self.test_panel_bot.geoValid()
+        valid_side = self.test_panel_side.geoValid()
+        valid_top = self.test_panel_top.geoValid()
+
+        #determine if stiffeners intersect
+        intersect_data = Box_Checker.boxchecker(self.tp_bot, self.hw_top, self.tf_top, self.B_side, self.nstiff_side,\
+                                                     self.tw_side, self.bf_side, self.test_panel_bot, self.test_panel_side, self.test_panel_top)
+        intersect = intersect_data.check_corner_stiffs()
+
+        #iterate through constraints
+        constraints_empty = [0, 0, 0, 0, 0, 0]
+        constraints = [0, 0, 0, 0, 0, 0]
+
         if frac_SM > 0:
-            constraints.append(frac_SM)
+            constraints[0] = frac_SM
+            #constraints.append(frac_SM)
+
+        elif frac_press > 0:
+            constraints[1] = frac_press
+            #onstraints.append(frac_press)
+
+        elif valid_bot == bool(0):
+            constraints[2] = valid_bot
+            #constraints.append(valid_bot)
+        
+        elif valid_side == bool(0):
+            constraints[3] = valid_side
+            #constraints.append(valid_side)
+
+        elif valid_top == bool(0):
+            constraints[4] = valid_top
+            #constraints.append(valid_top)
+
+        elif intersect == bool(1):
+            constraints[5] = intersect
+            #constraints.append(intersect)
+
         else:
-            constraints.append(0)
+            constraints = constraints_empty
         return (constraints, None)
-    
-test_problem = Box_Test_Case(2, 1, 6, [1,0.001,1,0.001,1,0.001], [8,0.012,8,0.012,8,0.012])
+
+test_problem = Box_Test_Case(2, 6, 6, [1,0.001,1,0.001,1,0.001], [8,0.012,8,0.012,8,0.012])
 opt = nsga2.Optimizer(test_problem)
 opt.run("Optimizer_Output", "initial_test", 48109, 100, 100)
 
+#numObj, numConstraints, GeneNum, loBound, upBound

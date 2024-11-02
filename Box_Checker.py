@@ -2,6 +2,8 @@
 # author: Richard Thill
 # date: 10-29-2024
 
+import TPanel_trans
+
 class boxchecker:
 
     def __init__(self, tp_bot, hw_top, tf_top, B_side, nstiff_side, tw_side, bf_side, test_panel_bot, test_panel_side, test_panel_top):
@@ -17,18 +19,28 @@ class boxchecker:
         self.test_panel_top = test_panel_top
 
     def check_corner_stiffs(self):
-        stiff_spacing = (self.B_side)/(self.nstiff_side-1)
+
+        if self.nstiff_side == 1:
+            stiff_spacing = self.B_side/2
+        else:
+            stiff_spacing = (self.B_side)/(self.nstiff_side-1)
+        
         h_bot_side_stiff = self.tp_bot + stiff_spacing
         h_bot_side_stiff_flange = h_bot_side_stiff - (self.tw_side/2) - (self.bf_side/2)
         h_bot_stiff = self.tp_bot + self.hw_top + self.tf_top
-        print (stiff_spacing, h_bot_side_stiff, h_bot_side_stiff_flange, h_bot_stiff) 
+        #print (stiff_spacing, h_bot_side_stiff, h_bot_side_stiff_flange, h_bot_stiff) 
         if h_bot_stiff >= h_bot_side_stiff_flange:
-            print ("Corner stiffeners are intersecting") 
+            return bool(1) 
         else:
-            print ("Corner stiffeners are not intersecting")
+            return bool(0)
 
     def check_geometry(self):
-        valid_bot = self.test_panel_bot.geoValid()
-        valid_side = self.test_panel_side.geoValid()
-        valid_top = self.test_panel_top.geoValid()
-        print(valid_bot, valid_side, valid_top)
+        valid_bot_data = TPanel_trans.TPanel_trans(self.test_panel_bot)
+        valid_bot = valid_bot_data.geoValid()
+
+        valid_side_data = TPanel_trans.TPanel_trans(self.test_panel_side)
+        valid_side = valid_side_data.geoValid()
+
+        valid_top_data = TPanel_trans.TPanel_trans(self.test_panel_top)
+        valid_top = valid_top_data.geoValid()
+        #print(valid_bot, valid_side, valid_top)

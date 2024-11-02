@@ -504,7 +504,7 @@ class NSGA_PostProcess:
         #Out of loop, if we had more than 7 fronts, plot the rest
         if (reserve_data != None):
             self.addFrontTo2DPlot(reserve_data, format_string = 'ko')
-        plt.legend(legend)                   
+        plt.legend(legend, loc = 'upper right')                   
         plt.savefig(filename + '.png', dpi=144)
         """ if sing_gen is True:
             plt.show() """
