@@ -431,7 +431,7 @@ class NSGA_PostProcess:
         
             
     
-    def GenPlot2D(self, gen_num, obj_functions, scale_factor, filename, sing_gen):
+    def GenPlot2D(self, gen_num, obj_functions, scale_factor, filename):
         '''Builds a single png of 2 or 3 objective function results
         from a single generation in the database  
         
@@ -469,6 +469,7 @@ class NSGA_PostProcess:
         xlabel_2D = "Cost [$]"
         title_2D = "All Fronts"
 
+        plt.close()
         plt.xlabel(xlabel_2D)
         plt.ylabel(ylabel_2D)
         plt.title(title_2D + ' For Generation ' + str(gen_num))
@@ -505,8 +506,9 @@ class NSGA_PostProcess:
             self.addFrontTo2DPlot(reserve_data, format_string = 'ko')
         plt.legend(legend)                   
         plt.savefig(filename + '.png', dpi=144)
-        if sing_gen is False:
-            plt.close()
+        """ if sing_gen is True:
+            plt.show() """
+        
         """ if single_gen is True:
             image_path = "C:/Users/rthill/Documents/MS-Thesis/SingleGen_All_Fronts_Plot.png"
             img = mpimg.imread(image_path)
@@ -832,7 +834,7 @@ class NSGA_PostProcess:
         
         return
     
-    def ObjMovie(self, start_gen, stop_gen, obj_functions, scale_factor, filenamegif, sing_gen2):
+    def ObjMovie(self, start_gen, stop_gen, obj_functions, scale_factor, filenamegif):
         '''Builds an animated GIF of 2 or 3 objective function results
         from a database run.  
         
@@ -866,13 +868,13 @@ class NSGA_PostProcess:
         title_movie = "Pareto Front Development"
 
         number_gens = stop_gen - start_gen + 1
-       
         #Now do the plots
         count = 0
         for frame in range(number_gens): #= number of generations
             count = count + 1
+            plt.close()
             temp_filename = 'gen_' + str('%05d' % count)
-            plotgen = self.GenPlot2D(count, obj_functions, scale_factor, temp_filename, sing_gen2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+            plotgen = self.GenPlot2D(count, obj_functions, scale_factor, temp_filename)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
         
         #Now build the movie
         images = []
@@ -889,13 +891,14 @@ class NSGA_PostProcess:
         images[0].save("Pareto_Movie.gif",
                save_all=True, append_images=images[1:], optimize=False, duration=500, loop=0)
     
-    def SingleFront (self,gen_number,front_number, obj_functions, scalefactor, filename):
+    def SingleFront (self,gen_number,front_number, obj_functions, scalefactor, filename3):
 
         #Internal parameters
         ylabel_S = "Volume [m$^3$]"
         xlabel_S = "Cost [$]"
         title_S = "Pareto Front"
 
+        plt.close()
         plot_data = self.frontPlotFormat(gen_number,front_number, obj_functions)
         xvector = list(map(itemgetter(0), plot_data))
         yvector = list(map(itemgetter(1), plot_data))
@@ -904,5 +907,5 @@ class NSGA_PostProcess:
         plt.ylabel(ylabel_S)
         plt.title(title_S + ' For Generation ' + str(gen_number))
         plt.axis([min(xvector)/scalefactor, max(xvector)*scalefactor, min(yvector)/scalefactor, max(yvector)*scalefactor])
-        plt.savefig(filename + '.png', dpi=144)
+        plt.savefig(filename3 + '.png', dpi=144)
 

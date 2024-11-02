@@ -9,13 +9,11 @@ optvars = testobj.getIndVariables(optvar_front)
 
 #generate just Pareto front for single generation
 plot_pareto = testobj.SingleFront(10, 0, [1,2], 1.3, "SingleGen_Pareto_Plot")
-plt.show(block=False)
-plt.close()
+#plt.show()
 
 #generate and show all fronts for single generation
-plot_data = testobj.GenPlot2D(10, [1,2], [1,1], "SingleGen_All_Fronts_Plot", True)
-plt.show(block=False)
-plt.close()
+plot_data = testobj.GenPlot2D(10, [1,2], [1,1], "SingleGen_All_Fronts_Plot")
+#plt.show()
 
 #generate a gif to show front progression over generations
-movie = testobj.ObjMovie(1,10,[1,2],[1.3,1.3],"All_Fronts_Movie", False)
+movie = testobj.ObjMovie(1,10,[1,2],[1.3,1.3],"All_Fronts_Movie")
