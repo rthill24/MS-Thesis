@@ -118,7 +118,7 @@ class NSGA_PostProcess:
     
     
     def addFrontTo2DPlot(self, front_list, ax= None, index_x = 1, index_y = 2,
-                       format_string = 'ro', forced_axis=None):
+                       format_string = 'ro', forced_axis= None):
         '''Utility function to add a front to a 2-D plot from the format 
         returned by getFront
         
@@ -431,7 +431,7 @@ class NSGA_PostProcess:
         
             
     
-    def GenPlot2D(self, gen_num, obj_functions, scale_factor, filename):
+    def GenPlot2D(self, gen_num, obj_functions, scale_factor, filename, single_gen):
         '''Builds a single png of 2 or 3 objective function results
         from a single generation in the database  
         
@@ -465,7 +465,7 @@ class NSGA_PostProcess:
             
         #Do the basic plotting set-up
         #Internal parameters
-        ylabel_2D = "Volume [m$^3$]"
+        ylabel_2D = "Weight [kg]"
         xlabel_2D = "Cost [$]"
         title_2D = "All Fronts"
 
@@ -479,15 +479,21 @@ class NSGA_PostProcess:
         reserve_data = None 
         points_style = ['ro', 'b*', 'g^', 'yd', 'ks', 'mp', 'c+']  
         legend = []
+        
         while (data_flag):
             #Try to pull data
             data = self.getFront(gen_num, current_front, obj_functions)
             if (len(data) > 0) and (current_front < 7):
                 #If data, see if we have a point style ready - only 
                 #first 7 fronts get distinct styles
-                self.addFrontTo2DPlot(data,
-                           format_string = points_style[current_front])
-                legend.append('Front ' + str(current_front))
+                if single_gen is True:
+                    self.addFrontTo2DPlot(data,
+                            format_string = points_style[current_front])
+                    legend.append('Front ' + str(current_front))
+                else:
+                    self.addFrontTo2DPlot(data,
+                            format_string = points_style[current_front], forced_axis= [1500,3500,100,350])
+                    legend.append('Front ' + str(current_front))
             elif (len(data) > 0) and (current_front >= 7):
                 #Otherwise, add to reserve data to be plotted with a 
                 #single plot in a bit
@@ -506,16 +512,6 @@ class NSGA_PostProcess:
             self.addFrontTo2DPlot(reserve_data, format_string = 'ko')
         plt.legend(legend, loc = 'upper right')                   
         plt.savefig(filename + '.png', dpi=144)
-        """ if sing_gen is True:
-            plt.show() """
-        
-        """ if single_gen is True:
-            image_path = "C:/Users/rthill/Documents/MS-Thesis/SingleGen_All_Fronts_Plot.png"
-            img = mpimg.imread(image_path)
-            plt.imshow(img)
-            plt.axis('off')
-        else:
-            pass """
     
     
     def KrigingStats(self, generations, ident, tol= 1.e-4):
@@ -863,7 +859,7 @@ class NSGA_PostProcess:
         '''
         
         #Internal parameters
-        ylabel_movie = "Volume [m$^3$]"
+        ylabel_movie = "Weight [kg]"
         xlabel_movie = "Cost [$]"
         title_movie = "Pareto Front Development"
 
@@ -874,7 +870,7 @@ class NSGA_PostProcess:
             count = count + 1
             plt.close()
             temp_filename = 'gen_' + str('%05d' % count)
-            plotgen = self.GenPlot2D(count, obj_functions, scale_factor, temp_filename)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+            plotgen = self.GenPlot2D(count, obj_functions, scale_factor, temp_filename, False)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
         
         #Now build the movie
         images = []
@@ -894,7 +890,7 @@ class NSGA_PostProcess:
     def SingleFront (self,gen_number,front_number, obj_functions, scalefactor, filename3):
 
         #Internal parameters
-        ylabel_S = "Volume [m$^3$]"
+        ylabel_S = "Weight [kg]"
         xlabel_S = "Cost [$]"
         title_S = "Pareto Front"
 

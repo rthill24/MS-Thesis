@@ -144,9 +144,9 @@ PC = structure.production_cost()
 #produce plot
 plot = structure.plot_section()
 
-print (SM)
-print (data)
-print (PC)
+#print (SM)
+print ("here's data: ", data)
+#print (PC)
 plt.show()
 
 #check if the geometry is valid for each individual panel

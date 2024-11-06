@@ -192,7 +192,6 @@ UltMmt = SmithCollapse.MUltimate(XSection)
 print (UltMmt) """
 
 
-XSection = structure.set_up_smith_collapse
-XSection
-UltMmt = SmithCollapse.MUltimate(XSection)
+Mult = structure.set_up_smith_collapse
+UltMmt = SmithCollapse.MUltimate(Mult)
 print (UltMmt)

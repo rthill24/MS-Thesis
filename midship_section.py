@@ -174,7 +174,7 @@ class Midship_Section(object):
         return SM
             
     
-    def section_data(self):
+    def section_data(self, density = 7850):
         '''
         Calculates the neutral axis and EI of the midship section.
         
@@ -191,7 +191,7 @@ class Midship_Section(object):
         EI:     Total EI of the section
         NAy:    Y location of the neutral axis
         area:   Total cross-sectional area of the section
-        volume: Volume of the structure
+        weight: weight of the structure
         '''
 
         section_analysis = Section.section()
@@ -202,12 +202,13 @@ class Midship_Section(object):
             section_analysis.Append_Panels(panel)
         section_analysis.Explode()
         section_analysis._upCalcs()
+        weight = volume * density
 
         EI = section_analysis.getEI()
         NAy = section_analysis.getYCentroid()
         area = section_analysis.getSectionArea()
         
-        return EI, NAy, area, volume
+        return EI, NAy, area, weight
     
     def production_cost(self):
         '''

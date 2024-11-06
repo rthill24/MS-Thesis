@@ -50,7 +50,7 @@ class Box_Test_Case(nsga2.Problem):
         self.tft_bot = 0.0064
         self.tfb_bot = 0.05
         self.sloc_bot = [0,0,0]
-        self.ornt_bot = 180
+        self.ornt_bot = 0
         self.qloc_bot = ['NA','NA','NA']
         self.eta_bot = 0.5
 
