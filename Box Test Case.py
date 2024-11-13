@@ -155,11 +155,8 @@ plt.show()
 valid_bot = test_panel_bot.geoValid()
 valid_side = test_panel_side.geoValid()
 valid_top = test_panel_top.geoValid()
-print ("hello1")
 
 #get pressure for allowable permanent set
 press = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)
-print("hello2")
 press_bot = press._p_aps(test_panel_bot)
-print ("hello")
 print ("here's the pressure: ", press_bot)

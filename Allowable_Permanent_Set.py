@@ -131,7 +131,7 @@ class Allowable_Permanent_Set:
         
         # return Q value from eq. 9.4.1 in ref
         Q = Qy+TRw*(dQ0+dQ1*Rw)
-        print(Q)
+        #print(Q)
         return Q
         
     def _p_aps(self, panel):
@@ -146,10 +146,10 @@ class Allowable_Permanent_Set:
         Yld = pmat.getYld()
         
         P = Yld**2*Q/E
-        print(P)
-        print(self.ar)
-        print(self.beta)
-        print(self.wpo)
+        #print(P)
+        #print(self.ar)
+        #print(self.beta)
+        #print(self.wpo)
         return P
     
     def APS_constraint(self, Panel, pressure):
