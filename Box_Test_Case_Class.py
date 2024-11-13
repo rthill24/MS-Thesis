@@ -126,14 +126,14 @@ class Box_Test_Case(nsga2.Problem):
             self.Eval(individual_instance)
         
         #evaluate SM
-        SM_all = self.structure.section_modulii()
-        SM = SM_all[0]
-        SM_R = 0.0000303043931 #section modulus of reference box from "Box Test Case.py"
+        data2 = self.structure.section_data()
+        SM = data2[5]
+        SM_R = 0.00666294154342022 #section modulus of reference box from "Box Test Case.py"
         frac_SM = (SM_R-SM)/SM_R
 
         #evaluate allowable set pressure
-        press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10.)._p_aps(self.test_panel_bot)
-        press_R = 154092789.79149616 #allowable set pressure of reference box from "Box Test Case.py"
+        press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)._p_aps(self.test_panel_bot)
+        press_R = 38.461726273105846 #allowable set pressure of reference box from "Box Test Case.py"
         frac_press = (press_R-press_bot)/press_R
 
         #determine if geometry is valid for individual panels

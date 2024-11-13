@@ -144,18 +144,18 @@ class Midship_Section(object):
         section_analysis.Explode()
         section_analysis._upCalcs()
         
-        compression = PC.PaikCReg()
+        """ compression = PC.PaikCReg()
         self.EIT, self._NAy, self.area, self.volume = self.section_data()
         self.EIT /= 10**9
         self.fatigue_loaders = []
         self.initial_SM = self.vessel_SM()
         self.initial_fUCS = []
         for panel in grillage_list:
-            self.initial_fUCS.append( (compression.ucs(panel)/panel.getYsavg()) )
+            self.initial_fUCS.append( (compression.ucs(panel)/panel.getYsavg()) ) """
     
-    def section_modulii(self):
+    #def section_modulii(self):
         '''
-        Calculates a list of section modulii for the mid ship section.
+        Calculates the SM_top and SM_bot for the midship section.
         
         Parameters
         ----------
@@ -163,24 +163,28 @@ class Midship_Section(object):
         
         Returns
         --------
-        SM: Array of section modulii
+        SM_bot:    The SM value for the bottom of the midship section
+        SM_top:    The SM value for the top of the midship section
         '''
         
-        SM = np.zeros(len(self.grillages))
-        for i in range(len(self.grillages)):
-            panel = self.grillages[i].getTTPanRef()
-            SM[i] = panel.getINA() / panel.gety_max()
+
+        #SM = np.zeros(len(self.grillages))
+        #for i in range(len(self.grillages)):
+            #panel = self.grillages[i].getTTPanRef()
+            #y_max = panel.gety_max()
         
-        return SM
+        #y_top = max(y_max)
+        
+
             
     
-    def section_data(self, density = 7850):
+    def section_data(self, density = 2660): #density for 5086-H116 AL in kg/m^3
         '''
         Calculates the neutral axis and EI of the midship section.
         
         This method will use the Section.py analysis module to explode each of the
         TPanels into individual plates and calculate the moment, centroid, total area,
-        and volume values.
+        weight, I_NA, and minimum section modulus.
         
         Parameters
         -----------
@@ -192,23 +196,42 @@ class Midship_Section(object):
         NAy:    Y location of the neutral axis
         area:   Total cross-sectional area of the section
         weight: weight of the structure
+        I_NA:   Moment of inertia about the neutral axis
+        SM_min: Minimum section modulus of the section
         '''
 
         section_analysis = Section.section()
         volume = 0.0
+        maxy = 0
         for grill in self.grillages:
             panel = grill.getTTPanRef()
             volume += panel.getTotalVolume()
             section_analysis.Append_Panels(panel)
         section_analysis.Explode()
         section_analysis._upCalcs()
-        weight = volume * density
 
         EI = section_analysis.getEI()
         NAy = section_analysis.getYCentroid()
         area = section_analysis.getSectionArea()
+        weight = volume * density
+        I_NA = section_analysis.getSectionYMOI()
+
+        y = np.zeros(len(self.grillages))
+        for i in range(len(self.grillages)):
+            panel = self.grillages[i].getTTPanRef()
+            y[i] = panel.get_top()
+        maxy = max(y)
+        y_top = maxy
+        y_bot = 0
+
+        c_top = y_top - NAy
+        c_bot = NAy - y_bot
+        SM_top = I_NA / c_top
+        SM_bot = I_NA / c_bot
+
+        SM_min = min(SM_top, SM_bot)
         
-        return EI, NAy, area, weight
+        return EI, NAy, area, weight, I_NA, SM_min
     
     def production_cost(self):
         '''

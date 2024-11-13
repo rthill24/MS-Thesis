@@ -21,7 +21,7 @@ import deterioratingStructure
 import Allowable_Permanent_Set
 import Box_Checker
 
-# Define the material properties
+# Define the material properties for 5086-H116 Aluminum
 pmatl = Structures.EPMatl(207, 71000, 0.33)
 smatl = Structures.EPMatl(207, 71000, 0.33)
 tmatl = Structures.EPMatl(207, 71000, 0.33)
@@ -41,7 +41,7 @@ tmatl = Structures.EPMatl(207, 71000, 0.33)
             smatl - basic elastic perfectly plastic class defining stiffener material
             tmatl - basic elactic perfectly plastic class defining transverse member material characteristics
             twh - transverse web height
-            tht - transverse web thickness
+            twt - transverse web thickness
             tft - transverse flange thickness
             tfb - transverse flange breath
             sloc - spacial location of the start of the panel
@@ -49,82 +49,118 @@ tmatl = Structures.EPMatl(207, 71000, 0.33)
             qloc - qualitative location used for corroision model
         """
 
-# Dimensions for TPanel_trans_bot
-B_bot = 1
-L_bot = 1
-nstiff_bot = 1
+Frame_Spacing = 2250/1000
+
+# Dimensions for bottom panel
+B_bot = 4433.08999/1000
+nstiff_bot = 8
 ntrans_bot = 1
-tp_bot = 0.004
-tw_bot = 0.005
-hw_bot = 0.1133
-tf_bot = 0.0064
-bf_bot = 0.05
-twh_bot = 0.1133
-twt_bot = 0.005
-tft_bot = 0.0064
-tfb_bot = 0.05
+tp_bot = 9/1000
+tw_bot = 8/1000
+hw_bot = 100/1000
+tf_bot = 6/1000
+bf_bot = 100/1000
+twh_bot = 100/1000
+twt_bot = 8/1000
+tft_bot = 6/1000
+tfb_bot = 100/1000
 sloc_bot = [0,0,0]
-ornt_bot = 0
+ornt_bot = -28
 qloc_bot = ['NA','NA','NA']
 eta_bot = 0
 
-# Dimensions for TPanel_trans_side
-B_side  =  1
-L_side = 1
-nstiff_side = 8
+# Dimensions for side shell panel
+B_side = 3615.29782/1000
+nstiff_side = 6
 ntrans_side = 1
-tp_side = 0.004
-tw_side = 0.005
-hw_side = 0.1133
-tf_side = 0.0064
-bf_side = 0.05
-twh_side = 0.1133
-twt_side = 0.005
-tft_side = 0.0064
-tfb_side = 0.05
-sloc_side = [B_bot,0,0]
-ornt_side = -90
+tp_side = 5.5/1000
+tw_side = 8/1000
+hw_side = 100/1000
+tf_side = 6/1000
+bf_side = 50/1000
+twh_side = 100/1000
+twt_side = 8/1000
+tft_side = 6/1000
+tfb_side = 50/1000
+sloc_side = [3922.59642/1000,2065.34832/1000,0]
+ornt_side = -71
 qloc_side = ['NA','NA','NA']
 eta_side = 0
 
-# Dimensions for TPanel_trans_top
-B_top  =  1
-L_top = 1
-nstiff_top = 8
+# Dimensions for sheer strake panel
+B_sheer = 2556.31049/1000
+nstiff_sheer = 4
+ntrans_sheer = 1
+tp_sheer = 5/1000
+tw_sheer = 8/1000
+hw_sheer = 100/1000
+tf_sheer = 6/1000
+bf_sheer = 50/1000
+twh_sheer = 100/1000
+twt_sheer = 8/1000
+tft_sheer = 6/1000
+tfb_sheer = 50/1000
+sloc_sheer = [5111.29802/1000,5479.62478/1000,0]
+ornt_sheer = -174
+qloc_sheer = ['NA','NA','NA']
+eta_sheer = 0
+
+# Dimensions for top panel
+B_top = 2566.89797/1000
+nstiff_top = 6
 ntrans_top = 1
-tp_top = 0.004
-tw_top = 0.005
-hw_top = 0.1133
-tf_top = 0.0064
-bf_top = 0.05
-twh_top = 0.1133
-twt_top = 0.005
-tft_top = 0.0064
-tfb_top = 0.05
-sloc_top = [0,B_side,0]
+tp_top = 5/1000
+tw_top = 8/1000
+hw_top = 100/1000
+tf_top = 6/1000
+bf_top = 50/1000
+twh_top = 100/1000
+twt_top = 8/1000
+tft_top = 6/1000
+tfb_top = 50/1000
+sloc_top = [0,5726.22896/1000,0]
 ornt_top = 180
 qloc_top = ['NA','NA','NA']
 eta_top = 0
 
-# Creation of TPanel_trans
-test_panel_bot = TPanel_trans.TPanel_trans(B_bot,L_bot,nstiff_bot,ntrans_bot,tp_bot,\
+# Dimensions for 2nd deck plating
+B_deck = 4165.69171/1000
+nstiff_deck = 9
+ntrans_deck = 1
+tp_deck = 5/1000
+tw_deck = 8/1000
+hw_deck = 100/1000
+tf_deck = 6/1000
+bf_deck = 50/1000
+twh_deck = 100/1000
+twt_deck = 8/1000
+tft_deck = 6/1000
+tfb_deck = 50/1000
+sloc_deck = [0,2763.65281/1000,0]
+ornt_deck = 0
+qloc_deck = ['NA','NA','NA']
+eta_deck = 0
+
+# Creation of midship section
+bottom_panel = TPanel_trans.TPanel_trans(B_bot,Frame_Spacing,nstiff_bot,ntrans_bot,tp_bot,\
                                         tw_bot,hw_bot,tf_bot,bf_bot,twh_bot,twt_bot,\
                                         tft_bot,tfb_bot,sloc_bot,ornt_bot,qloc_bot,pmatl,smatl,tmatl,eta_bot)
-test_panel_side = TPanel_trans.TPanel_trans(B_side,L_side,nstiff_side,ntrans_side,tp_side,\
+side_panel = TPanel_trans.TPanel_trans(B_side,Frame_Spacing,nstiff_side,ntrans_side,tp_side,\
                                         tw_side,hw_side,tf_side,bf_side,twh_side,twt_side,\
                                         tft_side,tfb_side,sloc_side,ornt_side,qloc_side,pmatl,smatl,tmatl,eta_side)
-test_panel_top = TPanel_trans.TPanel_trans(B_top,L_top,nstiff_top,ntrans_top,tp_top,\
+sheer_panel = TPanel_trans.TPanel_trans(B_sheer,Frame_Spacing,nstiff_sheer,ntrans_sheer,tp_sheer,\
+                                        tw_sheer,hw_sheer,tf_sheer,bf_sheer,twh_sheer,twt_sheer,\
+                                        tft_sheer,tfb_sheer,sloc_sheer,ornt_sheer,qloc_sheer,pmatl,smatl,tmatl,eta_sheer)
+top_panel = TPanel_trans.TPanel_trans(B_top,Frame_Spacing,nstiff_top,ntrans_top,tp_top,\
                                         tw_top,hw_top,tf_top,bf_top,twh_top,twt_top,\
                                         tft_top,tfb_top,sloc_top,ornt_top,qloc_top,pmatl,smatl,tmatl,eta_top)
-
-# Check the box for corner stiffener intersections
-""" check_my_box = Box_Checker.boxchecker(tp_bot,hw_top,tf_top,B_side,nstiff_side,tw_side,bf_side, test_panel_bot, test_panel_side, test_panel_top)
-check_my_box.check_corner_stiffs()
-check_my_box.check_geometry() """
+deck_panel = TPanel_trans.TPanel_trans(B_deck,Frame_Spacing,nstiff_deck,ntrans_deck,tp_deck,\
+                                        tw_deck,hw_deck,tf_deck,bf_deck,twh_deck,twt_deck,\
+                                        tft_deck,tfb_deck,sloc_deck,ornt_deck,qloc_deck,pmatl,smatl,tmatl,eta_deck)
 
 # Create the midship section    
-structure = midship_section.Midship_Section([test_panel_bot,test_panel_side,test_panel_top],0)
-        
+structure = midship_section.Midship_Section([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel],0)
+  
 #get section data
 '''
 Returns
@@ -152,14 +188,13 @@ print ("here's PC: ", PC)
 plt.show()
 
 #check if the geometry is valid for each individual panel
-valid_bot = test_panel_bot.geoValid()
-valid_side = test_panel_side.geoValid()
-valid_top = test_panel_top.geoValid()
-print ("hello1")
+valid_bot = bottom_panel.geoValid()
+valid_side = side_panel.geoValid()
+valid_sheer = sheer_panel.geoValid()
+valid_top = top_panel.geoValid()
+valid_deck = deck_panel.geoValid()
+print(valid_bot, valid_side, valid_sheer, valid_top, valid_deck)
 
 #get pressure for allowable permanent set
-press = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)
-print("hello2")
-press_bot = press._p_aps(test_panel_bot)
-print ("hello")
-print ("here's the pressure: ", press_bot)
+press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)._p_aps(bottom_panel)
+print ("here's the pressure': ", press_bot)

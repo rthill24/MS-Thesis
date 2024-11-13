@@ -33,7 +33,7 @@ class CostCal:
         C[8] - cost of electricity and electrodes [total] [lstiff ONLY!]
         C[9] - fabrication cost of lstiff and transverse frames [excluded]
     '''
-    def __init__(self,Pa=860,r=7.85,Clm=1.05,Ps=27,Cls=1.2,Cis=0.6,Cbj=1.15,Cee=0.9,Cfb=1.5):
+    def __init__(self,Pa=860,r=2660/907.185,Clm=1.05,Ps=27,Cls=1.2,Cis=0.6,Cbj=1.15,Cee=0.9,Cfb=1.5):
         '''
         set up the coefficient in order to be used later
         Pa = material price U.S$ / ton
