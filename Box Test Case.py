@@ -64,7 +64,7 @@ twt_bot = 0.005
 tft_bot = 0.0064
 tfb_bot = 0.05
 sloc_bot = [0,0,0]
-ornt_bot = 0
+ornt_bot = -180
 qloc_bot = ['NA','NA','NA']
 eta_bot = 0
 

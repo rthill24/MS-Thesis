@@ -204,14 +204,22 @@ class TPanel_trans(Structures.TPanel):
         
         # calculate distance to furthest fiber for section modulus calculation
         self.y_max = max(((self._tp+self._twh+self._tft)-self._tNA), self._tNA)
-        #calculate top of section
         
+        #calculate top of section
         start = self.sloc[1]
         addition = self._B*math.sin(math.radians(self.ornt))
-        if self.ornt < 0:
+        if self.ornt < 0 and start > -180:
             self.top = start - addition
         else:
-            self.top = start + addition
+            self.top = start
+
+        #calculate bottom of section
+        start = self.sloc[1]
+        addition = self._B*math.sin(math.radians(self.ornt))
+        if self.ornt < 0 and start > -180:
+            self.bot = start
+        else:
+            self.bot = start - addition
         
         # calculate the moment of inertia of the cross section about the NA
         # this formulation uses the parallel axis theorem
@@ -472,4 +480,6 @@ class TPanel_trans(Structures.TPanel):
     def get_top(self):
         ''' Returns the top of the panel'''
         return self.top
-        
+    def get_bot(self):
+        ''' Returns the bot of the panel'''
+        return self.bot

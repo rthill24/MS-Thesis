@@ -492,7 +492,7 @@ class NSGA_PostProcess:
                     legend.append('Front ' + str(current_front))
                 else:
                     self.addFrontTo2DPlot(data,
-                            format_string = points_style[current_front], forced_axis= [1500,3500,100,350])
+                            format_string = points_style[current_front], forced_axis= [500,2500,0,200])
                     legend.append('Front ' + str(current_front))
             elif (len(data) > 0) and (current_front >= 7):
                 #Otherwise, add to reserve data to be plotted with a 
