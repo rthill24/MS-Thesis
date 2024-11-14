@@ -63,67 +63,18 @@ twh_bot = 0.1133
 twt_bot = 0.005
 tft_bot = 0.0064
 tfb_bot = 0.05
-sloc_bot = [0,0,0]
-ornt_bot = 0
+sloc_bot = [0,100,0]
+ornt_bot = -174
 qloc_bot = ['NA','NA','NA']
 eta_bot = 0
-
-# Dimensions for TPanel_trans_side
-B_side  =  1
-L_side = 1
-nstiff_side = 8
-ntrans_side = 1
-tp_side = 0.004
-tw_side = 0.005
-hw_side = 0.1133
-tf_side = 0.0064
-bf_side = 0.05
-twh_side = 0.1133
-twt_side = 0.005
-tft_side = 0.0064
-tfb_side = 0.05
-sloc_side = [B_bot,0,0]
-ornt_side = -90
-qloc_side = ['NA','NA','NA']
-eta_side = 0
-
-# Dimensions for TPanel_trans_top
-B_top  =  1
-L_top = 1
-nstiff_top = 8
-ntrans_top = 1
-tp_top = 0.004
-tw_top = 0.005
-hw_top = 0.1133
-tf_top = 0.0064
-bf_top = 0.05
-twh_top = 0.1133
-twt_top = 0.005
-tft_top = 0.0064
-tfb_top = 0.05
-sloc_top = [0,B_side,0]
-ornt_top = 180
-qloc_top = ['NA','NA','NA']
-eta_top = 0
 
 # Creation of TPanel_trans
 test_panel_bot = TPanel_trans.TPanel_trans(B_bot,L_bot,nstiff_bot,ntrans_bot,tp_bot,\
                                         tw_bot,hw_bot,tf_bot,bf_bot,twh_bot,twt_bot,\
                                         tft_bot,tfb_bot,sloc_bot,ornt_bot,qloc_bot,pmatl,smatl,tmatl,eta_bot)
-test_panel_side = TPanel_trans.TPanel_trans(B_side,L_side,nstiff_side,ntrans_side,tp_side,\
-                                        tw_side,hw_side,tf_side,bf_side,twh_side,twt_side,\
-                                        tft_side,tfb_side,sloc_side,ornt_side,qloc_side,pmatl,smatl,tmatl,eta_side)
-test_panel_top = TPanel_trans.TPanel_trans(B_top,L_top,nstiff_top,ntrans_top,tp_top,\
-                                        tw_top,hw_top,tf_top,bf_top,twh_top,twt_top,\
-                                        tft_top,tfb_top,sloc_top,ornt_top,qloc_top,pmatl,smatl,tmatl,eta_top)
-
-# Check the box for corner stiffener intersections
-""" check_my_box = Box_Checker.boxchecker(tp_bot,hw_top,tf_top,B_side,nstiff_side,tw_side,bf_side, test_panel_bot, test_panel_side, test_panel_top)
-check_my_box.check_corner_stiffs()
-check_my_box.check_geometry() """
 
 # Create the midship section    
-structure = midship_section.Midship_Section([test_panel_bot,test_panel_side,test_panel_top],0)
+structure = midship_section.Midship_Section([test_panel_bot],0)
         
 #get section data
 '''
@@ -136,29 +87,7 @@ I_NA:   Moment of inertia about the neutral axis
 SM_min: Minimum section modulus of the section
 '''
 data = structure.section_data()
-        
-#get production cost
-PC = structure.production_cost()
 
 #produce plot
 plot = structure.plot_section()
 plt.show()
-
-print ("here's EI: ", data[0])
-print ("here's NAy: ", data[1])
-print ("here's area: ", data[2])
-print ("here's weight: ", data[3])
-print ("here's I_NA: ", data[4])
-print ("here's SM_min: ", data[5])
-print ("here's PC: ", PC)
-
-
-#check if the geometry is valid for each individual panel
-valid_bot = test_panel_bot.geoValid()
-valid_side = test_panel_side.geoValid()
-valid_top = test_panel_top.geoValid()
-
-#get pressure for allowable permanent set
-press = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)
-press_bot = press._p_aps(test_panel_bot)
-print ("here's the pressure: ", press_bot)

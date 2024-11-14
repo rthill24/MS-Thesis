@@ -19,7 +19,6 @@ from operator import itemgetter
 from scipy import integrate
 import deterioratingStructure
 import Allowable_Permanent_Set
-import Box_Checker
 
 # Define the material properties for 5086-H116 Aluminum
 pmatl = Structures.EPMatl(207, 71000, 0.33)
@@ -82,7 +81,7 @@ twh_side = 100/1000
 twt_side = 8/1000
 tft_side = 6/1000
 tfb_side = 50/1000
-sloc_side = [3922.59642/1000,2065.34832/1000,0]
+sloc_side = [B_bot*math.cos(math.radians(-ornt_bot)),B_bot*math.sin(math.radians(-ornt_bot)),0]
 ornt_side = -71
 qloc_side = ['NA','NA','NA']
 eta_side = 0
@@ -100,7 +99,7 @@ twh_sheer = 100/1000
 twt_sheer = 8/1000
 tft_sheer = 6/1000
 tfb_sheer = 50/1000
-sloc_sheer = [5111.29802/1000,5479.62478/1000,0]
+sloc_sheer = [sloc_side[0]+(B_side*math.cos(math.radians(-ornt_side))),sloc_side[1]+(B_side*math.sin(math.radians(-ornt_side))),0]
 ornt_sheer = -174
 qloc_sheer = ['NA','NA','NA']
 eta_sheer = 0
@@ -118,7 +117,7 @@ twh_top = 100/1000
 twt_top = 8/1000
 tft_top = 6/1000
 tfb_top = 50/1000
-sloc_top = [0,5726.22896/1000,0]
+sloc_top = [0,sloc_sheer[1]+(B_sheer*math.sin(math.radians((ornt_sheer+180)))),0]
 ornt_top = 180
 qloc_top = ['NA','NA','NA']
 eta_top = 0
@@ -137,7 +136,7 @@ twt_deck = 8/1000
 tft_deck = 6/1000
 tfb_deck = 50/1000
 sloc_deck = [0,2763.65281/1000,0]
-ornt_deck = 0
+ornt_deck = 180
 qloc_deck = ['NA','NA','NA']
 eta_deck = 0
 
@@ -178,6 +177,9 @@ PC = structure.production_cost()
 
 #produce plot
 plot = structure.plot_section()
+plt.show()
+
+#output data
 print ("here's EI: ", data[0])
 print ("here's NAy: ", data[1])
 print ("here's area: ", data[2])
@@ -185,7 +187,7 @@ print ("here's weight: ", data[3])
 print ("here's I_NA: ", data[4])
 print ("here's SM_min: ", data[5])
 print ("here's PC: ", PC)
-plt.show()
+
 
 #check if the geometry is valid for each individual panel
 valid_bot = bottom_panel.geoValid()

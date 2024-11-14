@@ -205,22 +205,88 @@ class TPanel_trans(Structures.TPanel):
         # calculate distance to furthest fiber for section modulus calculation
         self.y_max = max(((self._tp+self._twh+self._tft)-self._tNA), self._tNA)
         
-        #calculate top of section
-        start = self.sloc[1]
-        addition = self._B*math.sin(math.radians(self.ornt))
-        if self.ornt < 0 and start > -180:
-            self.top = start - addition
-        else:
-            self.top = start
+        #calculate spacing between stiffeners
+        stiff_spacing = self._B/(self._nstiff+1)
 
-        #calculate bottom of section
-        start = self.sloc[1]
-        addition = self._B*math.sin(math.radians(self.ornt))
-        if self.ornt < 0 and start > -180:
-            self.bot = start
-        else:
-            self.bot = start - addition
+        #calculate top of section considering orientation and stiffeners
+        start_top = self.sloc[1]
+
+        if self.ornt > 0 and self.ornt <=90:
+            first_stiff_top = -((stiff_spacing)*math.sin(math.radians(self.ornt)))+((self._hw+self._tf+self._tp)*math.sin(math.radians(90-self.ornt)))+((self._bf/2)*math.sin(math.radians(self.ornt)))
+            self.top_1 = start_top
+            self.top_2 = start_top + first_stiff_top
+            self.top = max(self.top_1, self.top_2)
+
+        elif self.ornt > 90 and self.ornt <180:
+            beta = self.ornt - 90
+            first_stiff_top = -((stiff_spacing)*math.sin(math.radians(beta)))-((self._hw+self._tf+self._tp)*math.sin(math.radians(90-beta)))+((self._bf/2)*math.sin(math.radians(beta)))
+            self.top_1 = start_top
+            self.top_2 = start_top + first_stiff_top
+            self.top = max(self.top_1, self.top_2)
+
+        elif self.ornt == 180 or self.ornt == -180:
+            self.top = start_top
+
+        elif self.ornt < 0 and self.ornt >= -90:
+            beta = abs(self.ornt)
+            plate_only = self._B*math.sin(math.radians(beta))
+            furthest_stiff_top = ((self._nstiff*stiff_spacing)*math.sin(math.radians(beta)))+((self._hw+self._tf+self._tp)*math.sin(math.radians(90-beta)))+((self._bf/2)*math.sin(math.radians(beta)))
+            self.top_1 = start_top + plate_only 
+            self.top_2 = start_top + furthest_stiff_top
+            self.top = max(self.top_1, self.top_2) 
+
+        elif self.ornt < -90 and self.ornt > -180:
+            beta = 180 - abs(self.ornt)
+            plate_only = self._B*math.sin(math.radians(beta))
+            furthest_stiff_top = ((self._nstiff*stiff_spacing)*math.sin(math.radians(beta)))-((self._hw+self._tf+self._tp)*math.sin(math.radians(90-beta)))+((self._bf/2)*math.sin(math.radians(beta)))
+            self.top_1 = start_top + plate_only
+            self.top_2 = start_top + furthest_stiff_top
+            self.top = max(self.top_1, self.top_2)
         
+        elif self.ornt == 0:
+            self.top = start_top + self._tp + self._hw + self._tf  
+
+        #calculate bottom of section considering orientation and stiffeners
+        start_bot = self.sloc[1]
+
+        if self.ornt > 0 and self.ornt <=90:
+            plate_only = -self._B*math.sin(math.radians(self.ornt))
+            furthest_stiff_bot = -((self._nstiff*stiff_spacing)*math.sin(math.radians(self.ornt)))+((self._hw+self._tf+self._tp)*math.sin(math.radians(90-self.ornt)))-((self._bf/2)*math.sin(math.radians(self.ornt)))
+            self.bot_1 = start_bot + plate_only
+            self.bot_2 = start_bot + furthest_stiff_bot
+            self.bot = min(self.bot_1, self.bot_2)
+
+        elif self.ornt > 90 and self.ornt <180:
+            beta = self.ornt - 90
+            plate_only = -self._B*math.sin(math.radians(beta))
+            furthest_stiff_bot = -((self._nstiff*stiff_spacing)*math.sin(math.radians(beta)))-((self._hw+self._tf+self._tp)*math.sin(math.radians(90-beta)))-((self._bf/2)*math.sin(math.radians(beta)))
+            self.bot_1 = start_bot + plate_only
+            self.bot_2 = start_bot + furthest_stiff_bot
+            self.bot = min(self.bot_1, self.bot_2)
+
+        elif self.ornt == 180 or self.ornt == -180:
+            self.bot = start_bot - self._tp - self._hw - self._tf
+
+        elif self.ornt < 0 and self.ornt >= -90:
+            beta = abs(self.ornt)
+            first_stiff_bot = ((stiff_spacing)*math.sin(math.radians(beta)))+((self._hw+self._tf+self._tp)*math.sin(math.radians(90-beta)))-((self._bf/2)*math.sin(math.radians(beta)))
+            self.bot_1 = start_bot
+            self.bot_2 = start_bot + first_stiff_bot
+            self.bot = min(self.bot_1, self.bot_2)
+        
+        elif self.ornt < -90 and self.ornt > -180:
+            beta = abs(self.ornt) - 90
+            first_stiff_bot = ((stiff_spacing)*math.sin(math.radians(beta)))-((self._hw+self._tf+self._tp)*math.sin(math.radians(90-beta)))-((self._bf/2)*math.sin(math.radians(beta)))
+            self.bot_1 = start_bot
+            self.bot_2 = start_bot + first_stiff_bot
+            self.bot = min(self.bot_1, self.bot_2)
+        
+        elif self.ornt == 0:
+            self.bot = start_bot
+
+
+
+
         # calculate the moment of inertia of the cross section about the NA
         # this formulation uses the parallel axis theorem
         self.t_INA = 1.0/12.0*self._a*self._tp**3.0 + self.tpa*(self._tp/2.0 \

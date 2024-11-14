@@ -11,7 +11,7 @@ plot_pareto = testobj.SingleFront(10, 0, [1,2], 1.2, "SingleGen_Pareto_Plot")
 plt.show()
 
 #generate and show all fronts for single generation
-plot_data = testobj.GenPlot2D(15, [1,2], [1.5,1.5], "SingleGen_All_Fronts_Plot", True)
+plot_data = testobj.GenPlot2D(1, [1,2], [1.75,1.75], "SingleGen_All_Fronts_Plot", True)
 plt.show()
 
 #generate a gif to show front progression over generations

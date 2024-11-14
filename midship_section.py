@@ -216,13 +216,20 @@ class Midship_Section(object):
         weight = volume * density
         I_NA = section_analysis.getSectionYMOI()
 
-        y = np.zeros(len(self.grillages))
+        top = np.zeros(len(self.grillages))
         for i in range(len(self.grillages)):
             panel = self.grillages[i].getTTPanRef()
-            y[i] = panel.get_top()
-        maxy = max(y)
+            top[i] = panel.get_top()
+
+        bot = np.zeros(len(self.grillages))
+        for i in range(len(self.grillages)):
+            panel = self.grillages[i].getTTPanRef()
+            bot[i] = panel.get_bot()
+
+        maxy = max(top)
+        miny = min(bot)
         y_top = maxy
-        y_bot = 0
+        y_bot = miny
 
         c_top = y_top - NAy
         c_bot = NAy - y_bot
