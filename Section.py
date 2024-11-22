@@ -75,12 +75,9 @@ class section(object):
         self._EI = 0.0
         for i in self._plates:
             # Plate Thickness * Plate Length
-            self._Area += i.getPlatebreadth()*i.getPlatethickness()*2
+            self._Area += i.getPlatebreadth()*i.getPlatethickness()
             # Plate Thickness * Plate Length * Y Plate center
-            self._YFirstMoment += (i.getPlatebreadth()*i.getPlatethickness()*(i.getPlatey2()+i.getPlatey1())/2)*2
-            #print ("here's the first moment: ", i.getPlatebreadth()*i.getPlatethickness()*(i.getPlatey2()+i.getPlatey1())/2)
-            #print ("here's the y2: ", i.getPlatey2())
-            print ("here's the y1: ", i.getPlatey1())
+            self._YFirstMoment += (i.getPlatebreadth()*i.getPlatethickness()*(i.getPlatey2()+i.getPlatey1())/2)
         # First moment Arm/Area
         self._YCentroid = self._YFirstMoment/self._Area    
         for j in self._plates:

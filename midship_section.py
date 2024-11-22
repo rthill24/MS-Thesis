@@ -178,7 +178,7 @@ class Midship_Section(object):
 
             
     
-    def section_data(self, density = 2660): #density for 5086-H116 AL in kg/m^3
+    def section_data(self, density = 2660, mirror = True): #density for 5086-H116 AL in kg/m^3, "mirror" will double the calculations for a symmetric section
         '''
         Calculates the neutral axis and EI of the midship section.
         
@@ -203,18 +203,23 @@ class Midship_Section(object):
         section_analysis = Section.section()
         volume = 0.0
         maxy = 0
+        if mirror == True:
+            factor = 2 
+        else:
+            factor = 1
+
         for grill in self.grillages:
             panel = grill.getTTPanRef()
-            volume += panel.getTotalVolume()
+            volume += panel.getTotalVolume() * factor
             section_analysis.Append_Panels(panel)
         section_analysis.Explode()
         section_analysis._upCalcs()
 
-        EI = section_analysis.getEI()
+        EI = section_analysis.getEI() * factor
         NAy = section_analysis.getYCentroid()
-        area = section_analysis.getSectionArea()
+        area = section_analysis.getSectionArea() * factor
         weight = volume * density
-        I_NA = section_analysis.getSectionYMOI()
+        I_NA = section_analysis.getSectionYMOI() * factor
 
         top = np.zeros(len(self.grillages))
         for i in range(len(self.grillages)):
@@ -240,7 +245,7 @@ class Midship_Section(object):
         
         return EI, NAy, area, weight, I_NA, SM_min
     
-    def production_cost(self):
+    def production_cost(self, mirror = True): #mirror will double the calculations for a symmetric section
         '''
         Calculates the production cost of the midship section using Caldwell's
         costing method
@@ -253,12 +258,15 @@ class Midship_Section(object):
         --------
         production_cost:    The total production cost for the section in its __CURRENT__ state
         '''
-        
+        if mirror == True:
+            factor = 2
+        else:
+            factor = 1
         production_cost = 0.0
         for panel in self.grillages:
             tpanel = panel.getTTPanRef()
             cost_object = Cost.Cost_trans(tpanel)
-            production_cost += cost_object.Total_Cost_()
+            production_cost += cost_object.Total_Cost_() * factor
         
         
         return production_cost
@@ -942,7 +950,7 @@ class Midship_Section(object):
                 
         return regeneration_cost, repair_method
     
-    def plot_section(self, show=False, mirror=True, ax_obj=None):
+    def plot_section(self, show=False, mirror=True, ax_obj=None): #mirror is used to mirror the plot, does not automatically mirror calculations
         '''Plots the section'''
         
         section_plot = Section.section()
