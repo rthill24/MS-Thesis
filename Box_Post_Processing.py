@@ -1,8 +1,8 @@
-import post_process_rewrite
+import post_process
 import matplotlib.pyplot as plt
 
 dbname = "C:/Users/rthill/Documents/MS-Thesis/Optimizer_Output"
-testobj = post_process_rewrite.NSGA_PostProcess(dbname)
+testobj = post_process.NSGA_PostProcess(dbname)
 optvar_front = testobj.getFront(100,50,[1,2])
 optvars = testobj.getIndVariables(optvar_front)
 

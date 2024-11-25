@@ -130,6 +130,8 @@ class test_TPanel_trans(unittest.TestCase):
         self.assertAlmostEqual(self.Panel.getArea(), 2120.0, 7)
         self.assertAlmostEqual(self.Panel.getNA(), 21.2971698, 7)
         self.assertAlmostEqual(self.Panel.getINA(), 2302099.44968553, 7)
+        self.assertAlmostEqual(self.Panel.get_top(), 95.0, 7)
+        self.assertAlmostEqual(self.Panel.get_bot(), 0.0, 7)
 
 suite = unittest.TestLoader().loadTestsFromTestCase(test_TPanel_trans)
 unittest.TextTestRunner(verbosity=2).run(suite)

@@ -549,3 +549,12 @@ class TPanel_trans(Structures.TPanel):
     def get_bot(self):
         ''' Returns the bot of the panel'''
         return self.bot
+    def getpmatl(self):
+        ''' Returns the material properties of the plating'''
+        return self._pmatl
+    def getsmatl(self):
+        ''' Returns the material properties of the stiffeners'''
+        return self._smatl
+    def gettmatl(self):
+        ''' Returns the material properties of the transverse members'''
+        return self._tmatl

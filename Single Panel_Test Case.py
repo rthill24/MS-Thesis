@@ -22,9 +22,9 @@ import Allowable_Permanent_Set
 import Box_Checker
 
 # Define the material properties
-pmatl = Structures.EPMatl(207, 71000, 0.33)
-smatl = Structures.EPMatl(207, 71000, 0.33)
-tmatl = Structures.EPMatl(207, 71000, 0.33)
+pmatl = Structures.EPMatl(207, 71000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
+smatl = Structures.EPMatl(207, 71000, 2660, 0.33)
+tmatl = Structures.EPMatl(207, 71000, 2660, 0.33)
 
 """
         constructor
@@ -49,44 +49,51 @@ tmatl = Structures.EPMatl(207, 71000, 0.33)
             qloc - qualitative location used for corroision model
         """
 
-# Dimensions for TPanel_trans_bot
-B_bot = 1
-L_bot = 1
-nstiff_bot = 1
-ntrans_bot = 1
-tp_bot = 0.004
-tw_bot = 0.005
-hw_bot = 0.1133
-tf_bot = 0.0064
-bf_bot = 0.05
-twh_bot = 0.1133
-twt_bot = 0.005
-tft_bot = 0.0064
-tfb_bot = 0.05
-sloc_bot = [0,100,0]
-ornt_bot = -174
-qloc_bot = ['NA','NA','NA']
-eta_bot = 0
+# Dimensions for TPanel_trans
+B = 1
+L = 1
+nstiff = 4
+ntrans = 1
+tp = 0.004
+tw = 0.005
+hw = 0.1133
+tf = 0.0064
+bf = 0.05
+twh = 0.1133
+twt = 0.005
+tft = 0.0064
+tfb = 0.05
+sloc = [0,0,0]
+ornt = 0
+qloc = ['NA','NA','NA']
+eta = 0
 
 # Creation of TPanel_trans
-test_panel_bot = TPanel_trans.TPanel_trans(B_bot,L_bot,nstiff_bot,ntrans_bot,tp_bot,\
-                                        tw_bot,hw_bot,tf_bot,bf_bot,twh_bot,twt_bot,\
-                                        tft_bot,tfb_bot,sloc_bot,ornt_bot,qloc_bot,pmatl,smatl,tmatl,eta_bot)
+Panel = TPanel_trans.TPanel_trans(B, L, nstiff, ntrans, tp, tw, hw, tf, bf, twh, twt, tft, tfb, sloc, ornt, qloc, pmatl, smatl, tmatl, eta)
 
 # Create the midship section    
-structure = midship_section.Midship_Section([test_panel_bot],0)
+structure = midship_section.Midship_Section([Panel],0)
         
 #get section data
 '''
 Returns
-EI:     Total EI of the section
-NAy:    Y location of the neutral axis
-area:   Total cross-sectional area of the section
-weight: weight of the structure
-I_NA:   Moment of inertia about the neutral axis
-SM_min: Minimum section modulus of the section
+    EI:     Total EI of the section
+    NAy:    Y location of the neutral axis
+    area:   Total cross-sectional area of the section
+    weight: weight of the structure
+    I_NA:   Moment of inertia about the neutral axis
+    SM_min: Minimum section modulus of the section
+    My:     Yield moment of the section
 '''
 data = structure.section_data()
+
+print ("here's EI: ", data[0])
+print ("here's NAy: ", data[1])
+print ("here's area: ", data[2])
+print ("here's weight: ", data[3])
+print ("here's I_NA: ", data[4])
+print ("here's SM_min: ", data[5])
+print ("here's My: ", data[6])
 
 #produce plot
 plot = structure.plot_section()

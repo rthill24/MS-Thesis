@@ -24,6 +24,7 @@ from scipy import integrate
 import PaikCompression as PC
 import matplotlib as plt
 
+
 #import c_msdl as SmithCollapse
 
 class Midship_Repair_Cost(deterioratingStructure.TPanel_Repair):
@@ -178,7 +179,7 @@ class Midship_Section(object):
 
             
     
-    def section_data(self, density = 2660, mirror = True): #density for 5086-H116 AL in kg/m^3, "mirror" will double the calculations for a symmetric section
+    def section_data(self, mirror = True): #density for 5086-H116 AL in kg/m^3, "mirror" will double the calculations for a symmetric section
         '''
         Calculates the neutral axis and EI of the midship section.
         
@@ -198,11 +199,15 @@ class Midship_Section(object):
         weight: weight of the structure
         I_NA:   Moment of inertia about the neutral axis
         SM_min: Minimum section modulus of the section
+        My:     Yield moment of the section
         '''
+        density = self.grillages[0].getTTPanRef().getmatlP().getDensity() #5086-H116 AL, only uses plating density
+        yield_strength = self.grillages[0].getTTPanRef().getmatlP().getYld() #5086-H116 AL, only uses plating yield strength
 
         section_analysis = Section.section()
         volume = 0.0
         maxy = 0
+        miny = 0
         if mirror == True:
             factor = 2 
         else:
@@ -212,13 +217,13 @@ class Midship_Section(object):
             panel = grill.getTTPanRef()
             volume += panel.getTotalVolume() * factor
             section_analysis.Append_Panels(panel)
+        weight = volume * density
         section_analysis.Explode()
         section_analysis._upCalcs()
 
         EI = section_analysis.getEI() * factor
         NAy = section_analysis.getYCentroid()
         area = section_analysis.getSectionArea() * factor
-        weight = volume * density
         I_NA = section_analysis.getSectionYMOI() * factor
 
         top = np.zeros(len(self.grillages))
@@ -236,14 +241,18 @@ class Midship_Section(object):
         y_top = maxy
         y_bot = miny
 
+        print (y_top)
+
         c_top = y_top - NAy
         c_bot = NAy - y_bot
         SM_top = I_NA / c_top
         SM_bot = I_NA / c_bot
 
         SM_min = min(SM_top, SM_bot)
+
+        My = yield_strength * SM_min
         
-        return EI, NAy, area, weight, I_NA, SM_min
+        return EI, NAy, area, weight, I_NA, SM_min, My
     
     def production_cost(self, mirror = True): #mirror will double the calculations for a symmetric section
         '''

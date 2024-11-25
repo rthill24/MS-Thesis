@@ -53,7 +53,7 @@ def isDom(point_1, point_2):
     if (twoDomTrue > 1):
         return 1
     
-    assert (false), "failed domination status"
+    assert (False), "failed domination status"
     return
 
 
@@ -118,7 +118,7 @@ class NSGA_PostProcess:
     
     
     def addFrontTo2DPlot(self, front_list, ax= None, index_x = 1, index_y = 2,
-                       format_string = 'ro', forced_axis=None):
+                       format_string = 'ro', forced_axis= None):
         '''Utility function to add a front to a 2-D plot from the format 
         returned by getFront
         
@@ -431,7 +431,7 @@ class NSGA_PostProcess:
         
             
     
-    def GenPlot2D(self, gen_num, obj_functions, scale_factor, filename):
+    def GenPlot2D(self, gen_num, obj_functions, scale_factor, filename, single_gen):
         '''Builds a single png of 2 or 3 objective function results
         from a single generation in the database  
         
@@ -445,6 +445,8 @@ class NSGA_PostProcess:
                        Will error if not either 2 or 3 long
         
         filename: filename for the final converted GIF
+
+        single_gen: True if all fronts for a single generation are desired, automatically set to True for a single instance
         
         Returns
         -------
@@ -463,10 +465,11 @@ class NSGA_PostProcess:
             
         #Do the basic plotting set-up
         #Internal parameters
-        ylabel_2D = "Volume [m$^3$]"
+        ylabel_2D = "Weight [kg]"
         xlabel_2D = "Cost [$]"
-        title_2D = "All Pareto Fronts"
+        title_2D = "All Fronts"
 
+        plt.close()
         plt.xlabel(xlabel_2D)
         plt.ylabel(ylabel_2D)
         plt.title(title_2D + ' For Generation ' + str(gen_num))
@@ -474,18 +477,24 @@ class NSGA_PostProcess:
         data_flag = True
         current_front = 0
         reserve_data = None 
-        points_style = ['ro', 'b*', 'g^', 'yd', 'ks', 'mp', 'c+', 'b>', 'go', 'y<']  
+        points_style = ['ro', 'b*', 'g^', 'yd', 'ks', 'mp', 'c+']  
         legend = []
+        
         while (data_flag):
             #Try to pull data
             data = self.getFront(gen_num, current_front, obj_functions)
-            if (len(data) > 0) and (current_front < 10):
+            if (len(data) > 0) and (current_front < 7):
                 #If data, see if we have a point style ready - only 
-                #first 10 fronts get distinct styles
-                self.addFrontTo2DPlot(data,
-                           format_string = points_style[current_front])
-                legend.append('Front ' + str(current_front))
-            elif (len(data) > 0) and (current_front >= 10):
+                #first 7 fronts get distinct styles
+                if single_gen is True:
+                    self.addFrontTo2DPlot(data,
+                            format_string = points_style[current_front])
+                    legend.append('Front ' + str(current_front))
+                else:
+                    self.addFrontTo2DPlot(data,
+                            format_string = points_style[current_front], forced_axis= [2000,4000,0,200])
+                    legend.append('Front ' + str(current_front))
+            elif (len(data) > 0) and (current_front >= 7):
                 #Otherwise, add to reserve data to be plotted with a 
                 #single plot in a bit
                 if (reserve_data == None):
@@ -501,14 +510,8 @@ class NSGA_PostProcess:
         #Out of loop, if we had more than 7 fronts, plot the rest
         if (reserve_data != None):
             self.addFrontTo2DPlot(reserve_data, format_string = 'ko')
-        plt.legend(legend)
-                           
+        plt.legend(legend, loc = 'upper right')                   
         plt.savefig(filename + '.png', dpi=144)
-        plt.close()
-        image_path = "C:/Users/rthill/Documents/MS-Thesis/SingleGen_All_Fronts_Plot.png"
-        img = mpimg.imread(image_path)
-        plt.imshow(img)
-        plt.axis('off')
     
     
     def KrigingStats(self, generations, ident, tol= 1.e-4):
@@ -827,8 +830,7 @@ class NSGA_PostProcess:
         
         return
     
-    def ObjMovie(self, start_gen, stop_gen, obj_functions, scale_factor, 
-                 filename, refResult = None, ptLabel= 'NSGAII-VFO', forced_axis=None):
+    def ObjMovie(self, start_gen, stop_gen, obj_functions, scale_factor, filenamegif):
         '''Builds an animated GIF of 2 or 3 objective function results
         from a database run.  
         
@@ -850,16 +852,6 @@ class NSGA_PostProcess:
         
         filename: filename for the final converted GIF
         
-        refResult:  2-D only, optional list of tuples for a reference curve to 
-                    be plotted on each image. Tuple must contain the following:
-                    0-index - list-like f1 values to plot
-                    1-index - list-like f2 valuet to plot
-                    2-index - string - plotting command (e.g. 'b-')
-                    3-index - string - label for reference curve
-        
-        ptLabel:    Optional point label for the data points if refResult
-                    is provided.  Defaults to "NSGAII-VFO"
-        
         Returns
         -------
         No return value, will create filename.gif as a the animated gif
@@ -867,153 +859,43 @@ class NSGA_PostProcess:
         '''
         
         #Internal parameters
-        delay = 20 #Delay in hundreths of second between frames
-        ylabel_movie = "Volume [m$^3$]"
+        ylabel_movie = "Weight [kg]"
         xlabel_movie = "Cost [$]"
         title_movie = "Pareto Front Development"
-        
-        #Check to see if num_obj is reasonable
-        num_obj = len(obj_functions)
-        if (num_obj < 2) or (num_obj > 3):
-            print('Error - ObjMovie can only plot 2d or 3d plots')
-            raise Exception('opt - post_process - ObjMovie argument error')
-        if (num_obj != len(scale_factor)):
-            print('Error - ObjMovie requires a scale factor (can be  1.0)')
-            print('For all objective functions')
-            raise Exception('opt - post_process - ObjMovie argument error')
-        
-        #Set up axis bounds        
-        axis_min = np.empty((num_obj))
-        axis_max = np.empty((num_obj))
-        
-        #Data for all the plot frames
-        frame_data = []
-        
-        #Go through and get the data 
-        for gen in range(start_gen, stop_gen + 1):
-            curr_front = 0  #Start with the Pareto front
-            data = self.getFront(gen, curr_front, obj_functions)
-            this_frame_data = self._UtilAppendFront(None, data, scale_factor)
-            #Load data for next front
-            curr_front = 1
-            data = self.getFront(gen, curr_front, obj_functions)
-            #While there is data, append to our existing data set
-            while (len(data) > 0):
-                this_frame_data = self._UtilAppendFront(this_frame_data, 
-                                                         data, scale_factor)
-                curr_front = curr_front + 1
-                data = self.getFront(gen, curr_front, obj_functions)
-            
-            #Now figure out if we have to update axis min/max
-            if (gen == start_gen):
-                #Then no data - so set all data
-                for i in range(0, num_obj):
-                    axis_min[i] = np.amin(this_frame_data[:,i])
-                    axis_max[i] = np.amax(this_frame_data[:,i])
-            else:
-                #We already have some min/max data
-                for i in range(0, num_obj):
-                    curr_min = np.amin(this_frame_data[:,i])
-                    curr_max = np.amax(this_frame_data[:,i])                
-                    if (curr_min < axis_min[i]):
-                        axis_min[i] = curr_min
-                    if (curr_max > axis_max[i]):
-                        axis_max[i] = curr_max
-            
-            #Store in the correct place
-            frame_data.append(this_frame_data)
-        
-        #Now do the plots
-        index = 0
-        for frame in frame_data: #= number of generations
-            temp_filename = filename + '_gen_' + str('%05d' % index) + '.png'
-            if (num_obj == 2):
-                if refResult is not None:
-                    for refSet in refResult:
-                        plt.plot(refSet[0], refSet[1], refSet[2],
-                             label=refSet[3])
-                    plt.plot(frame[:,0], frame[:,1], 'ro', label=ptLabel)
-                    plt.legend()
-                else:
-                    plt.plot( frame[:,0], frame[:,1], 'ro')
-                if not forced_axis:
-                    plt.axis([axis_min[0]/scale_factor[0], axis_max[0]*scale_factor[1], axis_min[1]/scale_factor[0], axis_max[1]*scale_factor[1]])
-                else:
-                    plt.axis(forced_axis)
-                plt.xlabel(xlabel_movie)
-                plt.ylabel(ylabel_movie)
-                plt.title(title_movie + ' Generation ' + str(start_gen + index))
-                plt.savefig(temp_filename, dpi=144)
-                plt.close('all')
-            elif (num_obj == 3):
-                fig = plt.figure()
-                ax = Axes3D(fig)
-                ax.scatter(frame[:,0], frame[:,1], frame[:,2], color = 'r')
-                ax.set_xlabel('Generation ' + str(start_gen + index) +
-                ' Objective' + str(obj_functions[0]))
-                ax.set_ylabel('Objective ' + str(obj_functions[1]))
-                ax.set_zlabel('Objective ' + str(obj_functions[2]))
-                ax.set_xlim3d(axis_min[0], axis_max[0])
-                ax.set_ylim3d(axis_min[1], axis_max[1])                
-                ax.set_zlim3d(axis_min[2], axis_max[2])
-                plt.savefig(temp_filename, dpi=144)
-                plt.close('all')
-            
-                ##Do some 2-D shoots as well
-                plt.subplots_adjust(hspace = 0.4)
-                plt.subplot(311)
-                temp_filename2 = filename + '_gen2D_' + str('%05d' % index) + \
-                          '.png'
-                plt.plot( frame[:,0], frame[:,1], 'ro')
-                plt.axis((axis_min[0], axis_max[0], axis_min[1], axis_max[1]))
-                plt.xlabel(xlabel_movie)
-                plt.ylabel(ylabel_movie)
-                plt.title(title_movie + ' Generation ' + str(start_gen + index)) 
-                
-                plt.subplot(312)
-                plt.plot( frame[:,1], frame[:,2], 'ro')
-                plt.axis((axis_min[1], axis_max[1], axis_min[2], axis_max[2]))
-                plt.xlabel('Objective ' + str(obj_functions[1]))
-                plt.ylabel('Objective ' + str(obj_functions[2]))
-                
-                plt.subplot(313)
-                plt.plot( frame[:,0], frame[:,2], 'ro')
-                plt.axis((axis_min[0], axis_max[0], axis_min[2], axis_max[2]))
-                plt.xlabel('Objective ' + str(obj_functions[0]))
-                plt.ylabel('Objective ' + str(obj_functions[2]))                
-                
-                
-                
-                plt.savefig(temp_filename2, dpi=144)  
-                plt.close('all')                 
-            else:
-                print('Coding error - post process movie file')
-                print('This line should not be reachable')
-            index = index + 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
-        
 
+        number_gens = stop_gen - start_gen + 1
+        #Now do the plots
+        count = 0
+        for frame in range(number_gens): #= number of generations
+            count = count + 1
+            plt.close()
+            temp_filename = 'gen_' + filenamegif + str('%05d' % count)
+            plotgen = self.GenPlot2D(count, obj_functions, scale_factor, temp_filename, False)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        
         #Now build the movie
         images = []
         
-        for filename in sorted(glob.glob("C:/Users/rthill/Documents/MS-Thesis/All_Fronts_Movie*.png")): # loop through all png files in the folder
-            im = Image.open(filename) # open the image
+        for blah in sorted(glob.glob("C:/Users/rthill/Documents/MS-Thesis/gen_*.png")): # loop through all png files in the folder
+            im = Image.open(blah) # open the image
             images.append(im) # add the image to the list
         last_frame = (len(images))
 
-        for x in range(0, 9):
+        for x in range(0, 5):
             im = images[last_frame-1]
             images.append(im)
 
-        images[0].save("Pareto_Movie.gif",
+        images[0].save(filenamegif + '.gif',
                save_all=True, append_images=images[1:], optimize=False, duration=500, loop=0)
+        print ("gif is finished")
     
-    def SingleFront (self,gen_number,front_number, obj_functions, scalefactor, filename):
+    def SingleFront (self,gen_number,front_number, obj_functions, scalefactor, filename3):
 
         #Internal parameters
-        ylabel_S = "Volume [m$^3$]"
+        ylabel_S = "Weight [kg]"
         xlabel_S = "Cost [$]"
         title_S = "Pareto Front"
 
+        plt.close()
         plot_data = self.frontPlotFormat(gen_number,front_number, obj_functions)
         xvector = list(map(itemgetter(0), plot_data))
         yvector = list(map(itemgetter(1), plot_data))
@@ -1022,5 +904,5 @@ class NSGA_PostProcess:
         plt.ylabel(ylabel_S)
         plt.title(title_S + ' For Generation ' + str(gen_number))
         plt.axis([min(xvector)/scalefactor, max(xvector)*scalefactor, min(yvector)/scalefactor, max(yvector)*scalefactor])
-        plt.savefig(filename + '.png', dpi=144)
+        plt.savefig(filename3 + '.png', dpi=144)
 

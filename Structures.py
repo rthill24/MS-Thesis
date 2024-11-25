@@ -10,24 +10,27 @@ import logging
 class EPMatl:
     """ Simple elastic-plastic material class with a yield or proof stress and
     and an elastic modulus"""
-    def __init__(self, yld, E, Poisson=0.3):
+    def __init__(self, yld, E, density, Poisson=0.3):
         self._yld = yld
         self._E = E
+        self.density = density
         self._Poisson=Poisson
+        
     
     def __str__(self):
         printMat = 'EPMatl instance with properties:\n'
         printMat += 'Yield strength: '+str(self._yld)+'\n'
         printMat += 'Modulus of elasticity: '+str(self._E)+'\n'
         printMat += "Poisson's ratio: "+str(self._Poisson)+'\n'
+        printMat += "Density: "+str(self.density)+'\n'
         
         return printMat
 
-    def update(self, yld=-1, E=-1, Poisson=-1):
+    def update(self, yld=-1, E=-1, density=-1, Poisson=-1):
         '''
         Allows updates of material properties, two parameters yld for
         yield stress
-        or proof stress and E for elastic modulus
+        or proof stress, density, and E for elastic modulus
         '''
         if yld > 0:
             self._yld = yld
@@ -35,6 +38,8 @@ class EPMatl:
             self._E=E
         if Poisson>0:
             self._Poisson=Poisson
+        if density>0:
+            self.density=density
 
     def getYld(self):
         '''returns the material's yield stress'''
@@ -44,6 +49,10 @@ class EPMatl:
         '''retunrs the material's elastic modulus'''
         return self._E
     
+    def getDensity(self):
+        '''returns the material's density'''
+        return self.density
+
     def getPoisson(self):
         '''returns the Poisson's ratio'''
         return self._Poisson

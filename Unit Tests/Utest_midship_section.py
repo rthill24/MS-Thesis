@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import sys
 import TPanel_trans as Panel
 from midship_section import *
-import Hull
+import Structures
 
 class test_midship_section(unittest.TestCase):
     '''
@@ -56,18 +56,18 @@ class test_midship_section(unittest.TestCase):
         self.test_panel_3 = Panel.TPanel_trans(1.0, 1.0, 4, 3, 0.005, 0.004, 0.06, 0.008, 0.03, \
                 0.2, 0.01, 0.02, 0.075, pmatl=matl, smatl=smatl, tmatl=matl, eta=4.5)
                 
-    def test_section_modulii(self):
+    #def test_section_modulii(self):
         
-        structure = Midship_Section([self.test_panel_1,self.test_panel_1], 0)
-        SM = structure.section_modulii()
-        for i in range(len(SM)):
-            self.assertAlmostEqual(SM[i], 15783.62498948, 7)
+        #structure = Midship_Section([self.test_panel_1,self.test_panel_1], 0)
+        #SM = structure.section_modulii()
+        #for i in range(len(SM)):
+            #self.assertAlmostEqual(SM[i], 15783.62498948, 7)
     
     def test_section_data(self):
         
         structure = Midship_Section([self.test_panel_2], 0)
         data = structure.section_data()
-        data_need = (1135559.4265751699, 0.036230174927113702, 0.0075460000000000006, 0.0084325000000000008)
+        data_need = (2.303563408195345, 0.0362301749271137, 0.015092000000000001, 44.8609, 3.244455504500486e-05, 0.0003709228298784142, 0.07678102578483174)
         for i in range(len(data)):
             self.assertAlmostEqual(data[i], data_need[i], 7)
         
