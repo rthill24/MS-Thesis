@@ -241,8 +241,6 @@ class Midship_Section(object):
         y_top = maxy
         y_bot = miny
 
-        print (y_top)
-
         c_top = y_top - NAy
         c_bot = NAy - y_bot
         SM_top = I_NA / c_top

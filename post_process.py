@@ -492,7 +492,7 @@ class NSGA_PostProcess:
                     legend.append('Front ' + str(current_front))
                 else:
                     self.addFrontTo2DPlot(data,
-                            format_string = points_style[current_front], forced_axis= [2000,4000,0,200])
+                            format_string = points_style[current_front], forced_axis= [15000,25000,1000,3000])
                     legend.append('Front ' + str(current_front))
             elif (len(data) > 0) and (current_front >= 7):
                 #Otherwise, add to reserve data to be plotted with a 
@@ -830,7 +830,7 @@ class NSGA_PostProcess:
         
         return
     
-    def ObjMovie(self, start_gen, stop_gen, obj_functions, scale_factor, filenamegif):
+    def ObjMovie(self, start_gen, stop_gen, obj_functions, scale_factor, filenamegif, option):
         '''Builds an animated GIF of 2 or 3 objective function results
         from a database run.  
         
@@ -875,10 +875,16 @@ class NSGA_PostProcess:
         #Now build the movie
         images = []
         
-        for blah in sorted(glob.glob("C:/Users/rthill/Documents/MS-Thesis/gen_*.png")): # loop through all png files in the folder
-            im = Image.open(blah) # open the image
-            images.append(im) # add the image to the list
-        last_frame = (len(images))
+        if option == "box":
+            for blah in sorted(glob.glob("C:/Users/rthill/Documents/MS-Thesis/gen_Box*.png")): # loop through all png files in the folder
+                im = Image.open(blah) # open the image
+                images.append(im) # add the image to the list
+            last_frame = (len(images))
+        else:
+            for blah in sorted(glob.glob("C:/Users/rthill/Documents/MS-Thesis/gen_SD*.png")): # loop through all png files in the folder
+                im = Image.open(blah) # open the image
+                images.append(im) # add the image to the list
+            last_frame = (len(images))
 
         for x in range(0, 5):
             im = images[last_frame-1]

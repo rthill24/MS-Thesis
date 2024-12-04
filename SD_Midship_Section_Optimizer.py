@@ -33,9 +33,9 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
 
     def Eval(self, individual_instance, metamodel=None):
         # Define the material properties
-        self.pmatl = Structures.EPMatl(207, 71000, 2660, 0.33)
-        self.smatl = Structures.EPMatl(207, 71000, 2660, 0.33)
-        self.tmatl = Structures.EPMatl(207, 71000, 2660, 0.33)
+        self.pmatl = Structures.EPMatl(190, 71000, 2660, 0.33)
+        self.smatl = Structures.EPMatl(190, 71000, 2660, 0.33)
+        self.tmatl = Structures.EPMatl(190, 71000, 2660, 0.33)
 
         self.Frame_Spacing = 2250/1000
 
@@ -177,17 +177,17 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         #evaluate SM
         data2 = self.structure.section_data()
         SM = data2[5]
-        SM_R = 0.335377946264072 #section modulus of reference box from "SD_Midship_Section.py"
+        SM_R = 0.267 #required section modulus per DNV calculations
         frac_SM = (SM_R-SM)/SM_R
 
         #evaluate My
         My = data2[6]
-        My_R = 69.4232348766629 #My of reference box from "SD_Midship_Section.py"
+        My_R = 69.4232348766629 #My of reference section from "SD_Midship_Section.py"
         frac_My = (My_R-My)/My_R
 
         #evaluate allowable set pressure
         press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)._p_aps(self.bottom_panel)
-        press_R = 48.13406023040023 #allowable set pressure of reference box from "SD_Midship_Section.py"
+        press_R = 38.36 #design pressure load from DNV calculations
         frac_press = (press_R-press_bot)/press_R
 
         #determine if geometry is valid for individual panels
