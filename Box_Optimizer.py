@@ -137,13 +137,13 @@ class Box_Test_Case(nsga2.Problem):
         frac_My = (My_R-My)/My_R
 
         #evaluate allowable set pressure
-        stiff_spacing = self.B_bot/(self.nstiff_bot+1)
+        """ stiff_spacing = self.B_bot/(self.nstiff_bot+1)
         s_t = stiff_spacing/self.tp_bot
         if s_t <= 80:
             aps = (1/100)*stiff_spacing
         else:
-            aps = (1/75)*stiff_spacing
-        press = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)
+            aps = (1/75)*stiff_spacing """
+        press = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)
         press_bot = press._p_aps(self.test_panel_bot)
         press_R = 25.67828547835179 #allowable set pressure of reference box from "Box Test Case.py"
         frac_press = (press_R-press_bot)/press_R

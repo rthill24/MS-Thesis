@@ -177,7 +177,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         #evaluate SM
         data2 = self.structure.section_data()
         SM = data2[5]
-        SM_R = 0.267 #required section modulus per DNV calculations
+        SM_R = 0.267 #required section modulus per LR calculations
         frac_SM = (SM_R-SM)/SM_R
 
         #evaluate My
@@ -186,14 +186,14 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         frac_My = (My_R-My)/My_R
 
         #evaluate allowable set pressure
-        stiff_spacing = self.B_bot/(self.nstiff_bot+1)
+        """ stiff_spacing = self.B_bot/(self.nstiff_bot+1)
         s_t = stiff_spacing/self.tp_bot
         if s_t <= 80:
             aps = (1/100)*stiff_spacing*1000
         else:
-            aps = (1/75)*stiff_spacing*1000
-        press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)._p_aps(self.bottom_panel)
-        press_R = 38.36 #design pressure load from DNV calculations
+            aps = (1/75)*stiff_spacing*1000 """
+        press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)._p_aps(self.bottom_panel)
+        press_R = 38.36 #design pressure load from LR calculations
         frac_press = (press_R-press_bot)/press_R
 
         #determine if geometry is valid for individual panels
