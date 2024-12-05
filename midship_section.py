@@ -3,7 +3,7 @@
 
 ### Based on the code by Matthew Lankowski and extended by Dylan Temple
 
-
+import pystra as ra
 import numpy as np
 import copy
 import math
@@ -179,7 +179,7 @@ class Midship_Section(object):
 
             
     
-    def section_data(self, mirror = True): #density for 5086-H116 AL in kg/m^3, "mirror" will double the calculations for a symmetric section
+    def section_data(self, mirror = True): #"mirror" will double the calculations for a symmetric section
         '''
         Calculates the neutral axis and EI of the midship section.
         
@@ -248,7 +248,7 @@ class Midship_Section(object):
 
         SM_min = min(SM_top, SM_bot)
 
-        My = yield_strength * SM_min
+        My = yield_strength * SM_min * 1000 
         
         return EI, NAy, area, weight, I_NA, SM_min, My
     
@@ -277,6 +277,64 @@ class Midship_Section(object):
         
         
         return production_cost
+    
+    def midship_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 13903, My_r = 1, My_cov = 0.15):
+        '''
+        Calculates the reliability of the midship section
+        
+        Parameters
+        ----------
+        
+        My_nom:     The nominal yield moment of the section
+        Ms_nom:     The nominal moment from the SDI analysis
+        Mw_r:       The ratio of the mean to nominal value for the wave moment
+        Mw_cov:     The coefficient of variation for the wave moment
+        Mw_nom:     The nominal wave moment
+        Md_r:       The ratio of the mean to nominal value for the dynamic bending moment
+        Md_cov:     The coefficient of variation for the dynamic bending moment
+        Md_nom:     The nominal dynamic bending moment
+        My_r:       The ratio of the mean to nominal value for the yield moment
+        My_cov:     The coefficient of variation for the yield moment
+        
+        Returns
+        --------
+        reliability:    The reliability index of the midship section
+        '''
+        self.limit_state = ra.LimitState(lambda Ms, Mw, Md, My: 1- ((Ms+Mw+Md)/My))
+        
+        #initialize stochastic model
+        self.stochastic_model = ra.StochasticModel()
+        
+        #define random variables
+        
+        ## Ms is a constant value determined from SDI analysis in GHS
+        self.stochastic_model.addVariable(ra.Constant("Ms", Ms_nom))
+        
+        ## Mw is a Gumbel distributed random variable with a mean/nominal ratio of 1 and a COV of 0.15, where nominal value is 27975 from LR rules
+        self.stochastic_model.addVariable(ra.Gumbel("Mw", Mw_nom*Mw_r, Mw_cov*Mw_nom*Mw_r))
+        
+        ## Md is a Gumbel distributed random variable with a mean/nominal ratio of 1 and a COV of 0.25, where nominal value is 13903 from LR rules
+        self.stochastic_model.addVariable(ra.Gumbel("Md", Md_nom*Md_r, Md_cov*Md_nom*Md_r))
+        
+        ## My is a Lognormal distributed random variable with a mean/nominal ratio of 1 and a COV of 0.15, where nominal value is provided by design optimization
+        self.stochastic_model.addVariable(ra.Lognormal("My", My_nom*My_r, My_cov*My_nom*My_r))
+    
+        #initialize reliability analysis
+        options = ra.AnalysisOptions()
+        options.setPrintOutput(True)
+        
+        Analysis = ra.Form(
+            analysis_options=options,
+            stochastic_model=self.stochastic_model,
+            limit_state=self.limit_state
+        )
+        
+        Analysis.run()
+        
+        beta_mid = Analysis.getBeta()
+        
+        return beta_mid
+
             
     def calculate_fatigue_loading(self, average_cycles, average_moment):
         '''

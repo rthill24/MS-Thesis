@@ -160,6 +160,12 @@ valid_side = test_panel_side.geoValid()
 valid_top = test_panel_top.geoValid()
 
 #get pressure for allowable permanent set
-press = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)
+stiff_spacing = B_bot/(nstiff_bot+1)
+s_t = stiff_spacing/tp_bot
+if s_t <= 80:
+    aps = (1/100)*stiff_spacing*1000
+else:
+    aps = (1/75)*stiff_spacing*1000
+press = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)
 press_bot = press._p_aps(test_panel_bot)
 print ("here's the pressure: ", press_bot)

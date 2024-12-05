@@ -1,6 +1,4 @@
-from setuptools import setup
-from Cython.Build import cythonize
+import setuptools
 
-setup(
-       ext_modules = cythonize("c_msdl.pyx")
-   )
+if __name__ == "__main__":
+    setuptools.setup()

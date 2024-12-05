@@ -173,6 +173,8 @@ Returns
 '''
 
 data = structure.section_data()
+
+beta = structure.midship_reliability(data[6])
         
 #get production cost
 PC = structure.production_cost()
@@ -190,6 +192,7 @@ print ("here's I_NA: ", data[4])
 print ("here's SM_min: ", data[5])
 print ("here's My: ", data[6])
 print ("here's PC: ", PC)
+print ("here's beta: ", beta)
 
 
 #check if the geometry is valid for each individual panel
@@ -200,6 +203,12 @@ valid_top = top_panel.geoValid()
 valid_deck = deck_panel.geoValid()
 print(valid_bot, valid_side, valid_sheer, valid_top, valid_deck)
 
-#get pressure for allowable permanent set
-press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)._p_aps(bottom_panel)
+#get pressure for allowable permanent set, value comes from LR - Rules and Regulations for the Classification of Special Service Craft, July 2022 - Part 3 General Requirements and Constructional Arrangements - Chapter 1 General Regulations - Section 8 Building tolerances and associated repairs, Table 1.8.6
+stiff_spacing = B_bot/(nstiff_bot+1)
+s_t = stiff_spacing/tp_bot
+if s_t <= 80:
+    aps = (1/100)*stiff_spacing*1000
+else:
+    aps = (1/75)*stiff_spacing*1000
+press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)._p_aps(bottom_panel)
 print ("here's the pressure': ", press_bot)
