@@ -200,14 +200,16 @@ class Midship_Section(object):
         I_NA:   Moment of inertia about the neutral axis
         SM_min: Minimum section modulus of the section
         My:     Yield moment of the section
+        Mult:   Ultimate moment of the section based on specified yield strength
         '''
-        density = self.grillages[0].getTTPanRef().getmatlP().getDensity() #5086-H116 AL, only uses plating density
-        yield_strength = self.grillages[0].getTTPanRef().getmatlP().getYld() #5086-H116 AL, only uses plating yield strength
+        density = self.grillages[0].getTTPanRef().getmatlP().getDensity() #only uses plating density
+        yield_strength = self.grillages[0].getTTPanRef().getmatlP().getYld() #only uses plating yield strength
 
         section_analysis = Section.section()
         volume = 0.0
         maxy = 0
         miny = 0
+        Mult = 0
         if mirror == True:
             factor = 2 
         else:
@@ -217,7 +219,7 @@ class Midship_Section(object):
             panel = grill.getTTPanRef()
             volume += panel.getTotalVolume() * factor
             section_analysis.Append_Panels(panel)
-        weight = volume * density
+        weight = volume * density * factor
         section_analysis.Explode()
         section_analysis._upCalcs()
 
@@ -227,14 +229,16 @@ class Midship_Section(object):
         I_NA = section_analysis.getSectionYMOI() * factor
 
         top = np.zeros(len(self.grillages))
+        bot = np.zeros(len(self.grillages))
+        d = np.zeros(len(self.grillages))
+        A = np.zeros(len(self.grillages))
         for i in range(len(self.grillages)):
             panel = self.grillages[i].getTTPanRef()
             top[i] = panel.get_top()
-
-        bot = np.zeros(len(self.grillages))
-        for i in range(len(self.grillages)):
-            panel = self.grillages[i].getTTPanRef()
             bot[i] = panel.get_bot()
+            d[i] = abs(((panel.get_top() + panel.get_bot())/2)-NAy)
+            A[i] = panel.getArea() * factor
+            Mult += d[i] * A[i] * yield_strength * 1000
 
         maxy = max(top)
         miny = min(bot)
@@ -250,7 +254,7 @@ class Midship_Section(object):
 
         My = yield_strength * SM_min * 1000 
         
-        return EI, NAy, area, weight, I_NA, SM_min, My
+        return EI, NAy, area, weight, I_NA, SM_min, My, Mult
     
     def production_cost(self, mirror = True): #mirror will double the calculations for a symmetric section
         '''
@@ -278,9 +282,9 @@ class Midship_Section(object):
         
         return production_cost
     
-    def midship_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 13903, My_r = 1, My_cov = 0.15):
+    def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 13903, My_r = 1, My_cov = 0.15):
         '''
-        Calculates the reliability of the midship section
+        Calculates the reliability of the midship section's hull girder strength
         
         Parameters
         ----------
@@ -298,7 +302,7 @@ class Midship_Section(object):
         
         Returns
         --------
-        reliability:    The reliability index of the midship section
+        beta_HG:    The reliability index of the midship section's hull girder strength
         '''
         self.limit_state = ra.LimitState(lambda Ms, Mw, Md, My: 1- ((Ms+Mw+Md)/My))
         
@@ -321,7 +325,7 @@ class Midship_Section(object):
     
         #initialize reliability analysis
         options = ra.AnalysisOptions()
-        options.setPrintOutput(True)
+        options.setPrintOutput(False)
         
         Analysis = ra.Form(
             analysis_options=options,
@@ -331,9 +335,43 @@ class Midship_Section(object):
         
         Analysis.run()
         
-        beta_mid = Analysis.getBeta()
+        beta_HG = Analysis.getBeta()
+        P_F_HG = Analysis.getFailure()
         
-        return beta_mid
+        return beta_HG, P_F_HG
+    
+    def plating_reliability (self, p_allow, p_design_nom = 38.36, p_design_r = 1, p_design_cov = 0.25):
+        
+        self.limit_state = ra.LimitState(lambda p_d, p_a: 1 - (p_d/p_a))
+        
+        #initialize stochastic model
+        self.stochastic_model = ra.StochasticModel()
+        
+        #define random variables
+        
+        ## p_d is a Weibull distributed random variable with a mean/nominal ratio of 1 and a COV of 0.25, where nominal value is 38.36 from LR rules
+        self.stochastic_model.addVariable(ra.Weibull("p_d", p_design_nom*p_design_r, p_design_cov*p_design_nom*p_design_r))
+
+        ## p_a is the allowable permanent set pressure
+        self.stochastic_model.addVariable(ra.Constant("p_a", p_allow))
+        
+        #initialize reliability analysis
+        options = ra.AnalysisOptions()
+        options.setPrintOutput(False)
+        
+        Analysis = ra.Form(
+            analysis_options=options,
+            stochastic_model=self.stochastic_model,
+            limit_state=self.limit_state
+        )
+        
+        Analysis.run()
+        
+        beta_plating = Analysis.getBeta()
+        P_F_plating = Analysis.getFailure()
+        
+        return beta_plating, P_F_plating
+
 
             
     def calculate_fatigue_loading(self, average_cycles, average_moment):

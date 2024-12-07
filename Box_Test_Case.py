@@ -134,6 +134,7 @@ Returns
     I_NA:   Moment of inertia about the neutral axis
     SM_min: Minimum section modulus of the section
     My:     Yield moment of the section
+    Mult:   Ultimate moment of the section based on specified yield strength
 '''
 data = structure.section_data()
         
@@ -151,6 +152,7 @@ print ("here's weight: ", data[3])
 print ("here's I_NA: ", data[4])
 print ("here's SM_min: ", data[5])
 print ("here's My: ", data[6])
+print ("here's Mult: ", data[7])
 print ("here's PC: ", PC)
 
 

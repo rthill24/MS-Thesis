@@ -170,11 +170,13 @@ Returns
     I_NA:   Moment of inertia about the neutral axis
     SM_min: Minimum section modulus of the section
     My:     Yield moment of the section
+    Mult:   Ultimate moment of the section based on specified yield strength
 '''
 
 data = structure.section_data()
 
-beta = structure.midship_reliability(data[6])
+beta_HG = structure.HG_reliability(data[6])[0]
+P_F_HG = structure.HG_reliability(data[6])[1]
         
 #get production cost
 PC = structure.production_cost()
@@ -191,8 +193,10 @@ print ("here's weight: ", data[3])
 print ("here's I_NA: ", data[4])
 print ("here's SM_min: ", data[5])
 print ("here's My: ", data[6])
+print ("here's Mult: ", data[7])
 print ("here's PC: ", PC)
-print ("here's beta: ", beta)
+print ("here's beta_HG: ", beta_HG)
+print ("here's P_F_HG: ", P_F_HG)
 
 
 #check if the geometry is valid for each individual panel
@@ -212,3 +216,9 @@ else:
     aps = (1/75)*stiff_spacing*1000
 press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)._p_aps(bottom_panel)
 print ("here's the pressure': ", press_bot)
+
+#get plating reliability
+beta_plate = structure.plating_reliability(press_bot)[0]
+P_F_plate = structure.plating_reliability(press_bot)[1]
+print ("here's beta_plate: ", beta_plate)
+print ("here's P_F_plate: ", P_F_plate)
