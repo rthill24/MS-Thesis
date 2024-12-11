@@ -282,7 +282,7 @@ class Midship_Section(object):
         
         return production_cost
     
-    def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 13903, My_r = 1, My_cov = 0.15):
+    def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''
         Calculates the reliability of the midship section's hull girder strength
         
