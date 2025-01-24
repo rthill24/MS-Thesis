@@ -175,6 +175,7 @@ Returns
 
 data = structure.section_data()
 HG_stress = structure.HG_stress()
+Hughes_panel = structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
 
 beta_HG = structure.HG_reliability(data[6])[0]
 P_F_HG = structure.HG_reliability(data[6])[1]
@@ -186,8 +187,9 @@ PC = structure.production_cost()
 plot = structure.plot_section()
 plt.show()
 
+print ("here's the P: ", Hughes_panel)
 
-#output data
+""" #output data
 print ("here's EI: ", data[0])
 print ("here's NAy: ", data[1])
 print ("here's area: ", data[2])
@@ -224,4 +226,4 @@ print ("here's the pressure': ", press_bot)
 beta_plate = structure.plating_reliability(press_bot)[0]
 P_F_plate = structure.plating_reliability(press_bot)[1]
 print ("here's beta_plate: ", beta_plate)
-print ("here's P_F_plate: ", P_F_plate)
+print ("here's P_F_plate: ", P_F_plate) """

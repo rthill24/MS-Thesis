@@ -154,7 +154,7 @@ class Midship_Section(object):
         for panel in grillage_list:
             self.initial_fUCS.append( (compression.ucs(panel)/panel.getYsavg()) ) """
     
-    #def section_modulii(self):
+    """ def section_modulii(self):
         '''
         Calculates the SM_top and SM_bot for the midship section.
         
@@ -169,12 +169,12 @@ class Midship_Section(object):
         '''
         
 
-        #SM = np.zeros(len(self.grillages))
-        #for i in range(len(self.grillages)):
+        SM = np.zeros(len(self.grillages))
+        for i in range(len(self.grillages)):
             #panel = self.grillages[i].getTTPanRef()
             #y_max = panel.gety_max()
         
-        #y_top = max(y_max)
+        y_top = max(y_max) """
         
 
             
@@ -288,7 +288,7 @@ class Midship_Section(object):
         
         Parameters
         -----------
-        No parameters
+        M_tot : The total moment in the midship section in kN*m
         
         Returns
         --------
@@ -327,6 +327,138 @@ class Midship_Section(object):
             sigma_HG[i] = ((M_tot*c[i])/I_NA) / 1000 #convert to MPa
 
         return sigma_HG
+    
+    def Hughes_Panel (self, waterline, rho, p_design, sigma_HG, mirror = True):
+
+        '''
+        Calculates the ultimate axial stress for each panel as a ratio against yield strength of the panel material by checking against Mode I, II, and III collapse
+        Reference from Chapter 14 of Hughes, Owen F. Ship Structural Design: A Rationally Based, Computer-Aided Optimization Approach. Cambridge University Press, 1996.
+
+        Parameters
+        ----------
+        waterline: the height of the design waterline above baseline
+        rho: density of the water
+        stiff_spacing : The spacing between stiffeners in the panel
+        frame_spacing: The spacing between frames in the panel
+        p_design: The design pressure for the plating on the vessel
+        sigma_HG: The hull girder bending stress for each panel in the midship section based on most extreme fiber
+
+        
+        Returns
+        --------
+        sigma_a_ult:    The ultimate axial stress for each panel in the midship section based on minumum of Mode I, II, or III collapse
+        '''
+        E = self.grillages[0].getTTPanRef().getmatlP().getE() #only uses plating yield strength
+
+        if mirror == True:
+
+            factor = 2 
+        else:
+            factor = 1
+
+        section_analysis = Section.section()
+        for grill in self.grillages:
+            panel = grill.getTTPanRef()
+            section_analysis.Append_Panels(panel)
+        section_analysis.Explode()
+        section_analysis._upCalcs()
+
+        top = np.zeros(len(self.grillages))
+        bot = np.zeros(len(self.grillages))
+        mid = np.zeros(len(self.grillages))
+        p_total = np.zeros(len(self.grillages))
+        sig_a = np.zeros(len(self.grillages))
+        a = np.zeros(len(self.grillages))
+        b = np.zeros(len(self.grillages))
+        M_o = np.zeros(len(self.grillages))
+        t_p = np.zeros(len(self.grillages))
+        t_w = np.zeros(len(self.grillages))
+        h_w = np.zeros(len(self.grillages))
+        t_f = np.zeros(len(self.grillages))
+        y_f = np.zeros(len(self.grillages))
+        A_p = np.zeros(len(self.grillages))
+        A_w = np.zeros(len(self.grillages))
+        A_f = np.zeros(len(self.grillages))
+        A = np.zeros(len(self.grillages))
+        M_p = np.zeros(len(self.grillages))
+        M_w = np.zeros(len(self.grillages))
+        M_f = np.zeros(len(self.grillages))
+        NA = np.zeros(len(self.grillages))
+        d_p = np.zeros(len(self.grillages))
+        d_w = np.zeros(len(self.grillages))
+        d_f = np.zeros(len(self.grillages))
+        I_p_i = np.zeros(len(self.grillages))
+        I_p_NA = np.zeros(len(self.grillages))
+        I_w_i = np.zeros(len(self.grillages))
+        I_w_NA = np.zeros(len(self.grillages))
+        I_f_i = np.zeros(len(self.grillages))
+        I_f_NA = np.zeros(len(self.grillages))
+        I = np.zeros(len(self.grillages))
+        del_o = np.zeros(len(self.grillages))
+        delta = np.zeros(len(self.grillages))
+        sig_e = np.zeros(len(self.grillages))
+        phi = np.zeros(len(self.grillages))
+        sig_f = np.zeros(len(self.grillages))
+        rho_NA = np.zeros(len(self.grillages))
+        lamb = np.zeros(len(self.grillages))
+        eta = np.zeros(len(self.grillages))
+        mu = np.zeros(len(self.grillages))
+        zeta = np.zeros(len(self.grillages))
+        R = np.zeros(len(self.grillages))
+
+        for i in range(len(self.grillages)):
+            panel = self.grillages[i].getTTPanRef()
+            top[i] = panel.get_top()
+            bot[i] = panel.get_bot()
+            mid[i] = (top[i] + bot[i])/2
+            if mid[i] < waterline:
+                avg_water_depth = waterline - mid[i]
+                p_hydro = rho * 9.81/1000 * avg_water_depth
+                p_tot = p_design + p_hydro
+            else: 
+                p_tot = 0
+
+            p_total[i] = p_tot
+            sig_a[i] = sigma_HG[i] 
+            a[i] = panel.geta()
+            b[i] = panel.getb()
+            M_o[i] = p_total[i] * b[i] * a[i] * (a[i]/2) #in kN*m
+            t_p[i] = panel.gettp()
+            t_w[i] = panel.gettwt()
+            h_w[i] = panel.gettwh()
+            t_f[i] = panel.gettf()
+            y_f[i] = (t_p[i]+h_w[i]+(t_f[i]/2)) - panel.get_tNA()
+            A_p[i] = t_p[i] * b[i]
+            A_w[i] = panel.gettwa()
+            A_f[i] = panel.gettfa()
+            A[i] = A_p[i] + A_w[i] + A_f[i]
+            M_p[i] = A_p[i] * (t_p[i]/2)
+            M_w[i] = A_w[i] * (t_p[i] + (h_w[i]/2))
+            M_f[i] = A_f[i] * (t_p[i] + h_w[i] + (t_f[i]/2))
+            NA[i] = (M_p[i] + M_w[i] + M_f[i]) / (A[i])
+            d_p[i] = (t_p[i]/2) - NA[i]
+            d_w[i] = (t_p[i] + (h_w[i]/2)) - NA[i]
+            d_f[i] = (t_p[i] + h_w[i] + (t_f[i]/2)) - NA[i]
+            I_p_i[i] = ((1/12)*(b[i]*t_p[i]**3))
+            I_p_NA[i] = I_p_i[i] + (A_p[i] * d_p[i]**2)
+            I_w_i[i] = ((1/12)*(t_w[i]*h_w[i]**3))
+            I_w_NA[i] = I_w_i[i] + (A_w[i] * d_w[i]**2)
+            I_f_i[i] = ((1/12)*(b[i]*t_f[i]**3))
+            I_f_NA[i] = I_f_i[i] + (A_f[i] * d_f[i]**2)
+            I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i]
+            del_o[i] = (5* (p_total[i]/1000) * b[i] * (a[i]**4))/(384 * E * I[i]) #in m
+            delta[i] = a[i]/750 #from the text
+            sig_e[i] = (math.pi**2 * E * I[i]) / (A[i] * a[i]**2) #in MPa
+            phi[i] = 1/(1-(sig_a[i]/sig_e[i]))
+            sig_f[i] = sig_a[i] + ((M_o[i] * y_f[i]) / I[i]) + ((sig_a[i]*A[i]*(del_o[i] + delta[i])*y_f[i]*phi[i])/(I[i])) #in MPa
+            rho_NA[i] = (I[i]/A[i])**0.5
+            lamb[i] = (a[i]/(math.pi*rho_NA[i]))*((sig_f[i]/E)**0.5)
+            eta[i] = ((del_o[i]+delta[i])*y_f[i])/(rho_NA[i]**2)
+            mu[i] = (M_o[i] * y_f[i]) / (I[i]*sig_f[i])
+            zeta[i] = 1 - mu[i] + ((1+eta[i])/lamb[i]**2)
+            R[i] = (zeta[i]/2) - (((zeta[i]**2)/4) - ((1-mu[i])/lamb[i]**2))**0.5
+
+        return R
     
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''
@@ -386,7 +518,7 @@ class Midship_Section(object):
         
         return beta_HG, P_F_HG
     
-    def plating_reliability (self, p_allow, p_design_nom = 38.36, p_design_r = 1, p_design_cov = 0.25):
+    def plating_reliability (self, p_allow, p_design_nom = 38.36, p_design_r = 1, p_design_cov = 0.25): #pressure in ksi
         
         self.limit_state = ra.LimitState(lambda p_d, p_a: 1 - (p_d/p_a))
         
@@ -418,9 +550,21 @@ class Midship_Section(object):
         
         return beta_plating, P_F_plating
 
-
+    def plot_section(self, show=False, mirror=True, ax_obj=None): #mirror is used to mirror the plot, does not automatically mirror calculations
+        '''Plots the section'''
+        
+        section_plot = Section.section()
+        for grill in self.grillages:
+            panel = grill.getTTPanRef()
+            section_plot.Append_Panels(panel)
+        section_plot.Explode()
+        section_plot.create_section_plot(show=False, mirror=mirror, ax_obj=None)
+        plt.pyplot.xlabel('Longitudinal Position from Centerline (m)', fontsize=14)
+        plt.pyplot.ylabel('Vertical Position from Keel (m)', fontsize=14)
+        if show:
+            plt.show()
             
-    def calculate_fatigue_loading(self, average_cycles, average_moment):
+    """ def calculate_fatigue_loading(self, average_cycles, average_moment):
         '''
         Generates a list of FatigueLoading objects based for the fatigue details associated
         with the section.
@@ -563,7 +707,7 @@ class Midship_Section(object):
         
         return needs
     
-    #def renew_grillages(self, grills, renew_fatigue_details=True):
+    def renew_grillages(self, grills, renew_fatigue_details=True):
         '''
         Renews a set of grillages in the cross section.
         
@@ -1097,26 +1241,10 @@ class Midship_Section(object):
                     print ("Could not get ultimate strength to meet threshold after 5 iterations! Ending cycle.")
                     checking_strength = False
                 
-        return regeneration_cost, repair_method
-    
-    def plot_section(self, show=False, mirror=True, ax_obj=None): #mirror is used to mirror the plot, does not automatically mirror calculations
-        '''Plots the section'''
-        
-        section_plot = Section.section()
-        for grill in self.grillages:
-            panel = grill.getTTPanRef()
-            section_plot.Append_Panels(panel)
-        section_plot.Explode()
-        section_plot.create_section_plot(show=False, mirror=mirror, ax_obj=None)
-        plt.pyplot.xlabel('Longitudinal Position from Centerline (m)', fontsize=14)
-        plt.pyplot.ylabel('Vertical Position from Keel (m)', fontsize=14)
-        if show:
-            plt.show()
-        
-            
+        return regeneration_cost, repair_method """
         
 
-    def maintenance_cost(self, end, refresh_age=0, mmtLimit_sagging=0, mmtLimit_hogging=0,
+    """ def maintenance_cost(self, end, refresh_age=0, mmtLimit_sagging=0, mmtLimit_hogging=0,
                             output=1,discount_rate=0., average_cycles=0, average_fatigue_moment=0,
                             service_extension=0, service_distribution=None,mult=1.,fracSM=0.8, fracUCS=0.8):
         '''
@@ -1295,4 +1423,4 @@ class Midship_Section(object):
             self.grillages = original_grillage
         
         
-        return total, fatigue, corrosion, scheduled, flat_rates, yearly_fatigue, yearly_corrosion, yearly_scheduled, yearly_flat_rates
+        return total, fatigue, corrosion, scheduled, flat_rates, yearly_fatigue, yearly_corrosion, yearly_scheduled, yearly_flat_rates """

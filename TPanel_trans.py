@@ -427,6 +427,10 @@ class TPanel_trans(Structures.TPanel):
         """returns EPMat class information for the transvese member"""
         return self._tmatl
     
+    def gettp(self):
+        """returns plate thickness"""
+        return self._tp
+    
     def gettwh(self):
         """returns transverse web height"""
         return self._twh
