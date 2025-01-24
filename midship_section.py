@@ -181,7 +181,7 @@ class Midship_Section(object):
     
     def section_data(self, mirror = True): #"mirror" will double the calculations for a symmetric section
         '''
-        Calculates the neutral axis and EI of the midship section.
+        Calculates the midship section's properties
         
         This method will use the Section.py analysis module to explode each of the
         TPanels into individual plates and calculate the moment, centroid, total area,
@@ -281,6 +281,52 @@ class Midship_Section(object):
         
         
         return production_cost
+
+    def HG_stress (self, M_tot = 46589 , mirror = True): #M_tot is the total moment in the midship section in kN*m
+        '''
+        Calculates the hull girder bending stress for each panel (looking at most extreme fiber) in the midship section
+        
+        Parameters
+        -----------
+        No parameters
+        
+        Returns
+        --------
+        sigma_HG:   The hull girder bending stress for each panel in the midship section based on most extreme fiber
+        '''
+
+        if mirror == True:
+            factor = 2 
+        else:
+            factor = 1
+
+        section_analysis = Section.section()
+        for grill in self.grillages:
+            panel = grill.getTTPanRef()
+            section_analysis.Append_Panels(panel)
+        section_analysis.Explode()
+        section_analysis._upCalcs()
+
+        NA_y = section_analysis.getYCentroid()
+        I_NA = section_analysis.getSectionYMOI() * factor
+
+        top = np.zeros(len(self.grillages))
+        bot = np.zeros(len(self.grillages))
+        c_top = np.zeros(len(self.grillages))
+        c_bot = np.zeros(len(self.grillages))
+        c = np.zeros(len(self.grillages))
+        sigma_HG = np.zeros(len(self.grillages))
+
+        for i in range(len(self.grillages)):
+            panel = self.grillages[i].getTTPanRef()
+            top[i] = panel.get_top()
+            bot[i] = panel.get_bot()
+            c_top[i] = abs(top[i] - NA_y)
+            c_bot[i] = abs(bot[i] - NA_y)
+            c[i] = max(c_top[i], c_bot[i])
+            sigma_HG[i] = ((M_tot*c[i])/I_NA) / 1000 #convert to MPa
+
+        return sigma_HG
     
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''

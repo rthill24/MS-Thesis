@@ -174,6 +174,7 @@ Returns
 '''
 
 data = structure.section_data()
+HG_stress = structure.HG_stress()
 
 beta_HG = structure.HG_reliability(data[6])[0]
 P_F_HG = structure.HG_reliability(data[6])[1]
@@ -184,6 +185,7 @@ PC = structure.production_cost()
 #produce plot
 plot = structure.plot_section()
 plt.show()
+
 
 #output data
 print ("here's EI: ", data[0])
@@ -197,6 +199,7 @@ print ("here's Mult: ", data[7])
 print ("here's PC: ", PC)
 print ("here's beta_HG: ", beta_HG)
 print ("here's P_F_HG: ", P_F_HG)
+print ("here's HG_stress for each panel: ", HG_stress)
 
 
 #check if the geometry is valid for each individual panel

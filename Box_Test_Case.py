@@ -137,6 +137,7 @@ Returns
     Mult:   Ultimate moment of the section based on specified yield strength
 '''
 data = structure.section_data()
+HG_stress = structure.HG_stress()
         
 #get production cost
 PC = structure.production_cost()
@@ -154,6 +155,7 @@ print ("here's SM_min: ", data[5])
 print ("here's My: ", data[6])
 print ("here's Mult: ", data[7])
 print ("here's PC: ", PC)
+print ("here's HG_stress for each panel: ", HG_stress)
 
 
 #check if the geometry is valid for each individual panel
