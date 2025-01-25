@@ -406,6 +406,7 @@ class Midship_Section(object):
         zeta = np.zeros(len(self.grillages))
         R = np.zeros(len(self.grillages))
 
+        #Mode I Failure Calculations
         for i in range(len(self.grillages)):
             panel = self.grillages[i].getTTPanRef()
             top[i] = panel.get_top()
@@ -418,11 +419,11 @@ class Midship_Section(object):
             else: 
                 p_tot = 0
 
-            p_total[i] = p_tot
+            p_total[i] = p_tot/1000 #convert to MPa
             sig_a[i] = sigma_HG[i] 
             a[i] = panel.geta()
             b[i] = panel.getb()
-            M_o[i] = p_total[i] * b[i] * a[i] * (a[i]/2) #in kN*m
+            M_o[i] = p_total[i] * b[i] * a[i] * (a[i]/2) #in MN*m
             t_p[i] = panel.gettp()
             t_w[i] = panel.gettwt()
             h_w[i] = panel.gettwh()
@@ -446,7 +447,7 @@ class Midship_Section(object):
             I_f_i[i] = ((1/12)*(b[i]*t_f[i]**3))
             I_f_NA[i] = I_f_i[i] + (A_f[i] * d_f[i]**2)
             I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i]
-            del_o[i] = (5* (p_total[i]/1000) * b[i] * (a[i]**4))/(384 * E * I[i]) #in m
+            del_o[i] = (5* (p_total[i]) * b[i] * (a[i]**4))/(384 * E * I[i]) #in m
             delta[i] = a[i]/750 #from the text
             sig_e[i] = (math.pi**2 * E * I[i]) / (A[i] * a[i]**2) #in MPa
             phi[i] = 1/(1-(sig_a[i]/sig_e[i]))
