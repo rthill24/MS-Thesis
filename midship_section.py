@@ -363,6 +363,7 @@ class Midship_Section(object):
         section_analysis.Explode()
         section_analysis._upCalcs()
 
+        #Mode I Initializations
         top = np.zeros(len(self.grillages))
         bot = np.zeros(len(self.grillages))
         mid = np.zeros(len(self.grillages))
@@ -375,7 +376,6 @@ class Midship_Section(object):
         t_w = np.zeros(len(self.grillages))
         h_w = np.zeros(len(self.grillages))
         t_f = np.zeros(len(self.grillages))
-        y_f = np.zeros(len(self.grillages))
         A_p = np.zeros(len(self.grillages))
         A_w = np.zeros(len(self.grillages))
         A_f = np.zeros(len(self.grillages))
@@ -387,6 +387,7 @@ class Midship_Section(object):
         d_p = np.zeros(len(self.grillages))
         d_w = np.zeros(len(self.grillages))
         d_f = np.zeros(len(self.grillages))
+        y_f = np.zeros(len(self.grillages))
         I_p_i = np.zeros(len(self.grillages))
         I_p_NA = np.zeros(len(self.grillages))
         I_w_i = np.zeros(len(self.grillages))
@@ -404,7 +405,10 @@ class Midship_Section(object):
         eta = np.zeros(len(self.grillages))
         mu = np.zeros(len(self.grillages))
         zeta = np.zeros(len(self.grillages))
-        R = np.zeros(len(self.grillages))
+        R_I = np.zeros(len(self.grillages))
+
+        #Mode II Initializations
+        beta_II = np.zeros(len(self.grillages))
 
         #Mode I Failure Calculations
         for i in range(len(self.grillages)):
@@ -428,7 +432,6 @@ class Midship_Section(object):
             t_w[i] = panel.gettwt()
             h_w[i] = panel.gettwh()
             t_f[i] = panel.gettf()
-            y_f[i] = (t_p[i]+h_w[i]+(t_f[i]/2)) - panel.get_tNA()
             A_p[i] = t_p[i] * b[i]
             A_w[i] = panel.gettwa()
             A_f[i] = panel.gettfa()
@@ -440,6 +443,7 @@ class Midship_Section(object):
             d_p[i] = (t_p[i]/2) - NA[i]
             d_w[i] = (t_p[i] + (h_w[i]/2)) - NA[i]
             d_f[i] = (t_p[i] + h_w[i] + (t_f[i]/2)) - NA[i]
+            y_f[i] = d_f[i]
             I_p_i[i] = ((1/12)*(b[i]*t_p[i]**3))
             I_p_NA[i] = I_p_i[i] + (A_p[i] * d_p[i]**2)
             I_w_i[i] = ((1/12)*(t_w[i]*h_w[i]**3))
@@ -448,7 +452,7 @@ class Midship_Section(object):
             I_f_NA[i] = I_f_i[i] + (A_f[i] * d_f[i]**2)
             I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i]
             del_o[i] = (5* (p_total[i]) * b[i] * (a[i]**4))/(384 * E * I[i]) #in m
-            delta[i] = a[i]/750 #from the text
+            delta[i] = a[i]/750 #from the text, positive if towards stiffeners
             sig_e[i] = (math.pi**2 * E * I[i]) / (A[i] * a[i]**2) #in MPa
             phi[i] = 1/(1-(sig_a[i]/sig_e[i]))
             sig_f[i] = sig_a[i] + ((M_o[i] * y_f[i]) / I[i]) + ((sig_a[i]*A[i]*(del_o[i] + delta[i])*y_f[i]*phi[i])/(I[i])) #in MPa
@@ -457,9 +461,13 @@ class Midship_Section(object):
             eta[i] = ((del_o[i]+delta[i])*y_f[i])/(rho_NA[i]**2)
             mu[i] = (M_o[i] * y_f[i]) / (I[i]*sig_f[i])
             zeta[i] = 1 - mu[i] + ((1+eta[i])/lamb[i]**2)
-            R[i] = (zeta[i]/2) - (((zeta[i]**2)/4) - ((1-mu[i])/lamb[i]**2))**0.5
+            R_I[i] = (zeta[i]/2) - (((zeta[i]**2)/4) - ((1-mu[i])/lamb[i]**2))**0.5
 
-        return R
+        #Mode II Failure Calculations
+
+
+
+        return R_I
     
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''
