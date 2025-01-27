@@ -348,7 +348,8 @@ class Midship_Section(object):
         --------
         sigma_a_ult:    The ultimate axial stress for each panel in the midship section based on minumum of Mode I, II, or III collapse
         '''
-        E = self.grillages[0].getTTPanRef().getmatlP().getE() #only uses plating yield strength
+        E = self.grillages[0].getTTPanRef().getmatlP().getE() #only uses plating Young's modulus
+        sig_ys = sig_yp = self.grillages[0].getTTPanRef().getmatlP().getYld() #only uses plating yield strength
 
         if mirror == True:
 
@@ -371,6 +372,7 @@ class Midship_Section(object):
         sig_a = np.zeros(len(self.grillages))
         a = np.zeros(len(self.grillages))
         b = np.zeros(len(self.grillages))
+        b_stiff = np.zeros(len(self.grillages))
         M_o = np.zeros(len(self.grillages))
         t_p = np.zeros(len(self.grillages))
         t_w = np.zeros(len(self.grillages))
@@ -406,9 +408,32 @@ class Midship_Section(object):
         mu = np.zeros(len(self.grillages))
         zeta = np.zeros(len(self.grillages))
         R_I = np.zeros(len(self.grillages))
+        sig_a_u_I = np.zeros(len(self.grillages))
 
         #Mode II Initializations
         beta_II = np.zeros(len(self.grillages))
+        zeta_II = np.zeros(len(self.grillages))
+        T = np.zeros(len(self.grillages))
+        tau_II = np.zeros(len(self.grillages))
+        sig_F_II = np.zeros(len(self.grillages))
+        b_II = np.zeros(len(self.grillages))
+        M_o_II = np.zeros(len(self.grillages))
+        A_p_II = np.zeros(len(self.grillages))
+        A_II = np.zeros(len(self.grillages))
+        M_p_II = np.zeros(len(self.grillages))
+        NA_II = np.zeros(len(self.grillages))
+        d_p_II = np.zeros(len(self.grillages))
+        d_w_II = np.zeros(len(self.grillages))
+        d_f_II = np.zeros(len(self.grillages))
+        y_p_II = np.zeros(len(self.grillages))
+        I_p_i_II = np.zeros(len(self.grillages))
+        I_p_NA_II = np.zeros(len(self.grillages))
+        I_w_i_II = np.zeros(len(self.grillages))
+        I_w_NA_II = np.zeros(len(self.grillages))
+        I_f_i_II = np.zeros(len(self.grillages))
+        I_f_NA_II = np.zeros(len(self.grillages))
+        I_II = np.zeros(len(self.grillages))
+        del_o_II = np.zeros(len(self.grillages))
 
         #Mode I Failure Calculations
         for i in range(len(self.grillages)):
@@ -427,6 +452,7 @@ class Midship_Section(object):
             sig_a[i] = sigma_HG[i] 
             a[i] = panel.geta()
             b[i] = panel.getb()
+            b_stiff[i] = panel.gettfb()
             M_o[i] = p_total[i] * b[i] * a[i] * (a[i]/2) #in MN*m
             t_p[i] = panel.gettp()
             t_w[i] = panel.gettwt()
@@ -448,9 +474,9 @@ class Midship_Section(object):
             I_p_NA[i] = I_p_i[i] + (A_p[i] * d_p[i]**2)
             I_w_i[i] = ((1/12)*(t_w[i]*h_w[i]**3))
             I_w_NA[i] = I_w_i[i] + (A_w[i] * d_w[i]**2)
-            I_f_i[i] = ((1/12)*(b[i]*t_f[i]**3))
+            I_f_i[i] = ((1/12)*(b_stiff[i]*t_f[i]**3))
             I_f_NA[i] = I_f_i[i] + (A_f[i] * d_f[i]**2)
-            I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i]
+            I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i] # double check this
             del_o[i] = (5* (p_total[i]) * b[i] * (a[i]**4))/(384 * E * I[i]) #in m
             delta[i] = a[i]/750 #from the text, positive if towards stiffeners
             sig_e[i] = (math.pi**2 * E * I[i]) / (A[i] * a[i]**2) #in MPa
@@ -462,12 +488,36 @@ class Midship_Section(object):
             mu[i] = (M_o[i] * y_f[i]) / (I[i]*sig_f[i])
             zeta[i] = 1 - mu[i] + ((1+eta[i])/lamb[i]**2)
             R_I[i] = (zeta[i]/2) - (((zeta[i]**2)/4) - ((1-mu[i])/lamb[i]**2))**0.5
+            sig_a_u_I[i] = sig_ys * R_I[i] #in MPa
 
-        #Mode II Failure Calculations
+            #Mode II Failure Calculations
+
+            beta_II[i] = (b[i]/t_p[i]) * ((sig_yp/E)**0.5)
+            zeta_II[i] = 1 + (2.75/(beta_II[i]**2))
+            T[i] = 0.25 * (2 + zeta_II[i] - ((zeta_II[i]**2)-(10.4/(beta_II[i]**2)))**0.5)
+            tau_II[i] = (p_total[i] * b[i] * (a[i]/2))/A[i] #in MPa
+            sig_F_II[i] = ((T[i]-0.1)/T[i]) * sig_yp * ((1-(3*(tau_II[i]/sig_yp)**2)))**0.5
+            b_II[i] = T[i] * b[i]
+            M_o_II[i] = p_total[i] * b_II[i] * a[i] * (a[i]/2) #in MN*m
+            A_p_II[i] = t_p[i] * b_II[i]
+            A_II[i] = A_p_II[i] + A_w[i] + A_f[i]
+            M_p_II[i] = A_p_II[i] * (t_p[i]/2)
+            NA_II[i] = (M_p_II[i] + M_w[i] + M_f[i]) / (A[i])
+            d_p_II[i] = (t_p[i]/2) - NA_II[i]
+            d_w_II[i] = (t_p[i] + (h_w[i]/2)) - NA_II[i]
+            d_f_II[i] = (t_p[i] + h_w[i] + (t_f[i]/2)) - NA_II[i]
+            y_p_II[i] = NA_II[i]
+            I_p_i_II[i] = ((1/12)*(b_II[i]*t_p[i]**3))
+            I_p_NA_II[i] = I_p_i_II[i] + (A_p_II[i] * d_p_II[i]**2)
+            I_w_i_II[i] = ((1/12)*(t_w[i]*h_w[i]**3))
+            I_w_NA_II[i] = I_w_i[i] + (A_w[i] * d_w_II[i]**2)
+            I_f_i_II[i] = ((1/12)*(b_stiff[i]*t_f[i]**3))
+            I_f_NA_II[i] = I_f_i[i] + (A_f[i] * d_f_II[i]**2)
+            I_II[i] = I_p_NA_II[i] + I_w_NA_II[i] + I_f_NA_II[i]
+            del_o_II[i] = (5* (p_total[i]) * b_II[i] * (a[i]**4))/(384 * E * I_II[i]) #in m
 
 
-
-        return R_I
+        return A
     
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''
