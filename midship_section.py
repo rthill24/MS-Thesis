@@ -449,7 +449,6 @@ class Midship_Section(object):
         zeta_R_II = np.zeros(len(self.grillages))
         R_II = np.zeros(len(self.grillages))
         sig_a_u_II = np.zeros(len(self.grillages))
-        test = np.zeros(len(self.grillages))
 
         #Mode I Failure Calculations
         for i in range(len(self.grillages)):
@@ -492,7 +491,7 @@ class Midship_Section(object):
             I_w_NA[i] = I_w_i[i] + (A_w[i] * d_w[i]**2)
             I_f_i[i] = ((1/12)*(b_stiff[i]*t_f[i]**3))
             I_f_NA[i] = I_f_i[i] + (A_f[i] * d_f[i]**2)
-            I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i] # double check this
+            I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i]
             del_o[i] = (5* (p_total[i]) * b[i] * (a[i]**4))/(384 * E * I[i]) #in m
             delta[i] = a[i]/750 #from the text, positive if towards stiffeners
             sig_e[i] = (math.pi**2 * E * I[i]) / (A[i] * a[i]**2) #in MPa
@@ -511,7 +510,7 @@ class Midship_Section(object):
             beta_II[i] = (b[i]/t_p[i]) * ((sig_yp/E)**0.5)
             zeta_II[i] = 1 + (2.75/(beta_II[i]**2))
             T[i] = 0.25 * (2 + zeta_II[i] - ((zeta_II[i]**2)-(10.4/(beta_II[i]**2)))**0.5)
-            tau_II[i] = (p_total[i] * b[i] * (a[i]/2))/A[i] #in MPa
+            tau_II[i] = 0 #(p_total[i] * b[i] * (a[i]/2))/A[i] #formula from text in MPa
             sig_F_II[i] = ((T[i]-0.1)/T[i]) * sig_yp * ((1-(3*(tau_II[i]/sig_yp)**2)))**0.5
             b_II[i] = T[i] * b[i]
             M_o_II[i] = p_total[i] * b_II[i] * a[i] * (a[i]/2) #in MN*m
@@ -546,7 +545,7 @@ class Midship_Section(object):
             R_II[i] = (zeta_R_II[i]/2) - (((zeta_R_II[i]**2)/4) - ((1-mu_II[i])/((1+eta_p_II[i])*lamb_II[i]**2)))**0.5
             sig_a_u_II[i] = sig_F_II[i] * R_II[i] * (A_II[i]/A[i]) #in MPa
 
-        return sig_a_u_II
+        return sig_a_u_I, sig_a_u_II
     
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''
