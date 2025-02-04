@@ -493,7 +493,7 @@ class Midship_Section(object):
             I_f_NA[i] = I_f_i[i] + (A_f[i] * d_f[i]**2)
             I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i]
             del_o[i] = (5* (p_total[i]) * b[i] * (a[i]**4))/(384 * E * I[i]) #in m
-            delta[i] = a[i]/750 #from the text, positive if towards stiffeners
+            delta[i] = -a[i]/750 #from the text, positive if towards stiffeners
             sig_e[i] = (math.pi**2 * E * I[i]) / (A[i] * a[i]**2) #in MPa
             phi[i] = 1/(1-(sig_a[i]/sig_e[i]))
             sig_f[i] = sig_a[i] + ((M_o[i] * y_f[i]) / I[i]) + ((sig_a[i]*A[i]*(del_o[i] + delta[i])*y_f[i]*phi[i])/(I[i])) #in MPa
@@ -536,7 +536,7 @@ class Midship_Section(object):
             y_NA_i_II[i] = panel.get_NA_base()
             H[i] = abs(y_NA_i_II[i] - NA_y)
             delta_H[i] = I[i]/(A[i]*H[i])
-            delta_II[i] = delta_P[i] + delta_H[i]
+            delta_II[i] = (delta_P[i] + delta_H[i])
             lamb_II[i] = (a[i]/(math.pi*rho_NA_II[i]))*((sig_F_II[i]/E)**0.5)
             eta_II[i] = ((del_o_II[i]+delta_II[i])*y_p_II[i])/(rho_NA_II[i]**2)
             eta_p_II[i] = (delta_P[i]*y_p_II[i])/(rho_NA_II[i]**2)
@@ -545,7 +545,7 @@ class Midship_Section(object):
             R_II[i] = (zeta_R_II[i]/2) - (((zeta_R_II[i]**2)/4) - ((1-mu_II[i])/((1+eta_p_II[i])*lamb_II[i]**2)))**0.5
             sig_a_u_II[i] = sig_F_II[i] * R_II[i] * (A_II[i]/A[i]) #in MPa
 
-        return sig_a_u_I, sig_a_u_II
+        return delta_II
     
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''
