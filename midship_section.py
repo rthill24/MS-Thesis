@@ -24,9 +24,6 @@ from scipy import integrate
 import PaikCompression as PC
 import matplotlib as plt
 
-
-#import c_msdl as SmithCollapse
-
 class Midship_Repair_Cost(deterioratingStructure.TPanel_Repair):
     '''
     A repair class for the midship section class - can be extended to consider
@@ -328,7 +325,7 @@ class Midship_Section(object):
 
         return sigma_HG
     
-    def Hughes_Panel (self, waterline, rho, p_design, sigma_HG, mirror = True):
+    def Hughes_Panel (self, waterline, rho, p_design, sigma_HG):
 
         '''
         Calculates the ultimate axial stress for each panel as a ratio against yield strength of the panel material by checking against Mode I, II, and III collapse
@@ -349,14 +346,9 @@ class Midship_Section(object):
         sigma_a_ult:    The ultimate axial stress for each panel in the midship section based on minumum of Mode I, II, or III collapse
         '''
         E = self.grillages[0].getTTPanRef().getmatlP().getE() #only uses plating Young's modulus
-        sig_ys = sig_yp = self.grillages[0].getTTPanRef().getmatlP().getYld() #only uses plating yield strength
+        sig_ys = self.grillages[0].getTTPanRef().getsmatl().getYld() #stiffener yield strength
+        sig_yp = self.grillages[0].getTTPanRef().getmatlP().getYld() #plating yield strength
         NA_y = self.section_data()[1]
-
-        if mirror == True:
-
-            factor = 2 
-        else:
-            factor = 1
 
         section_analysis = Section.section()
         for grill in self.grillages:
@@ -449,6 +441,22 @@ class Midship_Section(object):
         zeta_R_II = np.zeros(len(self.grillages))
         R_II = np.zeros(len(self.grillages))
         sig_a_u_II = np.zeros(len(self.grillages))
+        sig_a_u = np.zeros(len(self.grillages))
+
+        #Mode III Initializations
+        M_o_g = np.zeros(len(self.grillages))
+        del_o_g = np.zeros(len(self.grillages))
+        mu_GH = np.zeros(len(self.grillages))
+        y_f_II = np.zeros(len(self.grillages))
+        eta_p_GH = np.zeros(len(self.grillages))
+        eta_GH = np.zeros(len(self.grillages))
+        lamb_GH = np.zeros(len(self.grillages))
+        zeta_GH = np.zeros(len(self.grillages))
+        R_GH = np.zeros(len(self.grillages))
+        mu_III = np.zeros(len(self.grillages))
+        zeta_III = np.zeros(len(self.grillages))
+        R_III = np.zeros(len(self.grillages))
+        sig_a_u_III = np.zeros(len(self.grillages))
 
         #Mode I Failure Calculations
         for i in range(len(self.grillages)):
@@ -484,7 +492,7 @@ class Midship_Section(object):
             d_p[i] = (t_p[i]/2) - NA[i]
             d_w[i] = (t_p[i] + (h_w[i]/2)) - NA[i]
             d_f[i] = (t_p[i] + h_w[i] + (t_f[i]/2)) - NA[i]
-            y_f[i] = d_f[i]
+            y_f[i] = -d_f[i]
             I_p_i[i] = ((1/12)*(b[i]*t_p[i]**3))
             I_p_NA[i] = I_p_i[i] + (A_p[i] * d_p[i]**2)
             I_w_i[i] = ((1/12)*(t_w[i]*h_w[i]**3))
@@ -493,7 +501,7 @@ class Midship_Section(object):
             I_f_NA[i] = I_f_i[i] + (A_f[i] * d_f[i]**2)
             I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i]
             del_o[i] = (5* (p_total[i]) * b[i] * (a[i]**4))/(384 * E * I[i]) #in m
-            delta[i] = a[i]/750 #from the text, positive if towards stiffeners
+            delta[i] = -a[i]/750 #from the text, positive if towards stiffeners
             sig_e[i] = (math.pi**2 * E * I[i]) / (A[i] * a[i]**2) #in MPa
             phi[i] = 1/(1-(sig_a[i]/sig_e[i]))
             sig_f[i] = sig_a[i] + ((M_o[i] * y_f[i]) / I[i]) + ((sig_a[i]*A[i]*(del_o[i] + delta[i])*y_f[i]*phi[i])/(I[i])) #in MPa
@@ -531,10 +539,10 @@ class Midship_Section(object):
             I_II[i] = I_p_NA_II[i] + I_w_NA_II[i] + I_f_NA_II[i]
             del_o_II[i] = (5* (p_total[i]) * b_II[i] * (a[i]**4))/(384 * E * I_II[i]) #in m
             rho_NA_II[i] = (I_II[i]/A_II[i])**0.5
-            h_II[i] = panel.get_tNAStiff() - (t_p[i]/2)
+            h_II[i] = panel.getNAStiff() - (t_p[i]/2)
             delta_P[i] = (h_II[i]*(A_f[i]+A_w[i])) * ((1/A_II[i])-(1/A[i]))
             y_NA_i_II[i] = panel.get_NA_base()
-            H[i] = abs(y_NA_i_II[i] - NA_y)
+            H[i] = y_NA_i_II[i] - NA_y
             delta_H[i] = I[i]/(A[i]*H[i])
             delta_II[i] = (delta_P[i] + delta_H[i])
             lamb_II[i] = (a[i]/(math.pi*rho_NA_II[i]))*((sig_F_II[i]/E)**0.5)
@@ -545,7 +553,37 @@ class Midship_Section(object):
             R_II[i] = (zeta_R_II[i]/2) - (((zeta_R_II[i]**2)/4) - ((1-mu_II[i])/((1+eta_p_II[i])*lamb_II[i]**2)))**0.5
             sig_a_u_II[i] = sig_F_II[i] * R_II[i] * (A_II[i]/A[i]) #in MPa
 
-        return R_II
+            """ #Mode III failure calculations
+            counter = 0
+            while True:
+                M_o_g[i] = -M_o[i]
+                y_f_II[i] = -d_f_II[i]
+                mu_GH[i] = (M_o_g[i] * y_f_II[i]) / (I_II[i]*(-sig_ys))
+                eta_p_GH[i] = (delta_P[i]*y_f_II[i])/(rho_NA_II[i]**2)
+                eta_GH[i] = ((del_o_II[i]+delta_II[i])*y_f_II[i])/(rho_NA_II[i]**2)
+                lamb_GH[i] = (a[i]/(math.pi*rho_NA_II[i]))*((sig_ys/E)**0.5)
+                zeta_GH[i] = ((1-mu_GH[i])/(1+eta_p_GH[i]))-((1+eta_p_GH[i]+eta_GH[i])/((1+eta_p_GH[i])*lamb_GH[i]**2))
+                R_GH[i] = (zeta_GH[i]/2) - (((zeta_GH[i]**2)/4) + ((1-mu_GH[i])/((1+eta_p_GH[i])*lamb_GH[i]**2)))**0.5
+                sig_F_III = -sig_ys
+                mu_III[i] = (M_o_g[i] * y_p_II[i]) / (I_II[i]*sig_F_III)
+                zeta_III[i] = ((1-mu_III[i])/(1+eta_p_II[i]))-((1+eta_p_II[i]+eta_II[i])/((1+eta_p_II[i])*lamb_II[i]**2))
+                R_III[i] = (zeta_III[i]/2) - (((zeta_III[i]**2)/4) - ((1-mu_III[i])/((1+eta_p_II[i])*lamb_II[i]**2)))**0.5
+
+                if abs(R_GH[i] - R_III[i]) < 1e-3:
+                    break
+
+                M_o[i] *= 0.99  # Adjust M_o to converge R_GH and R_III
+                counter += 1
+                if counter >= 5000:
+                    user_input = input("The loop has run 5000 times. Do you want to continue? (yes/no): ")
+                    if user_input.lower() != 'yes':
+                        break
+
+            sig_a_u_III[i] = sig_F_III * R_III[i] * (A_II[i]/A[i]) #in MPa """
+
+            sig_a_u[i] = np.nanmin([sig_a_u_I[i], sig_a_u_II[i]])
+
+        return sig_a_u
     
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''

@@ -286,7 +286,7 @@ class TPanel_trans(Structures.TPanel):
 
         #calculate position of neutral axis w.r.t baseline
         self.mid = (self.top + self.bot)/2
-        self.offset = self._tNA * math.sin(math.radians(self.ornt))
+        self.offset = self._NA * math.sin(math.radians(self.ornt))
         self.NA_base = self.mid + self.offset
 
 
@@ -491,7 +491,7 @@ class TPanel_trans(Structures.TPanel):
         return self._tNA
     
     def get_NA_base(self):
-        """returns the location of the neutral axis of plate/transverse member combination w.r.t the baseline"""
+        """returns the location of the neutral axis of plate/long. tee stiffener member combination w.r.t the baseline"""
         return self.NA_base
     
     def get_tNAStiff(self):
