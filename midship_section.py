@@ -553,10 +553,16 @@ class Midship_Section(object):
             R_II[i] = (zeta_R_II[i]/2) - (((zeta_R_II[i]**2)/4) - ((1-mu_II[i])/((1+eta_p_II[i])*lamb_II[i]**2)))**0.5
             sig_a_u_II[i] = sig_F_II[i] * R_II[i] * (A_II[i]/A[i]) #in MPa
 
-            """ #Mode III failure calculations
-            counter = 0
-            while True:
-                M_o_g[i] = -M_o[i]
+            #Mode III failure calculations
+
+            # Initialize M_o_g with a guess value
+            """ M_o_g[i] = 10
+            tolerance = 1e-6
+            max_iterations = 100
+            iteration = 0
+            error = float('inf')
+
+            while error > tolerance and iteration < max_iterations:
                 y_f_II[i] = -d_f_II[i]
                 mu_GH[i] = (M_o_g[i] * y_f_II[i]) / (I_II[i]*(-sig_ys))
                 eta_p_GH[i] = (delta_P[i]*y_f_II[i])/(rho_NA_II[i]**2)
@@ -569,16 +575,24 @@ class Midship_Section(object):
                 zeta_III[i] = ((1-mu_III[i])/(1+eta_p_II[i]))-((1+eta_p_II[i]+eta_II[i])/((1+eta_p_II[i])*lamb_II[i]**2))
                 R_III[i] = (zeta_III[i]/2) - (((zeta_III[i]**2)/4) - ((1-mu_III[i])/((1+eta_p_II[i])*lamb_II[i]**2)))**0.5
 
-                if abs(R_GH[i] - R_III[i]) < 1e-3:
-                    break
+                # Calculate the error
+                error = abs(R_GH[i] - R_III[i])
 
-                M_o[i] *= 0.99  # Adjust M_o to converge R_GH and R_III
-                counter += 1
-                if counter >= 5000:
-                    user_input = input("The loop has run 5000 times. Do you want to continue? (yes/no): ")
-                    if user_input.lower() != 'yes':
-                        break
+                # Update M_o_g using Newton's method
+                if error > tolerance:
+                    # Calculate the derivative of the error with respect to M_o_g
+                    delta_M_o_g = 1e-6
+                    M_o_g_temp = M_o_g[i] + delta_M_o_g
+                    mu_GH_temp = (M_o_g_temp * y_f_II[i]) / (I_II[i]*(-sig_ys))
+                    zeta_GH_temp = ((1-mu_GH_temp)/(1+eta_p_GH[i]))-((1+eta_p_GH[i]+eta_GH[i])/((1+eta_p_GH[i])*lamb_GH[i]**2))
+                    R_GH_temp = (zeta_GH_temp / 2) - (((zeta_GH_temp**2) / 4) + ((1 - mu_GH_temp) / ((1 + eta_p_GH[i]) * lamb_GH[i]**2)))**0.5
+                    derivative = (R_GH_temp - R_GH[i]) / delta_M_o_g
 
+                    # Update M_o_g
+                    M_o_g[i] -= (R_GH[i] - R_III[i]) / derivative
+
+                iteration += 1
+            
             sig_a_u_III[i] = sig_F_III * R_III[i] * (A_II[i]/A[i]) #in MPa """
 
             sig_a_u[i] = np.nanmin([sig_a_u_I[i], sig_a_u_II[i]])
