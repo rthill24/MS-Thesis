@@ -21,9 +21,9 @@ import deterioratingStructure
 import Allowable_Permanent_Set
 
 # Define the material properties for 5086-H116 Aluminum
-pmatl = Structures.EPMatl(207, 71000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
-smatl = Structures.EPMatl(207, 71000, 2660, 0.33)
-tmatl = Structures.EPMatl(207, 71000, 2660, 0.33)
+pmatl = Structures.EPMatl(239, 190000, 7890, 0.3) #MPa, MPa, kg/m^3, Poisson's ratio, og is 207, 71000, 2660, 0.33 for all 3
+smatl = Structures.EPMatl(267, 190000, 7890, 0.3)
+tmatl = smatl
 
 """
         constructor
@@ -48,40 +48,41 @@ tmatl = Structures.EPMatl(207, 71000, 2660, 0.33)
             qloc - qualitative location used for corroision model
         """
 
-Frame_Spacing = 2250/1000
+Frame_Spacing = 1151/1000 #og is 2250/1000
 
 # Dimensions for bottom panel
-B_bot = 4433.08999/1000
-nstiff_bot = 8
-ntrans_bot = 1
+B_bot = 4433.08999/1000 
+nstiff_bot = 8 
+ntrans_bot = 1 
 tp_bot = 9/1000 
-tw_bot = 8/1000
-hw_bot = 200/1000
-tf_bot = 6/1000
-bf_bot = 100/1000
-twh_bot = 100/1000
-twt_bot = 8/1000
-tft_bot = 6/1000
-tfb_bot = 100/1000
-sloc_bot = [0,0,0]
+tw_bot = 8/1000 
+hw_bot = 100/1000 
+tf_bot = 6/1000 
+bf_bot = 100/1000 
+twh_bot = 100/1000 
+twt_bot = 8/1000 
+tft_bot = 6/1000 
+tfb_bot = 100/1000 
+sloc_bot = [0,0,0] 
 ornt_bot = -28
 qloc_bot = ['NA','NA','NA']
 eta_bot = 0
 
 # Dimensions for side shell panel
-B_side = 3615.29782/1000
-nstiff_side = 6
-ntrans_side = 1
-tp_side = 5.5/1000
-tw_side = 8/1000
-hw_side = 100/1000
-tf_side = 6/1000
-bf_side = 50/1000
-twh_side = 100/1000
-twt_side = 8/1000
-tft_side = 6/1000
-tfb_side = 50/1000
-sloc_side = [B_bot*math.cos(math.radians(-ornt_bot)),B_bot*math.sin(math.radians(-ornt_bot)),0]
+B_side = (6+1)*(295/1000) #og is 3615.29782/1000
+nstiff_side = 6 #og is 6
+ntrans_side = 1 #og is 1
+tp_side = 2.57/1000 #og is 5.5/1000
+tw_side = 4.9/1000 #og is 8/1000
+hw_side = 30.5/1000 #og is 100/1000
+tf_side = 6.12/1000 #og is 6/1000
+bf_side = 12.7/1000 #og is 50/1000
+twh_side = 100/1000 #og is 100/1000
+twt_side = 8/1000 #og is 8/1000
+tft_side = 6/1000 #og is 6/1000
+tfb_side = 50/1000 #og is 50/1000
+sloc_side = [5,5,0]
+#[B_bot*math.cos(math.radians(-ornt_bot)),B_bot*math.sin(math.radians(-ornt_bot)),0]
 ornt_side = -71
 qloc_side = ['NA','NA','NA']
 eta_side = 0
@@ -175,7 +176,7 @@ Returns
 
 data = structure.section_data()
 HG_stress = structure.HG_stress()
-Hughes_panel = structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
+Hughes_panel = structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress) #call hull girder stress when finished
 
 beta_HG = structure.HG_reliability(data[6])[0]
 P_F_HG = structure.HG_reliability(data[6])[1]
@@ -185,7 +186,7 @@ PC = structure.production_cost()
 
 #produce plot
 plot = structure.plot_section()
-plt.show()
+#plt.show()
 
 print ("here's the R: ", Hughes_panel)
 

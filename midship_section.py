@@ -442,6 +442,7 @@ class Midship_Section(object):
         R_II = np.zeros(len(self.grillages))
         sig_a_u_II = np.zeros(len(self.grillages))
         sig_a_u = np.zeros(len(self.grillages))
+        Rat_a_u = np.zeros(len(self.grillages)) #remove this one after testing
 
         #Mode III Initializations
         M_o_g = np.zeros(len(self.grillages))
@@ -472,7 +473,8 @@ class Midship_Section(object):
                 p_tot = 0
 
             p_total[i] = p_tot/1000 #convert to MPa
-            sig_a[i] = sigma_HG[i] 
+            sig_a[i] = 97.152
+            #sigma_HG[i] 
             a[i] = panel.geta()
             b[i] = panel.getb()
             b_stiff[i] = panel.getbf()
@@ -501,7 +503,8 @@ class Midship_Section(object):
             I_f_NA[i] = I_f_i[i] + (A_f[i] * d_f[i]**2)
             I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i]
             del_o[i] = (5* (p_total[i]) * b[i] * (a[i]**4))/(384 * E * I[i]) #in m
-            delta[i] = -a[i]/750 #from the text, positive if towards stiffeners
+            delta[i] = -1.58/1000
+            #-a[i]/750 #from the text, positive if towards stiffeners
             sig_e[i] = (math.pi**2 * E * I[i]) / (A[i] * a[i]**2) #in MPa
             phi[i] = 1/(1-(sig_a[i]/sig_e[i]))
             sig_f[i] = sig_a[i] + ((M_o[i] * y_f[i]) / I[i]) + ((sig_a[i]*A[i]*(del_o[i] + delta[i])*y_f[i]*phi[i])/(I[i])) #in MPa
@@ -544,7 +547,8 @@ class Midship_Section(object):
             y_NA_i_II[i] = panel.get_NA_base()
             H[i] = y_NA_i_II[i] - NA_y
             delta_H[i] = I[i]/(A[i]*H[i])
-            delta_II[i] = (delta_P[i] + delta_H[i])
+            delta_II[i] = delta[i]
+            #(delta_P[i] + delta_H[i])
             lamb_II[i] = (a[i]/(math.pi*rho_NA_II[i]))*((sig_F_II[i]/E)**0.5)
             eta_II[i] = ((del_o_II[i]+delta_II[i])*y_p_II[i])/(rho_NA_II[i]**2)
             eta_p_II[i] = (delta_P[i]*y_p_II[i])/(rho_NA_II[i]**2)
@@ -597,7 +601,9 @@ class Midship_Section(object):
 
             sig_a_u[i] = np.nanmin([sig_a_u_I[i], sig_a_u_II[i]])
 
-        return sig_a_u
+            Rat_a_u[i] = sig_a_u[i]/((sig_ys+sig_yp)/2)
+
+        return sig_a_u_I[1], sig_a_u_II[1], sig_a_u[1], Rat_a_u[1]
     
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''
