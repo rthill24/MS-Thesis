@@ -473,7 +473,7 @@ class Midship_Section(object):
                 p_tot = 0
 
             p_total[i] = p_tot/1000 #convert to MPa
-            sig_a[i] = 97.152
+            sig_a[i] = 130.8
             #sigma_HG[i] 
             a[i] = panel.geta()
             b[i] = panel.getb()
@@ -503,7 +503,7 @@ class Midship_Section(object):
             I_f_NA[i] = I_f_i[i] + (A_f[i] * d_f[i]**2)
             I[i] = I_p_NA[i] + I_w_NA[i] + I_f_NA[i]
             del_o[i] = (5* (p_total[i]) * b[i] * (a[i]**4))/(384 * E * I[i]) #in m
-            delta[i] = -1.58/1000
+            delta[i] = -2.1/1000
             #-a[i]/750 #from the text, positive if towards stiffeners
             sig_e[i] = (math.pi**2 * E * I[i]) / (A[i] * a[i]**2) #in MPa
             phi[i] = 1/(1-(sig_a[i]/sig_e[i]))

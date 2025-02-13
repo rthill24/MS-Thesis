@@ -21,8 +21,8 @@ import deterioratingStructure
 import Allowable_Permanent_Set
 
 # Define the material properties for 5086-H116 Aluminum
-pmatl = Structures.EPMatl(239, 190000, 7890, 0.3) #MPa, MPa, kg/m^3, Poisson's ratio, og is 207, 71000, 2660, 0.33 for all 3
-smatl = Structures.EPMatl(267, 190000, 7890, 0.3)
+pmatl = Structures.EPMatl(244, 190000, 7890, 0.3) #MPa, MPa, kg/m^3, Poisson's ratio, og is 207, 71000, 2660, 0.33 for all 3
+smatl = Structures.EPMatl(273, 190000, 7890, 0.3)
 tmatl = smatl
 
 """
@@ -48,7 +48,7 @@ tmatl = smatl
             qloc - qualitative location used for corroision model
         """
 
-Frame_Spacing = 1151/1000 #og is 2250/1000
+Frame_Spacing = 384/1000 #og is 2250/1000
 
 # Dimensions for bottom panel
 B_bot = 4433.08999/1000 
@@ -72,7 +72,7 @@ eta_bot = 0
 B_side = (6+1)*(295/1000) #og is 3615.29782/1000
 nstiff_side = 6 #og is 6
 ntrans_side = 1 #og is 1
-tp_side = 2.57/1000 #og is 5.5/1000
+tp_side = 3.1/1000 #og is 5.5/1000
 tw_side = 4.9/1000 #og is 8/1000
 hw_side = 30.5/1000 #og is 100/1000
 tf_side = 6.12/1000 #og is 6/1000
