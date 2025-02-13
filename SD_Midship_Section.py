@@ -21,8 +21,8 @@ import deterioratingStructure
 import Allowable_Permanent_Set
 
 # Define the material properties for 5086-H116 Aluminum
-pmatl = Structures.EPMatl(244, 190000, 7890, 0.3) #MPa, MPa, kg/m^3, Poisson's ratio, og is 207, 71000, 2660, 0.33 for all 3
-smatl = Structures.EPMatl(273, 190000, 7890, 0.3)
+pmatl = Structures.EPMatl(207, 71000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
+smatl = Structures.EPMatl(207, 71000, 2660, 0.33)
 tmatl = smatl
 
 """
@@ -48,7 +48,7 @@ tmatl = smatl
             qloc - qualitative location used for corroision model
         """
 
-Frame_Spacing = 384/1000 #og is 2250/1000
+Frame_Spacing = 2250/1000
 
 # Dimensions for bottom panel
 B_bot = 4433.08999/1000 
@@ -69,20 +69,19 @@ qloc_bot = ['NA','NA','NA']
 eta_bot = 0
 
 # Dimensions for side shell panel
-B_side = (6+1)*(295/1000) #og is 3615.29782/1000
-nstiff_side = 6 #og is 6
-ntrans_side = 1 #og is 1
-tp_side = 3.1/1000 #og is 5.5/1000
-tw_side = 4.9/1000 #og is 8/1000
-hw_side = 30.5/1000 #og is 100/1000
-tf_side = 6.12/1000 #og is 6/1000
-bf_side = 12.7/1000 #og is 50/1000
-twh_side = 100/1000 #og is 100/1000
-twt_side = 8/1000 #og is 8/1000
-tft_side = 6/1000 #og is 6/1000
-tfb_side = 50/1000 #og is 50/1000
-sloc_side = [5,5,0]
-#[B_bot*math.cos(math.radians(-ornt_bot)),B_bot*math.sin(math.radians(-ornt_bot)),0]
+B_side = 3615.29782/1000
+nstiff_side = 6 
+ntrans_side = 1 
+tp_side = 5.5/1000
+tw_side = 8/1000 
+hw_side = 100/1000 
+tf_side = 6/1000 
+bf_side = 50/1000 
+twh_side = 100/1000 
+twt_side = 8/1000 
+tft_side = 6/1000 
+tfb_side = 50/1000 
+sloc_side = [B_bot*math.cos(math.radians(-ornt_bot)),B_bot*math.sin(math.radians(-ornt_bot)),0]
 ornt_side = -71
 qloc_side = ['NA','NA','NA']
 eta_side = 0
@@ -176,7 +175,7 @@ Returns
 
 data = structure.section_data()
 HG_stress = structure.HG_stress()
-Hughes_panel = structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress) #call hull girder stress when finished
+Hughes_panel = structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
 
 beta_HG = structure.HG_reliability(data[6])[0]
 P_F_HG = structure.HG_reliability(data[6])[1]
@@ -186,11 +185,11 @@ PC = structure.production_cost()
 
 #produce plot
 plot = structure.plot_section()
-#plt.show()
+plt.show()
 
 print ("here's the R: ", Hughes_panel)
 
-""" #output data
+#output data
 print ("here's EI: ", data[0])
 print ("here's NAy: ", data[1])
 print ("here's area: ", data[2])
@@ -227,4 +226,4 @@ print ("here's the pressure': ", press_bot)
 beta_plate = structure.plating_reliability(press_bot)[0]
 P_F_plate = structure.plating_reliability(press_bot)[1]
 print ("here's beta_plate: ", beta_plate)
-print ("here's P_F_plate: ", P_F_plate) """
+print ("here's P_F_plate: ", P_F_plate)
