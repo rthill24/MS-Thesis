@@ -600,7 +600,7 @@ class Midship_Section(object):
 
             Rat_a_u[i] = sig_a_u[i]/((sig_ys+sig_yp)/2)
 
-        return sig_a_u, Rat_a_u
+        return Rat_a_u
     
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''
