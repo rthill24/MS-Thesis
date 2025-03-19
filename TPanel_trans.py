@@ -286,7 +286,10 @@ class TPanel_trans(Structures.TPanel):
 
         #calculate position of neutral axis w.r.t baseline
         self.mid = (self.top + self.bot)/2
-        self.offset = self._NA * math.sin(math.radians(self.ornt))
+        self.area = (self.gettf()*self.getbf()) + (self.gettp()*self.getB()) + (self.gettw()*self.gethw())
+        self.mom = ((self.gettf()*self.getbf())*(self.gettp()+self.gethw()+self.gettf()/2)) + ((self.gettp()*self.getB())*(self.gettp()/2)) + ((self.gettw()*self.gethw())*(self.gettp()+self.gethw()/2))
+        self._NA = self.mom/self.area
+        self.offset = self._NA * math.sin(math.radians(90+self.ornt))
         self.NA_base = self.mid + self.offset
 
 
@@ -569,3 +572,33 @@ class TPanel_trans(Structures.TPanel):
     def gettmatl(self):
         ''' Returns the material properties of the transverse members'''
         return self._tmatl
+    def getSloc(self):
+        ''' Returns the spatial location of the panel'''
+        return self.sloc
+    def gettw(self):
+        ''' Returns the thickness of the web'''
+        return self._tw
+    def gethw(self):
+        ''' Returns the height of the web'''
+        return self._hw
+    def gettf(self):
+        ''' Returns the thickness of the flange'''
+        return self._tf
+    def getbf(self):
+        ''' Returns the breadth of the flange'''
+        return self._bf
+    def getQloc(self):
+        ''' Returns the qualitative location of the panel'''
+        return self.qloc
+    def getEta(self):
+        ''' Returns the eta value of the panel'''
+        return self._eta
+    def getmid(self):
+        ''' Returns the height of the middle of the panel w.r.t. the baseline'''
+        return self.mid
+    def getoffset(self):
+        ''' Returns the offset of the neutral axis from the baseline'''
+        return self.offset
+    def getmid(self):
+        ''' Returns the height of the middle of the panel w.r.t. the baseline'''
+        return self.mid

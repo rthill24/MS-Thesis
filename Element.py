@@ -232,6 +232,14 @@ class Element:
             return self._intrpAER3(straini)
         elif straini > self.strnR3_max:
             return self._intrpAER4
+        
+    def getForce(self, straini):
+        '''return force at a given strain'''
+        return self.getStress(straini) * self._panel.getArea()
+    
+    def getPanel(self):
+        '''return t_panel object'''
+        return self._panel
                 
     def getYloc(self):
         '''return y-location (vertical), yloc'''

@@ -19,6 +19,7 @@ from operator import itemgetter
 from scipy import integrate
 import deterioratingStructure
 import Allowable_Permanent_Set
+import smith_collapse
 
 # Define the material properties for 5086-H116 Aluminum
 pmatl = Structures.EPMatl(207, 71000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
@@ -159,6 +160,21 @@ deck_panel = TPanel_trans.TPanel_trans(B_deck,Frame_Spacing,nstiff_deck,ntrans_d
 
 # Create the midship section    
 structure = midship_section.Midship_Section([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel],0)
+HCdata = smith_collapse.SmithCollapse([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel])
+HC_strs_strn  = HCdata.Hansen()
+
+""" HC_strs_panel_1 = HC_strs_strn[2][0]
+HC_strn_panel_1 = HC_strs_strn[1][0]
+plt.plot(HC_strn_panel_1,HC_strs_panel_1)
+plt.xlabel('Strain')
+plt.ylabel('Stress (MPa)')
+plt.title('Stress-Strain Curve for Panel 1')
+plt.grid(True)
+plt.show() """
+
+#test = HCdata.setup()
+#Mult = HCdata.sumForce_and_moment()
+curve = HCdata.plotCollapse()
   
 #get section data
 '''
@@ -174,7 +190,7 @@ Returns
 '''
 
 data = structure.section_data()
-HG_stress = structure.HG_stress()
+""" HG_stress = structure.HG_stress()
 Hughes_panel = structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
 
 beta_HG = structure.HG_reliability(data[6])[0]
@@ -183,21 +199,22 @@ P_F_HG = structure.HG_reliability(data[6])[1]
 #get production cost
 PC = structure.production_cost()
 
+"""
 #produce plot
 plot = structure.plot_section()
-plt.show()
+#plt.show()
 
-print ("here's the R: ", Hughes_panel)
+""" print ("here's the R: ", Hughes_panel)
 
 #output data
 print ("here's EI: ", data[0])
 print ("here's NAy: ", data[1])
 print ("here's area: ", data[2])
-print ("here's weight: ", data[3])
-print ("here's I_NA: ", data[4])
-print ("here's SM_min: ", data[5])
-print ("here's My: ", data[6])
-print ("here's Mult: ", data[7])
+print ("here's weight: ", data[3]) """
+#print ("here's I_NA: ", data[4])
+#print ("here's SM_min: ", data[5])
+#print ("here's My: ", data[6])
+""" print ("here's Mult: ", data[7])
 print ("here's PC: ", PC)
 print ("here's beta_HG: ", beta_HG)
 print ("here's P_F_HG: ", P_F_HG)
@@ -226,4 +243,4 @@ print ("here's the pressure': ", press_bot)
 beta_plate = structure.plating_reliability(press_bot)[0]
 P_F_plate = structure.plating_reliability(press_bot)[1]
 print ("here's beta_plate: ", beta_plate)
-print ("here's P_F_plate: ", P_F_plate)
+print ("here's P_F_plate: ", P_F_plate) """

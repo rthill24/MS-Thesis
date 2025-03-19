@@ -249,7 +249,7 @@ class Midship_Section(object):
 
         SM_min = min(SM_top, SM_bot)
 
-        My = yield_strength * SM_min * 1000 
+        My = yield_strength * SM_min * 1000 #in kN*m
         
         return EI, NAy, area, weight, I_NA, SM_min, My, Mult
     
