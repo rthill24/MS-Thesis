@@ -98,7 +98,7 @@ class SmithCollapse(object):
         print ("Ultimate moment on cross-section=", moment, "kN-m")
         return force, moment
 
-    def ApplyCurvature(self, NA_guess, curv_init, el_type = 'PE', mirror = True):
+    def ApplyCurvature(self, NA_guess, curv_init, el_type = 'Norm', mirror = True):
         '''Takes a curvature and a proposed NA position, calcs resulting moment and force'''
 
         XSection = self.discretize()
@@ -115,8 +115,7 @@ class SmithCollapse(object):
         empty_force = []
         empty_moment = []
         empty_denom = []
-        #crv_array_sag = []
-        #M_array_sag = []
+
         for element in XSection:
             element.strain = (-(element.getYloc() - self.NA_guess))/(1/self.curv_init)
             if self.el_type == 'PE':
@@ -126,7 +125,7 @@ class SmithCollapse(object):
                 element.stress = element.getStress(element.strain)
                 element.force = element.getForce(element.stress) * factor #in MN
             element.moment = element.force*(element.getYloc() - self.NA_guess) * factor #in MN*m
-            shift_denom = empty_denom.append(E*element.getPanel().getArea())
+            empty_denom.append(E*element.getPanel().getArea()*factor)
             empty_moment.append(element.moment)
             empty_force.append(element.force)
         total_force = sum(empty_force)*1e6 #in N
@@ -138,7 +137,7 @@ class SmithCollapse(object):
     def plotCollapse(self):
         '''Iterates through curvature values and plots the collapse curve
         finding the equalibrium point on each'''
-        force_tol = 1e-6 #in N
+        force_tol = 10000 #in N
         NA0 = self.setup()[0]
         crv_array = []
         M_array = []
@@ -149,16 +148,22 @@ class SmithCollapse(object):
         Crv_step_sag = self.setup()[6]
         empty_crv_sag = []
         empty_moment_sag = []
+        NA0_sag = []
 
         for i in range(0,num_crv_inc+1):
             curv_applied_sag = Crv_min_sag + i*Crv_step_sag
-            force_i = self.ApplyCurvature(NA0, curv_applied_sag)[0]
-            if abs(force_i) > force_tol:
-                NA0 += self.ApplyCurvature(NA0, curv_applied_sag)[2]
-            else:
-                moment_i = self.ApplyCurvature(NA0, curv_applied_sag)[1]
-                empty_crv_sag.append(curv_applied_sag)
-                empty_moment_sag.append(moment_i)
+            force, moment, shift = self.ApplyCurvature(NA0, curv_applied_sag)
+            count = 0
+            while abs(force) > force_tol:
+                count += 1
+                NA0 += shift
+                force, moment, shift = self.ApplyCurvature(NA0, curv_applied_sag)
+                if count > 3:
+                    print ("NA0 not converging in sag")
+                    break
+            empty_crv_sag.append(curv_applied_sag)
+            empty_moment_sag.append(moment)
+            NA0_sag.append(NA0)
         print ("empty_crv_sag", empty_crv_sag)
 
         #for hogging condition
@@ -167,30 +172,39 @@ class SmithCollapse(object):
         Crv_step_hog = self.setup()[9]
         empty_crv_hog = []
         empty_moment_hog = []
+        NA0_hog = []
 
         for i in range(0,num_crv_inc+1):
             curv_applied_hog = Crv_min_hog + i*Crv_step_hog
-            force_i = self.ApplyCurvature(NA0, curv_applied_hog)[0]
-            if abs(force_i) > force_tol:
-                NA0 += self.ApplyCurvature(NA0, curv_applied_hog)[2]
-            else:
-                moment_i = self.ApplyCurvature(NA0, curv_applied_hog)[1]
-                empty_crv_hog.append(curv_applied_hog)
-                empty_moment_hog.append(moment_i)
+            force, moment, shift = self.ApplyCurvature(NA0, curv_applied_hog)
+            count = 0
+            while abs(force) > force_tol:
+                count += 1
+                NA0 += shift
+                force, moment, shift = self.ApplyCurvature(NA0, curv_applied_hog)
+                print ("force_hog", force)
+                print ("NA0_hog", NA0)
+                if count > 3:
+                    print ("NA0 not converging in hog")
+                    break
+            empty_crv_hog.append(curv_applied_hog)
+            empty_moment_hog.append(moment)
+            NA0_hog.append(NA0)
         print ("empty_crv_hog", empty_crv_hog)
         
         crv_array = empty_crv_sag + empty_crv_hog
         M_array = empty_moment_sag + empty_moment_hog
+        NA_array = NA0_sag + NA0_hog
 
         #print ("crv_array", crv_array)
 
-        plt.plot(crv_array,M_array)
+        plt.plot(crv_array,NA_array, 'ro')
         plt.xlabel('Curvature [1/m]')
-        plt.ylabel('VBM [kN*m]')
+        plt.ylabel('NA location [m]')
         plt.title('Collapse Curve for Section')
         plt.grid(True)
         plt.show()
-        return crv_array, M_array
+        return crv_array, M_array, NA_array
 
 
         #M_array_sag.append(total_moment)

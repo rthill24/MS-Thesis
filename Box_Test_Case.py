@@ -127,8 +127,10 @@ HCdata = smith_collapse.SmithCollapse([test_panel_bot, test_panel_side, test_pan
 # Create the midship section    
 structure = midship_section.Midship_Section([test_panel_bot, test_panel_side, test_panel_top],0)
 
-plot = HCdata.plotCollapse()
-plt.show()
+#plot = HCdata.discretize()
+#data = HCdata.sumForce_and_moment()
+plot_HC = HCdata.plotCollapse()
+#plt.show()
         
 #get section data
 '''
@@ -150,7 +152,7 @@ PC = structure.production_cost()
 
 #produce plot
 plot = structure.plot_section()
-#plt.show()
+plt.show()
 
 """ print ("here's EI: ", data[0])
 print ("here's EI: ", data[0])
