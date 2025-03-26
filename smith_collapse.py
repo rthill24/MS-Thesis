@@ -48,19 +48,21 @@ class SmithCollapse(object):
             count += 1
             stiff_spacing = panel.getb()
             numElements = panel.getnstiff()+2
+            numStiff = panel.getnstiff()
             for j in range(numElements):
-                if j < numElements-2:
+                if j < numStiff:
                     y_i = panel.get_bot()+((j+1)*(stiff_spacing)*math.sin(math.radians(-panel.getOrnt())))
                     #print ("here's the y_i: ", y_i)
                     elements.append(TPanel_trans.TPanel_trans(stiff_spacing,1,1,1,panel.gettp(),panel.gettw(),panel.gethw(),panel.gettf(),panel.getbf(),panel.gettwh() \
                                                             , panel.gettwt(), panel.gettft(),panel.gettfb(),[0,y_i,0],panel.getOrnt(),panel.getQloc(),panel.getpmatl(),panel.getsmatl(),panel.gettmatl(),panel.getEta()))
-                elif j == numElements-2:
-                    span_end = panel.getB() - (numElements-2)*stiff_spacing
-                    y_0 = panel.get_bot() + (span_end/2)*math.sin(math.radians(-panel.getOrnt()))
+                elif j == numStiff:
+                    y_0 = panel.get_bot()
+                    y_last = panel.get_bot()+((numStiff)*(stiff_spacing)*math.sin(math.radians(-panel.getOrnt())))
+                    span_0 = stiff_spacing
+                    span_end = panel.getB()-(stiff_spacing*(numStiff))-span_0
                     #print ("y_0", y_0)
-                    y_last = panel.get_top() - (span_end/2)*math.sin(math.radians(-panel.getOrnt()))
                     #print ("y_last", y_last)
-                    elements.append(TPanel_trans.TPanel_trans(span_end,1,0,1,panel.gettp(),1e-6,1e-6,1e-6,1e-6,panel.gettwh() \
+                    elements.append(TPanel_trans.TPanel_trans(span_0,1,0,1,panel.gettp(),1e-6,1e-6,1e-6,1e-6,panel.gettwh() \
                                                             , panel.gettwt(), panel.gettft(),panel.gettfb(),[0,y_0,0],panel.getOrnt(),panel.getQloc(),panel.getpmatl(),panel.getsmatl(),panel.gettmatl(),panel.getEta()))
                     elements.append(TPanel_trans.TPanel_trans(span_end,1,0,1,panel.gettp(),1e-6,1e-6,1e-6,1e-6,panel.gettwh() \
                                                             , panel.gettwt(), panel.gettft(),panel.gettfb(),[0,y_last,0],panel.getOrnt(),panel.getQloc(),panel.getpmatl(),panel.getsmatl(),panel.gettmatl(),panel.getEta()))

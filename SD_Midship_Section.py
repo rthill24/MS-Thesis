@@ -173,7 +173,7 @@ plt.grid(True)
 plt.show() """
 
 #test = HCdata.setup()
-Mult = HCdata.discretize()
+Mult = HCdata.sumForce_and_moment()
 #curve = HCdata.plotCollapse()
 
   
