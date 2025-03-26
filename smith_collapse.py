@@ -47,12 +47,23 @@ class SmithCollapse(object):
             elements = []
             count += 1
             stiff_spacing = panel.getb()
-            numElements = panel.getnstiff()
+            numElements = panel.getnstiff()+2
             for j in range(numElements):
-                y_i = panel.get_bot()+((j+1)*(stiff_spacing)*math.sin(math.radians(-panel.getOrnt())))
-                #print ("here's the y_i: ", y_i)
-                elements.append(TPanel_trans.TPanel_trans(stiff_spacing,1,1,1,panel.gettp(),panel.gettw(),panel.gethw(),panel.gettf(),panel.getbf(),panel.gettwh() \
+                if j < numElements-2:
+                    y_i = panel.get_bot()+((j+1)*(stiff_spacing)*math.sin(math.radians(-panel.getOrnt())))
+                    #print ("here's the y_i: ", y_i)
+                    elements.append(TPanel_trans.TPanel_trans(stiff_spacing,1,1,1,panel.gettp(),panel.gettw(),panel.gethw(),panel.gettf(),panel.getbf(),panel.gettwh() \
                                                             , panel.gettwt(), panel.gettft(),panel.gettfb(),[0,y_i,0],panel.getOrnt(),panel.getQloc(),panel.getpmatl(),panel.getsmatl(),panel.gettmatl(),panel.getEta()))
+                elif j == numElements-2:
+                    span_end = panel.getB() - (numElements-2)*stiff_spacing
+                    y_0 = panel.get_bot() + (span_end/2)*math.sin(math.radians(-panel.getOrnt()))
+                    #print ("y_0", y_0)
+                    y_last = panel.get_top() - (span_end/2)*math.sin(math.radians(-panel.getOrnt()))
+                    #print ("y_last", y_last)
+                    elements.append(TPanel_trans.TPanel_trans(span_end,1,0,1,panel.gettp(),1e-6,1e-6,1e-6,1e-6,panel.gettwh() \
+                                                            , panel.gettwt(), panel.gettft(),panel.gettfb(),[0,y_0,0],panel.getOrnt(),panel.getQloc(),panel.getpmatl(),panel.getsmatl(),panel.gettmatl(),panel.getEta()))
+                    elements.append(TPanel_trans.TPanel_trans(span_end,1,0,1,panel.gettp(),1e-6,1e-6,1e-6,1e-6,panel.gettwh() \
+                                                            , panel.gettwt(), panel.gettft(),panel.gettfb(),[0,y_last,0],panel.getOrnt(),panel.getQloc(),panel.getpmatl(),panel.getsmatl(),panel.gettmatl(),panel.getEta()))
                 XSection.append(Element.Element(elements[j], self.strs_data[count], self.strn_data[count], self.AE_data[count], 0, y_i+elements[j].getoffset()))
         return XSection    
     
@@ -98,7 +109,7 @@ class SmithCollapse(object):
         print ("Ultimate moment on cross-section=", moment, "kN-m")
         return force, moment
 
-    def ApplyCurvature(self, NA_guess, curv_init, el_type = 'Norm', mirror = True):
+    def ApplyCurvature(self, NA_guess, curv_init, el_type = 'PE', mirror = True):
         '''Takes a curvature and a proposed NA position, calcs resulting moment and force'''
 
         XSection = self.discretize()

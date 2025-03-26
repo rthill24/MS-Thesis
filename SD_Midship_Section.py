@@ -173,8 +173,8 @@ plt.grid(True)
 plt.show() """
 
 #test = HCdata.setup()
-#Mult = HCdata.sumForce_and_moment()
-curve = HCdata.plotCollapse()
+Mult = HCdata.discretize()
+#curve = HCdata.plotCollapse()
 
   
 #get section data
@@ -203,7 +203,7 @@ PC = structure.production_cost()
 """
 #produce plot
 plot = structure.plot_section()
-#plt.show()
+plt.show()
 
 """ print ("here's the R: ", Hughes_panel)
 
