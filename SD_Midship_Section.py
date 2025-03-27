@@ -173,8 +173,8 @@ plt.grid(True)
 plt.show() """
 
 #test = HCdata.setup()
-Mult = HCdata.sumForce_and_moment()
-#curve = HCdata.plotCollapse()
+#Mult = HCdata.sumForce_and_moment()
+curve = HCdata.plotCollapse()
 
   
 #get section data

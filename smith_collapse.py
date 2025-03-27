@@ -111,7 +111,7 @@ class SmithCollapse(object):
         print ("Ultimate moment on cross-section=", moment, "kN-m")
         return force, moment
 
-    def ApplyCurvature(self, NA_guess, curv_init, el_type = 'PE', mirror = True):
+    def ApplyCurvature(self, NA_guess, curv_init, el_type = 'Norm', mirror = True):
         '''Takes a curvature and a proposed NA position, calcs resulting moment and force'''
 
         XSection = self.discretize()
@@ -138,7 +138,7 @@ class SmithCollapse(object):
                 element.stress = element.getStress(element.strain)
                 element.force = element.getForce(element.stress) * factor #in MN
             element.moment = element.force*(element.getYloc() - self.NA_guess) * factor #in MN*m
-            empty_denom.append(E*element.getPanel().getArea()*factor)
+            empty_denom.append(E*element.getPanel().getArea()*factor*1e6) #in N
             empty_moment.append(element.moment)
             empty_force.append(element.force)
         total_force = sum(empty_force)*1e6 #in N
@@ -169,11 +169,14 @@ class SmithCollapse(object):
             count = 0
             while abs(force) > force_tol:
                 count += 1
-                NA0 += shift
+                NA0 -= shift
                 force, moment, shift = self.ApplyCurvature(NA0, curv_applied_sag)
-                if count > 3:
-                    print ("NA0 not converging in sag")
+                if count > 25:
+                    #print ("NA0 not converging in sag")
                     break
+            if abs(force) < force_tol:
+                print ("Converged at NA0=", NA0)
+                print ("Shift was =", shift)
             empty_crv_sag.append(curv_applied_sag)
             empty_moment_sag.append(moment)
             NA0_sag.append(NA0)
@@ -195,11 +198,12 @@ class SmithCollapse(object):
                 count += 1
                 NA0 += shift
                 force, moment, shift = self.ApplyCurvature(NA0, curv_applied_hog)
-                print ("force_hog", force)
-                print ("NA0_hog", NA0)
-                if count > 3:
+                if count > 25:
                     print ("NA0 not converging in hog")
                     break
+            if abs(force) < force_tol:
+                print ("Converged at NA0=", NA0)
+                print ("Shift was =", shift)
             empty_crv_hog.append(curv_applied_hog)
             empty_moment_hog.append(moment)
             NA0_hog.append(NA0)
@@ -213,7 +217,7 @@ class SmithCollapse(object):
 
         plt.plot(crv_array,NA_array, 'ro')
         plt.xlabel('Curvature [1/m]')
-        plt.ylabel('NA location [m]')
+        plt.ylabel('VBM [kN*m]')
         plt.title('Collapse Curve for Section')
         plt.grid(True)
         plt.show()

@@ -127,9 +127,9 @@ HCdata = smith_collapse.SmithCollapse([test_panel_bot, test_panel_side, test_pan
 # Create the midship section    
 structure = midship_section.Midship_Section([test_panel_bot, test_panel_side, test_panel_top],0)
 
-plot = HCdata.discretize()
+#plot = HCdata.discretize()
 #data = HCdata.sumForce_and_moment()
-#plot_HC = HCdata.plotCollapse()
+plot_HC = HCdata.plotCollapse()
 #plt.show()
         
 #get section data
