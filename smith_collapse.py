@@ -138,19 +138,20 @@ class SmithCollapse(object):
                 element.stress = element.getStress(element.strain)
                 element.force = element.getForce(element.stress) * factor #in MN
             element.moment = element.force*(element.getYloc() - self.NA_guess) * factor #in MN*m
-            empty_denom.append(E*element.getPanel().getArea()*factor*1e6) #in N
+            empty_denom.append(E*element.getPanel().getArea()) #in N
             empty_moment.append(element.moment)
             empty_force.append(element.force)
         total_force = sum(empty_force)*1e6 #in N
         total_moment = sum(empty_moment)*1e3 #in kN*m
-        shift = total_force/(self.curv_init*sum(empty_denom)) #in m
+        shift_denom = sum(empty_denom) * factor * 1e6 #in N
+        shift = total_force/(self.curv_init*shift_denom) #in m
         
         return total_force, total_moment, shift
     
     def plotCollapse(self):
         '''Iterates through curvature values and plots the collapse curve
         finding the equalibrium point on each'''
-        force_tol = 10000 #in N
+        force_tol = 5 #in N
         NA0 = self.setup()[0]
         crv_array = []
         M_array = []
@@ -165,18 +166,21 @@ class SmithCollapse(object):
 
         for i in range(0,num_crv_inc+1):
             curv_applied_sag = Crv_min_sag + i*Crv_step_sag
+            #print ("curv_applied_sag", curv_applied_sag)
             force, moment, shift = self.ApplyCurvature(NA0, curv_applied_sag)
             count = 0
             while abs(force) > force_tol:
+                #print ("force is =", force)
                 count += 1
                 NA0 -= shift
+                #print ("NA0 is updated to", NA0)
                 force, moment, shift = self.ApplyCurvature(NA0, curv_applied_sag)
-                if count > 25:
-                    #print ("NA0 not converging in sag")
+                if count > 500:
+                    print ("NA0 not converging in sag")
                     break
-            if abs(force) < force_tol:
-                print ("Converged at NA0=", NA0)
-                print ("Shift was =", shift)
+            #if abs(force) < force_tol:
+                #print ("Converged at NA0=", NA0)
+                #print ("Shift was =", shift)
             empty_crv_sag.append(curv_applied_sag)
             empty_moment_sag.append(moment)
             NA0_sag.append(NA0)
@@ -192,13 +196,16 @@ class SmithCollapse(object):
 
         for i in range(0,num_crv_inc+1):
             curv_applied_hog = Crv_min_hog + i*Crv_step_hog
+            print ("curv_applied_hog", curv_applied_hog)
             force, moment, shift = self.ApplyCurvature(NA0, curv_applied_hog)
             count = 0
             while abs(force) > force_tol:
+                print ("force is =", force)
                 count += 1
-                NA0 += shift
+                NA0 -= shift
                 force, moment, shift = self.ApplyCurvature(NA0, curv_applied_hog)
-                if count > 25:
+                print ("NA0 is updated to", NA0)
+                if count > 500:
                     print ("NA0 not converging in hog")
                     break
             if abs(force) < force_tol:
@@ -215,7 +222,7 @@ class SmithCollapse(object):
 
         #print ("crv_array", crv_array)
 
-        plt.plot(crv_array,NA_array, 'ro')
+        plt.plot(crv_array,M_array, 'ro')
         plt.xlabel('Curvature [1/m]')
         plt.ylabel('VBM [kN*m]')
         plt.title('Collapse Curve for Section')
