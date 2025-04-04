@@ -235,7 +235,10 @@ class Element:
         
     def getForce(self, straini):
         '''return force at a given strain'''
-        return self.getStress(straini) * self._panel.getArea()
+        stress = float(self.getStress(straini))
+        area = self.getPanel().getArea()
+        
+        return stress * area
     
     def getPanel(self):
         '''return t_panel object'''

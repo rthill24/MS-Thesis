@@ -158,10 +158,14 @@ deck_panel = TPanel_trans.TPanel_trans(B_deck,Frame_Spacing,nstiff_deck,ntrans_d
                                         tw_deck,hw_deck,tf_deck,bf_deck,twh_deck,twt_deck,\
                                         tft_deck,tfb_deck,sloc_deck,ornt_deck,qloc_deck,pmatl,smatl,tmatl,eta_deck)
 
+#start logging
+logging.basicConfig(filename='SD_Midship_Section.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
 # Create the midship section    
 structure = midship_section.Midship_Section([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel],0)
 HCdata = smith_collapse.SmithCollapse([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel])
 HC_strs_strn  = HCdata.Hansen()
+
 
 """ HC_strs_panel_1 = HC_strs_strn[2][0]
 HC_strn_panel_1 = HC_strs_strn[1][0]

@@ -8,6 +8,8 @@ import numpy as np
 import HansenC as HC
 import math
 import matplotlib.pyplot as plt
+import logging
+logger = logging.getLogger(__name__)
 
 
 class SmithCollapse(object):
@@ -128,6 +130,7 @@ class SmithCollapse(object):
         empty_force = []
         empty_moment = []
         empty_denom = []
+        logger.debug("Starting Force/Moment Calc, NA_guess: %s, Curvature %s", NA_guess, curv_init)
 
         for element in XSection:
             element.strain = (-(element.getYloc() - self.NA_guess))/(1/self.curv_init)
@@ -136,8 +139,9 @@ class SmithCollapse(object):
                 element.force = element.stress*element.getPanel().getArea() * factor #in MN
             else:
                 element.stress = element.getStress(element.strain)
-                element.force = element.getForce(element.stress) * factor #in MN
+                element.force = element.stress*element.getPanel().getArea() * factor #in MN ####CHECK THIS
             element.moment = element.force*(element.getYloc() - self.NA_guess) * factor #in MN*m
+            logger.debug("Element %s, Area %s, Strain %s, Stress %s, Force %s, Moment %s", element, element.getPanel().getArea(), element.strain, element.stress, element.force, element.moment)
             empty_denom.append(E*element.getPanel().getArea()) #in N
             empty_moment.append(element.moment)
             empty_force.append(element.force)
@@ -145,6 +149,7 @@ class SmithCollapse(object):
         total_moment = sum(empty_moment)*1e3 #in kN*m
         shift_denom = sum(empty_denom) * factor * 1e6 #in N
         shift = total_force/(self.curv_init*shift_denom) #in m
+        logger.debug("Total Force %s, Total Moment %s, Shift %s", total_force, total_moment, shift)
         
         return total_force, total_moment, shift
     
@@ -170,16 +175,16 @@ class SmithCollapse(object):
             force, moment, shift = self.ApplyCurvature(NA0, curv_applied_sag)
             count = 0
             while abs(force) > force_tol:
-                #print ("force is =", force)
+                print ("force is =", force)
                 count += 1
                 NA0 -= shift
-                #print ("NA0 is updated to", NA0)
+                print ("NA0 is updated to", NA0)
                 force, moment, shift = self.ApplyCurvature(NA0, curv_applied_sag)
-                if count > 500:
+                if count > 3:
                     print ("NA0 not converging in sag")
                     break
-            #if abs(force) < force_tol:
-                #print ("Converged at NA0=", NA0)
+            if abs(force) < force_tol:
+                print ("Converged at NA0=", NA0)
                 #print ("Shift was =", shift)
             empty_crv_sag.append(curv_applied_sag)
             empty_moment_sag.append(moment)
@@ -205,7 +210,7 @@ class SmithCollapse(object):
                 NA0 -= shift
                 force, moment, shift = self.ApplyCurvature(NA0, curv_applied_hog)
                 print ("NA0 is updated to", NA0)
-                if count > 500:
+                if count > 3:
                     print ("NA0 not converging in hog")
                     break
             if abs(force) < force_tol:
