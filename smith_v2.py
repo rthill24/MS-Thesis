@@ -5,6 +5,11 @@
 # (c) 2025 Regents of the Univesity of Michigan
 
 import matplotlib.pyplot as plt
+import logging
+import TPanel_trans
+import math
+import HansenC as HC
+from scipy.interpolate import CubicSpline
 
 logger = logging.getLogger(__name__)
 
@@ -89,7 +94,7 @@ class EP_compression_element(ElementBase):
     Class for an element that is elastic-pefectly plastic in tension, and
     follows a load-shortening curve in compression.
     '''
-    def __init__(self, name, area, x_loc, y_loc, sigma_yield, strain_yield, interp_compression):
+    def __init__(self, name, area, x_loc, y_loc, sigma_yield, E, interp_compression):
         '''
         Initialize the elastic element with its name, area, location, and elastic modulus.
         Parameters
@@ -111,8 +116,10 @@ class EP_compression_element(ElementBase):
         '''
         super().__init__(name, area, x_loc, y_loc)
         self.sigma_yield = sigma_yield
-        self.strain_yield = strain_yield
+        self.E = E
+        self.strain_yield = self.sigma_yield / self.E #Yield strain
         self.interp_compression = interp_compression
+        
     
     def getForceAndStress(self, strain):
         '''
@@ -136,9 +143,10 @@ class EP_compression_element(ElementBase):
             stress = self.E * strain
         elif (strain < 0):
             #Compression region
-            stress = self.interp_compression(strain)
+            stress = self.interp_compression(strain) #in MPa
+        #might need to add elif about last data point in compression
 
-        force = stress*self.area*10e6
+        force = stress*self.area*10e6 #in N
         return force, stress
 
 class SmithMethod:
@@ -152,7 +160,46 @@ class SmithMethod:
         self._elements = []
         self._need_update = True
         
-    
+    def discretize(self, t_panel_list):
+        
+        count = -1
+
+        for panel in t_panel_list:
+            data_i = HC.HansenC(panel)
+            cs = CubicSpline(-data_i._strn, -data_i._strss, bc_type='natural')
+            elements = []
+            count += 1
+            stiff_spacing = panel.getb()
+            numElements = panel.getnstiff()+2
+            numStiff = panel.getnstiff()
+            for j in range(numElements):
+                if j < numStiff:
+                    y_i = panel.get_bot()+((j+1)*(stiff_spacing)*math.sin(math.radians(-panel.getOrnt())))
+                    x_i = 0
+                    Ys = panel.getsmatl().getYld() #ATTN! currently just uses yield strength of first element
+                    E = panel.getsmatl().getE() #ATTN! currently just uses E of first element
+                    yield_strn = Ys/E
+                    area = panel.gettp() * panel.getb() + panel.gettw() * panel.gethw() + panel.gettf() * panel.getbf()
+                    element = EP_compression_element("test", area, x_i, y_i, Ys, yield_strn, cs)
+                    self.addElement(element)
+                elif j == numStiff:
+                    y_0 = panel.get_bot()
+                    y_last = panel.get_bot()+((numStiff)*(stiff_spacing)*math.sin(math.radians(-panel.getOrnt())))
+                    x_0 = 0
+                    x_last = 0
+                    span_0 = stiff_spacing
+                    span_last = panel.getB()-(stiff_spacing*(numStiff))-span_0
+                    Area_0 = panel.gettp() * span_0
+                    Area_last = panel.gettp() * span_last
+                    Ys = panel.getsmatl().getYld() #ATTN! currently just uses yield strength of first element
+                    E = panel.getsmatl().getE() #ATTN! currently just uses E of first element
+                    yield_strn = Ys/E
+                    element = EP_compression_element("test", Area_0, x_0, y_0, Ys, yield_strn, cs)
+                    self.addElement(element)
+                    element = EP_compression_element("test", Area_last, x_last, y_last, Ys, yield_strn, cs)
+                    self.addElement(element)
+        return 
+
     def addElement(self, element):
         '''
         Adds a member of the element class to the list of elements in the cross section'
@@ -161,7 +208,7 @@ class SmithMethod:
         self._need_update = True
         logger.debug(f"Added element: {element.name} to Smith method.")
 
-    def getOverallProperties(self):
+    def getOverallProperties(self,  mirror = True):
         '''
         Calculate the overall properties of the cross section.
         Returns
@@ -175,25 +222,66 @@ class SmithMethod:
         total_my = 0
         total_ixx = 0
         total_iyy = 0
+        total_shift_denom = 0
+        yloc_list = []
+        xloc_list = []
+        c1 = []
+        c2 = []
+
+        if mirror == True:
+            factor = 2 
+        else:
+            factor = 1
 
         # Calculate areas and moments about origin
         for element in self._elements:
-            total_area += element.area
-            total_mx += element.area * element.x_loc
-            total_my += element.area * element.y_loc
-            total_ixx += element.area * (element.y_loc**2)
-            total_iyy += element.area * (element.x_loc**2)
+            total_area += element.area * factor
+            total_mx += element.area * element.x_loc * factor
+            total_my += element.area * element.y_loc * factor
+            total_ixx += element.area * (element.y_loc**2) * factor
+            total_iyy += element.area * (element.x_loc**2) * factor
+            total_shift_denom += element.area * element.E * 10e6 #in N
+            yloc_list  = yloc_list.append(element.y_loc) #list of y locations for the elements
+            xloc_list  = xloc_list.append(element.x_loc) #list of x locations for the elements
         
         #Catch case of now panels ready
         if total_area == 0:
-            return 0, 0, 0, 0, 0
+            return 0, 0, 0, 0, 0, 0
         else:
             x_na = total_mx / total_area
             y_na = total_my / total_area
-            ixx = total_ixx - total_area * y_na**2  
+            ixx = total_ixx - total_area * y_na**2
             iyy = total_iyy - total_area * x_na**2
-            return total_area, x_na, y_na, ixx, iyy
+            return total_area, x_na, y_na, ixx, iyy, total_shift_denom
+        
+    def setup(self):
+        '''Determine the curvature bounds for the ultimate strength calculator'''
 
+        NA0 = self.getOverallProperties()[2]
+        yloc_list = []
+        for element in self._elements:
+            yloc_list.append(element.getYloc())
+        c1 = abs(NA0 - max(yloc_list))
+        c2 = abs(NA0 - min(yloc_list))
+        c = max(c1,c2)
+        Ys = self.getPanel().getsmatl().getYld() #ATTN! currently just uses yield strength of first element
+        E = self.getPanel().getsmatl().getE() #ATTN! currently just uses E of first element
+        YldCrv = Ys/(c*E) #yield curvature in 1/m
+        #print ("Yield curvature=", YldCrv, "1/m")
+        
+        num_crv_inc = 20
+
+        #for sagging condition
+        Crv_max_sag = -2*YldCrv
+        Crv_min_sag = Crv_max_sag/10
+        Crv_step_sag = (Crv_max_sag - Crv_min_sag)/num_crv_inc
+
+        #for hogging condition
+        Crv_max_hog = 2*YldCrv
+        Crv_min_hog = Crv_max_hog/10
+        Crv_step_hog = (Crv_max_hog - Crv_min_hog)/num_crv_inc
+        
+        return Crv_min_sag, Crv_step_sag, Crv_min_hog, Crv_step_hog, num_crv_inc
     
     def plotSection(self):
         #Make a list of all X/Y locations for plotting
@@ -213,7 +301,7 @@ class SmithMethod:
         plt.show()
 
     
-    def applyCurvature(self, curvature, NAGuess = None):
+    def applyCurvature(self, curvature, NAGuess = None,  mirror = True):
         '''
         Apply a curvature to the cross section and calculate the forces and stresses in each element.
         Parameters
@@ -226,6 +314,13 @@ class SmithMethod:
             force overall in the cross section N, and moment in the cross section kN*m.
         '''
         
+        #don't forget to add factor for mirroring
+
+        if mirror == True:
+            factor = 2 
+        else:
+            factor = 1
+
         #Calculate the overall properties of the cross section
         if NAGuess is None:
             area, x_na, y_na, ixx, iyy = self.getOverallProperties()
@@ -236,17 +331,17 @@ class SmithMethod:
         moment = 0
         force_overall = 0 
         for element in self._elements:
-            strain = curvature * (element.y_loc - y_na)
+            strain = curvature * -(element.y_loc - y_na)
             force, stress = element.getForceAndStress(strain)
-            moment += force * (element.y_loc - y_na)*1./1000.
-            force_overall += force
+            moment += force * (element.y_loc - y_na)*1./1000 * factor #in kN*m
+            force_overall += force * factor #in N
         
         return force_overall, moment
     
     
-    def solveCurvature(self, curvature):
+    def solveCurvature(self, curvature, NAGuess = None):
         '''
-            Solve for the curvature of the cross section using the Smith method.
+            Solve for the bending moment of the cross section using the Smith method.
             Parameters: 
             ----------
             curvature : float
@@ -256,4 +351,72 @@ class SmithMethod:
             tuple
                 Resisting bending moment kN*m, and NA position, meters
         '''
+        area, x_na, y_na, ixx, iyy, total_shift_denom = self.getOverallProperties()
 
+        if NAGuess is not None:
+            y_na = NAGuess
+        
+        force_tol = 10 #in N
+        force = 2 * force_tol #just to start
+        while abs(force) > force_tol:
+            force, moment = self.applyCurvature(curvature, y_na)
+            if abs(force) > force_tol:
+                shift = force/(curvature*total_shift_denom) #in m
+                y_na -= abs(force) * shift #might need to add abs(force) to get this to converge more quickly
+            #print ("force is =", force)
+            count += 1
+            #print ("NA0 is updated to", NA0)
+            if count > 100:
+                print ("NA0 not converging")
+                break
+            
+        return moment, y_na
+
+    def getCollapseCurve(self):
+        '''
+            Increments through curvatures from setup function.
+            Returns
+            -------     
+            tuple
+                Resisting bending moment kN*m, and curvature 1/m
+        '''
+        crv_array = []
+        M_array = []
+
+        Crv_min_sag, Crv_step_sag, Crv_min_hog, Crv_step_hog, num_crv_inc = self.setup()
+
+        #for sagging condition first
+        for i in range(0,num_crv_inc+1):
+            curv_applied_sag = Crv_min_sag + i*Crv_step_sag
+            moment, y_na = self.solveCurvature(curv_applied_sag)
+            crv_array.append(curv_applied_sag)
+            M_array.append(moment)
+        #for hogging condition next
+        for i in range(0,num_crv_inc+1):
+            curv_applied_hog = Crv_min_hog + i*Crv_step_hog
+            moment, y_na = self.solveCurvature(curv_applied_hog)
+            crv_array.append(curv_applied_hog)
+            M_array.append(moment)
+
+        plt.plot(crv_array,M_array, 'ro')
+        plt.xlabel('Curvature [1/m]')
+        plt.ylabel('VBM [kN*m]')
+        plt.title('Collapse Curve for Section')
+        plt.grid(True)
+        plt.show()
+        
+        return M_array, crv_array
+    
+    def getUltimateMoment(self):
+        '''
+            Finds the ultimate collapse moment from the collapse curve.
+            Returns
+            -------     
+            float
+                Mult, ultimate moment kN*m
+        '''
+        M_array, crv_array = self.getCollapseCurve()
+        #Find the max moment in the array
+        Mult = max(abs(M_array))
+    
+        return Mult
