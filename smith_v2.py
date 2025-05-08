@@ -167,7 +167,6 @@ class SmithMethod:
         for panel in t_panel_list:
             data_i = HC.HansenC(panel)
             cs = CubicSpline(-data_i._strn, -data_i._strss, bc_type='natural')
-            elements = []
             count += 1
             stiff_spacing = panel.getb()
             numElements = panel.getnstiff()+2
@@ -225,8 +224,6 @@ class SmithMethod:
         total_shift_denom = 0
         yloc_list = []
         xloc_list = []
-        c1 = []
-        c2 = []
 
         if mirror == True:
             factor = 2 
@@ -236,33 +233,30 @@ class SmithMethod:
         # Calculate areas and moments about origin
         for element in self._elements:
             total_area += element.area * factor
-            total_mx += element.area * element.x_loc * factor
-            total_my += element.area * element.y_loc * factor
-            total_ixx += element.area * (element.y_loc**2) * factor
-            total_iyy += element.area * (element.x_loc**2) * factor
+            total_mx += element.area * element.x_loc 
+            total_my += element.area * element.y_loc 
+            total_ixx += element.area * (element.y_loc**2) 
+            total_iyy += element.area * (element.x_loc**2) 
             total_shift_denom += element.area * element.E * 10e6 #in N
-            yloc_list  = yloc_list.append(element.y_loc) #list of y locations for the elements
-            xloc_list  = xloc_list.append(element.x_loc) #list of x locations for the elements
+            yloc_list.append(element.getYloc())
+            xloc_list.append(element.getXloc())
         
         #Catch case of now panels ready
         if total_area == 0:
-            return 0, 0, 0, 0, 0, 0
+            return 0, 0, 0, 0, 0, 0, 0, 0
         else:
             x_na = total_mx / total_area
             y_na = total_my / total_area
             ixx = total_ixx - total_area * y_na**2
             iyy = total_iyy - total_area * x_na**2
-            return total_area, x_na, y_na, ixx, iyy, total_shift_denom
+            return total_area, x_na, y_na, ixx, iyy, total_shift_denom, yloc_list, xloc_list
         
     def setup(self):
         '''Determine the curvature bounds for the ultimate strength calculator'''
 
-        NA0 = self.getOverallProperties()[2]
-        yloc_list = []
-        for element in self._elements:
-            yloc_list.append(element.getYloc())
-        c1 = abs(NA0 - max(yloc_list))
-        c2 = abs(NA0 - min(yloc_list))
+        total_area, x_na, y_na, ixx, iyy, total_shift_denom, yloc_list, xloc_list = self.getOverallProperties()
+        c1 = abs(y_na - max(yloc_list))
+        c2 = abs(y_na - min(yloc_list))
         c = max(c1,c2)
         Ys = self.getPanel().getsmatl().getYld() #ATTN! currently just uses yield strength of first element
         E = self.getPanel().getsmatl().getE() #ATTN! currently just uses E of first element
@@ -323,7 +317,7 @@ class SmithMethod:
 
         #Calculate the overall properties of the cross section
         if NAGuess is None:
-            area, x_na, y_na, ixx, iyy = self.getOverallProperties()
+            area, x_na, y_na, ixx, iyy, yloc_list, xloc_list = self.getOverallProperties()
         else:
             y_na = NAGuess
 

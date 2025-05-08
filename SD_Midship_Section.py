@@ -19,7 +19,7 @@ from operator import itemgetter
 from scipy import integrate
 import deterioratingStructure
 import Allowable_Permanent_Set
-import smith_collapse
+import smith_v2 
 
 # Define the material properties for 5086-H116 Aluminum
 pmatl = Structures.EPMatl(207, 71000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
@@ -159,26 +159,12 @@ deck_panel = TPanel_trans.TPanel_trans(B_deck,Frame_Spacing,nstiff_deck,ntrans_d
                                         tft_deck,tfb_deck,sloc_deck,ornt_deck,qloc_deck,pmatl,smatl,tmatl,eta_deck)
 
 #start logging
-logging.basicConfig(filename='SD_Midship_Section.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+#logging.basicConfig(filename='SD_Midship_Section.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 # Create the midship section    
 structure = midship_section.Midship_Section([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel],0)
-HCdata = smith_collapse.SmithCollapse([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel])
-HC_strs_strn  = HCdata.Hansen()
-
-
-""" HC_strs_panel_1 = HC_strs_strn[2][0]
-HC_strn_panel_1 = HC_strs_strn[1][0]
-plt.plot(HC_strn_panel_1,HC_strs_panel_1)
-plt.xlabel('Strain')
-plt.ylabel('Stress (MPa)')
-plt.title('Stress-Strain Curve for Panel 1')
-plt.grid(True)
-plt.show() """
-
-#test = HCdata.setup()
-#Mult = HCdata.sumForce_and_moment()
-curve = HCdata.plotCollapse()
+Smith = smith_v2.SmithMethod([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel])
+curve = Smith.getCollapseCurve()
 
   
 #get section data
