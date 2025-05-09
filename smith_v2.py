@@ -9,6 +9,7 @@ import logging
 import TPanel_trans
 import math
 import HansenC as HC
+import numpy as np
 from scipy.interpolate import CubicSpline
 
 logger = logging.getLogger(__name__)
@@ -146,6 +147,10 @@ class EP_compression_element(ElementBase):
             stress = self.interp_compression(strain) #in MPa
         #might need to add elif about last data point in compression
 
+        #if np.isnan(stress):
+            #print ("NaN in stress")
+            #print ("provided strain was: ", strain)
+
         force = stress*self.area*10e6 #in N
         return force, stress
 
@@ -166,7 +171,9 @@ class SmithMethod:
 
         for panel in t_panel_list:
             data_i = HC.HansenC(panel)
-            cs = CubicSpline(-data_i._strn, -data_i._strss, bc_type='natural')
+            data_i._strn_flip = -np.flip(data_i._strn)
+            data_i._strss_flip = -np.flip(data_i._strss)
+            cs = CubicSpline(data_i._strn_flip, data_i._strss_flip, bc_type='natural')
             count += 1
             stiff_spacing = panel.getb()
             numElements = panel.getnstiff()+2
@@ -179,7 +186,7 @@ class SmithMethod:
                     E = panel.getsmatl().getE() #ATTN! currently just uses E of first element
                     yield_strn = Ys/E
                     area = panel.gettp() * panel.getb() + panel.gettw() * panel.gethw() + panel.gettf() * panel.getbf()
-                    element = EP_compression_element("test", area, x_i, y_i, Ys, yield_strn, cs)
+                    element = EP_compression_element("test", area, x_i, y_i, Ys, E, cs)
                     self.addElement(element)
                 elif j == numStiff:
                     y_0 = panel.get_bot()
@@ -193,9 +200,9 @@ class SmithMethod:
                     Ys = panel.getsmatl().getYld() #ATTN! currently just uses yield strength of first element
                     E = panel.getsmatl().getE() #ATTN! currently just uses E of first element
                     yield_strn = Ys/E
-                    element = EP_compression_element("test", Area_0, x_0, y_0, Ys, yield_strn, cs)
+                    element = EP_compression_element("test", Area_0, x_0, y_0, Ys, E, cs)
                     self.addElement(element)
-                    element = EP_compression_element("test", Area_last, x_last, y_last, Ys, yield_strn, cs)
+                    element = EP_compression_element("test", Area_last, x_last, y_last, Ys, E, cs)
                     self.addElement(element)
         return 
 
@@ -238,8 +245,8 @@ class SmithMethod:
             total_ixx += element.area * (element.y_loc**2) 
             total_iyy += element.area * (element.x_loc**2) 
             total_shift_denom += element.area * element.E * 10e6 #in N
-            yloc_list.append(element.getYloc())
-            xloc_list.append(element.getXloc())
+            yloc_list.append(element.y_loc)
+            xloc_list.append(element.x_loc)
         
         #Catch case of now panels ready
         if total_area == 0:
@@ -258,8 +265,9 @@ class SmithMethod:
         c1 = abs(y_na - max(yloc_list))
         c2 = abs(y_na - min(yloc_list))
         c = max(c1,c2)
-        Ys = self.getPanel().getsmatl().getYld() #ATTN! currently just uses yield strength of first element
-        E = self.getPanel().getsmatl().getE() #ATTN! currently just uses E of first element
+        #print ("c=", c)
+        Ys = self._elements[0].sigma_yield #ATTN! currently just uses yield strength of first element
+        E = self._elements[0].E #ATTN! currently just uses E of first element
         YldCrv = Ys/(c*E) #yield curvature in 1/m
         #print ("Yield curvature=", YldCrv, "1/m")
         
@@ -320,6 +328,8 @@ class SmithMethod:
             area, x_na, y_na, ixx, iyy, yloc_list, xloc_list = self.getOverallProperties()
         else:
             y_na = NAGuess
+            
+        print ("NAGuess is: ", y_na)
 
         #Calculate the strain in each element
         moment = 0
@@ -345,7 +355,9 @@ class SmithMethod:
             tuple
                 Resisting bending moment kN*m, and NA position, meters
         '''
-        area, x_na, y_na, ixx, iyy, total_shift_denom = self.getOverallProperties()
+        area, x_na, y_na, ixx, iyy, total_shift_denom, yloc_list, xloc_list = self.getOverallProperties()
+
+        count = 0
 
         if NAGuess is not None:
             y_na = NAGuess
@@ -356,10 +368,10 @@ class SmithMethod:
             force, moment = self.applyCurvature(curvature, y_na)
             if abs(force) > force_tol:
                 shift = force/(curvature*total_shift_denom) #in m
-                y_na -= abs(force) * shift #might need to add abs(force) to get this to converge more quickly
+                y_na -=  shift #might need to add abs(force) to get this to converge more quickly
             #print ("force is =", force)
             count += 1
-            #print ("NA0 is updated to", NA0)
+            #print ("NA0 is updated to", y_na)
             if count > 100:
                 print ("NA0 not converging")
                 break
@@ -398,6 +410,9 @@ class SmithMethod:
         plt.title('Collapse Curve for Section')
         plt.grid(True)
         plt.show()
+
+        print ("here's crv array: ", crv_array)
+        print ("here's M array: ", M_array)
         
         return M_array, crv_array
     
@@ -411,6 +426,7 @@ class SmithMethod:
         '''
         M_array, crv_array = self.getCollapseCurve()
         #Find the max moment in the array
-        Mult = max(abs(M_array))
-    
+        Mult = max(M_array, key=abs)
+        print ("here's the ultimate moment: ", Mult)
+        
         return Mult

@@ -163,8 +163,10 @@ deck_panel = TPanel_trans.TPanel_trans(B_deck,Frame_Spacing,nstiff_deck,ntrans_d
 
 # Create the midship section    
 structure = midship_section.Midship_Section([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel],0)
-Smith = smith_v2.SmithMethod([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel])
-curve = Smith.getCollapseCurve()
+Smith = smith_v2.SmithMethod()
+Smith.discretize([bottom_panel, side_panel, sheer_panel, top_panel, deck_panel])
+#Smith.plotSection()
+Smith.getUltimateMoment()
 
   
 #get section data
