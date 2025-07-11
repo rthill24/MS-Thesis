@@ -195,15 +195,15 @@ PC = structure.production_cost()
 """
 #produce plot
 plot = structure.plot_section()
-plt.show()
+#plt.show()
 
-""" print ("here's the R: ", Hughes_panel)
+#print ("here's the R: ", Hughes_panel)
 
 #output data
-print ("here's EI: ", data[0])
+#print ("here's EI: ", data[0])
 print ("here's NAy: ", data[1])
-print ("here's area: ", data[2])
-print ("here's weight: ", data[3]) """
+#print ("here's area: ", data[2])
+#print ("here's weight: ", data[3])
 #print ("here's I_NA: ", data[4])
 #print ("here's SM_min: ", data[5])
 #print ("here's My: ", data[6])

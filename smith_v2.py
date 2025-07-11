@@ -240,11 +240,11 @@ class SmithMethod:
         # Calculate areas and moments about origin
         for element in self._elements:
             total_area += element.area * factor
-            total_mx += element.area * element.x_loc 
-            total_my += element.area * element.y_loc 
-            total_ixx += element.area * (element.y_loc**2) 
-            total_iyy += element.area * (element.x_loc**2) 
-            total_shift_denom += element.area * element.E * 10e6 #in N
+            total_mx += element.area * element.x_loc * factor
+            total_my += element.area * element.y_loc * factor
+            total_ixx += element.area * (element.y_loc**2) * factor
+            total_iyy += element.area * (element.x_loc**2) * factor
+            total_shift_denom += element.area * element.E * factor * 10e6 #in N
             yloc_list.append(element.y_loc)
             xloc_list.append(element.x_loc)
         
@@ -265,11 +265,9 @@ class SmithMethod:
         c1 = abs(y_na - max(yloc_list))
         c2 = abs(y_na - min(yloc_list))
         c = max(c1,c2)
-        #print ("c=", c)
         Ys = self._elements[0].sigma_yield #ATTN! currently just uses yield strength of first element
         E = self._elements[0].E #ATTN! currently just uses E of first element
         YldCrv = Ys/(c*E) #yield curvature in 1/m
-        #print ("Yield curvature=", YldCrv, "1/m")
         
         num_crv_inc = 20
 
@@ -329,7 +327,7 @@ class SmithMethod:
         else:
             y_na = NAGuess
             
-        print ("NAGuess is: ", y_na)
+        #print ("NAGuess is: ", y_na)
 
         #Calculate the strain in each element
         moment = 0
@@ -337,7 +335,7 @@ class SmithMethod:
         for element in self._elements:
             strain = curvature * -(element.y_loc - y_na)
             force, stress = element.getForceAndStress(strain)
-            moment += force * (element.y_loc - y_na)*1./1000 * factor #in kN*m
+            moment += (force/1000) * (element.y_loc - y_na) * factor #in kN*m
             force_overall += force * factor #in N
         
         return force_overall, moment
@@ -372,7 +370,7 @@ class SmithMethod:
             #print ("force is =", force)
             count += 1
             #print ("NA0 is updated to", y_na)
-            if count > 100:
+            if count > 1000:
                 print ("NA0 not converging")
                 break
             
@@ -411,8 +409,8 @@ class SmithMethod:
         plt.grid(True)
         plt.show()
 
-        print ("here's crv array: ", crv_array)
-        print ("here's M array: ", M_array)
+        #print ("here's crv array: ", crv_array)
+        #print ("here's M array: ", M_array)
         
         return M_array, crv_array
     
