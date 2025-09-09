@@ -281,7 +281,7 @@ class Midship_Section(object):
 
     def HG_stress (self, M_tot = 46589 , mirror = True): #M_tot is the total moment in the midship section in kN*m
         '''
-        Calculates the hull girder bending stress for each panel (looking at most extreme fiber) in the midship section
+        Calculates the hull girder bending stress for each panel at most extreme fiber for each panel. Returns compressive (+) stresses for use in reliability analysis.
         
         Parameters
         -----------
@@ -289,7 +289,7 @@ class Midship_Section(object):
         
         Returns
         --------
-        sigma_HG:   The hull girder bending stress for each panel in the midship section based on most extreme fiber
+        sigma_HG:   The hull girder bending stress for each panel in the midship section based on most extreme fiber of each panel (in MPa)
         '''
 
         if mirror == True:
@@ -600,7 +600,7 @@ class Midship_Section(object):
 
             Rat_a_u[i] = sig_a_u[i]/((sig_ys+sig_yp)/2)
 
-        return Rat_a_u
+        return sig_a_u
     
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''
@@ -691,6 +691,57 @@ class Midship_Section(object):
         P_F_plating = Analysis.getFailure()
         
         return beta_plating, P_F_plating
+
+    def Hansen_panel_reliability (self, sig_a_u, HG_stress, sig_a_u_Rel_r = 1.05, sig_a_u_Rel_cov = 0.075, HG_stress_Rel_r = 1, HG_stress_Rel_cov = 0.20):
+
+        # Calculate the reliability of the panels to compressive collapse based on panel w/ max ratio of HG_stress to ultimate compressive axial strength
+        # Results in one beta value for the entire section based on the most critical panel
+
+        # Find the maximum ratio of HG_stress to sig_a_u
+        ratios = np.zeros(len(HG_stress))
+        for i in range(len(HG_stress)):
+            ratios[i] = HG_stress[i] / sig_a_u[i]
+        
+        # Find the index of the maximum ratio
+        max_ratio_index = np.argmax(ratios)
+        
+        # Use the maximum ratio to find the sig_au value and HG_stress value to use in the reliability analysis
+        sig_a_u_Rel = sig_a_u[max_ratio_index]
+
+        print ("Critical Panel Index: ", max_ratio_index)
+        print ("Critical Panel Yield Stress (MPa): ", sig_a_u_Rel)
+        print ("Critical Panel HG Stress (MPa): ", HG_stress[max_ratio_index])
+        HG_stress_Rel = HG_stress[max_ratio_index]
+
+        self.limit_state = ra.LimitState(lambda HG_stress_Rel, sig_a_u_Rel: 1 - (HG_stress_Rel/sig_a_u_Rel))
+        
+        #initialize stochastic model
+        self.stochastic_model = ra.StochasticModel()
+        
+        #define random variables
+        
+        ## sig_au is a Lognormal distributed random variable with a mean/nominal ratio of 1 and a COV of 0.15, where nominal value is provided by design optimization
+        self.stochastic_model.addVariable(ra.Lognormal("HG_stress_Rel", HG_stress_Rel*HG_stress_Rel_r, HG_stress_Rel_cov*HG_stress_Rel*HG_stress_Rel_r))
+
+        ## sig_y is a Lognormal distributed random variable with a mean/nominal ratio of 1 and a COV of 0.15, where nominal value is provided by design optimization
+        self.stochastic_model.addVariable(ra.Lognormal("sig_a_u_Rel", sig_a_u_Rel*sig_a_u_Rel_r, sig_a_u_Rel_cov*sig_a_u_Rel*sig_a_u_Rel_r))
+        
+        #initialize reliability analysis
+        options = ra.AnalysisOptions()
+        options.setPrintOutput(False)
+        
+        Analysis = ra.Form(
+            analysis_options=options,
+            stochastic_model=self.stochastic_model,
+            limit_state=self.limit_state
+        )
+        
+        Analysis.run()
+        
+        beta_Hpanel = Analysis.getBeta()
+        P_F_Hpanel = Analysis.getFailure()
+        
+        return beta_Hpanel, P_F_Hpanel
 
     def plot_section(self, show=False, mirror=True, ax_obj=None): #mirror is used to mirror the plot, does not automatically mirror calculations
         '''Plots the section'''

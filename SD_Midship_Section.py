@@ -183,7 +183,7 @@ Returns
 '''
 
 data = structure.section_data()
-""" HG_stress = structure.HG_stress()
+HG_stress = structure.HG_stress()
 Hughes_panel = structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
 
 beta_HG = structure.HG_reliability(data[6])[0]
@@ -192,7 +192,12 @@ P_F_HG = structure.HG_reliability(data[6])[1]
 #get production cost
 PC = structure.production_cost()
 
-"""
+beta_Hpanel = structure.Hansen_panel_reliability(Hughes_panel, HG_stress)[0]
+P_F_Hpanel = structure.Hansen_panel_reliability(Hughes_panel, HG_stress)[1]
+
+""" print ("here's beta_Hpanel: ", beta_Hpanel)
+print ("here's P_F_Hpanel: ", P_F_Hpanel) """
+
 #produce plot
 plot = structure.plot_section()
 #plt.show()
