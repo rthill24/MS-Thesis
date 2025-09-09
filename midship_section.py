@@ -708,9 +708,6 @@ class Midship_Section(object):
         # Use the maximum ratio to find the sig_au value and HG_stress value to use in the reliability analysis
         sig_a_u_Rel = sig_a_u[max_ratio_index]
 
-        print ("Critical Panel Index: ", max_ratio_index)
-        print ("Critical Panel Yield Stress (MPa): ", sig_a_u_Rel)
-        print ("Critical Panel HG Stress (MPa): ", HG_stress[max_ratio_index])
         HG_stress_Rel = HG_stress[max_ratio_index]
 
         self.limit_state = ra.LimitState(lambda HG_stress_Rel, sig_a_u_Rel: 1 - (HG_stress_Rel/sig_a_u_Rel))

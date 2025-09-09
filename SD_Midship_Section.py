@@ -195,8 +195,8 @@ PC = structure.production_cost()
 beta_Hpanel = structure.Hansen_panel_reliability(Hughes_panel, HG_stress)[0]
 P_F_Hpanel = structure.Hansen_panel_reliability(Hughes_panel, HG_stress)[1]
 
-""" print ("here's beta_Hpanel: ", beta_Hpanel)
-print ("here's P_F_Hpanel: ", P_F_Hpanel) """
+print ("here's beta_Hpanel: ", beta_Hpanel)
+print ("here's P_F_Hpanel: ", P_F_Hpanel)
 
 #produce plot
 plot = structure.plot_section()
