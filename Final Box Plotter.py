@@ -21,9 +21,9 @@ import Box_Post_Processing_NAME
 plt.close()
 
 # Define the material properties
-pmatl = Structures.EPMatl(95e6, 70e9, 0.34)
-smatl = Structures.EPMatl(95e6, 70e9, 0.34)
-tmatl = Structures.EPMatl(95e6, 70e9, 0.34)
+pmatl = Structures.EPMatl(207, 71000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
+smatl = Structures.EPMatl(207, 71000, 2660, 0.33)
+tmatl = smatl
 
 # for bottom panel
 B_bot  =  1

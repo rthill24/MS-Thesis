@@ -32,10 +32,10 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         self.current_individual = None
 
     def Eval(self, individual_instance, metamodel=None):
-        # Define the material properties
-        self.pmatl = Structures.EPMatl(190, 71000, 2660, 0.33)
-        self.smatl = Structures.EPMatl(190, 71000, 2660, 0.33)
-        self.tmatl = Structures.EPMatl(190, 71000, 2660, 0.33)
+        # Define the material properties for 5086-H116 Aluminum
+        self.pmatl = Structures.EPMatl(207, 71000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
+        self.smatl = Structures.EPMatl(207, 71000, 2660, 0.33)
+        self.tmatl = Structures.EPMatl(207, 71000, 2660, 0.33)
 
         self.Frame_Spacing = 2250/1000
 
@@ -164,9 +164,10 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         self.current_individual = individual_instance
         PC = self.structure.production_cost()
         data = self.structure.section_data()
+        weight = data[3]
 
         #return the output of the objective functions
-        obj = [PC, data[3]] 
+        obj = [PC, weight] 
         return (obj, None)
     
     #define constraints
@@ -174,34 +175,34 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         if individual_instance != self.current_individual:
             self.Eval(individual_instance)
         
-        #evaluate SM
-        data2 = self.structure.section_data()
-        SM = data2[5]
-        SM_R = 0.267 #required section modulus per LR calculations
-        frac_SM = (SM_R-SM)/SM_R
-
-        #evaluate My
-        My = data2[6]
-        My_R = 69.4232348766629 #My of reference section from "SD_Midship_Section.py"
-        frac_My = (My_R-My)/My_R
-
-        #evaluate allowable set pressure
-        """ stiff_spacing = self.B_bot/(self.nstiff_bot+1)
-        s_t = stiff_spacing/self.tp_bot
-        if s_t <= 80:
-            aps = (1/100)*stiff_spacing*1000
-        else:
-            aps = (1/75)*stiff_spacing*1000 """
-        press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, 10)._p_aps(self.bottom_panel)
-        press_R = 38.36 #design pressure load from LR calculations
-        frac_press = (press_R-press_bot)/press_R
-
         #determine if geometry is valid for individual panels
         valid_bot = self.bottom_panel.geoValid()
         valid_side = self.side_panel.geoValid()
         valid_sheer = self.sheer_panel.geoValid()
         valid_top = self.top_panel.geoValid()
         valid_deck = self.deck_panel.geoValid()
+
+        #evaluate SM
+        section_data = self.structure.section_data()
+        SM = section_data[5]
+        SM_R = 0.267 #m^3, required section modulus per LR calculations
+        frac_SM = (SM_R-SM)/SM_R
+
+        #evaluate My
+        My = section_data[6]
+        My_R = 69.4232348766629 #My of reference section from "SD_Midship_Section.py"
+        frac_My = (My_R-My)/My_R
+
+        #evaluate allowable set pressure
+        stiff_spacing = self.B_bot/(self.nstiff_bot+1)
+        s_t = stiff_spacing/self.tp_bot
+        if s_t <= 80:
+            aps = (1/100)*stiff_spacing*1000
+        else:
+            aps = (1/75)*stiff_spacing*1000
+        press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)._p_aps(self.bottom_panel)
+        press_R = 38.36 #design pressure load from LR calculations
+        frac_press = (press_R-press_bot)/press_R
 
         #iterate through constraints
         constraints_empty = [0, 0, 0, 0, 0, 0, 0, 0]
@@ -235,6 +236,8 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
             constraints = constraints_empty
         return (constraints, None)
 
+# run the optimization
 test_problem = SD_Midship_Section_Test_Case(2, 8, 10, [1,0.001,1,0.001,1,0.001,1,0.001,1,0.001], [8,0.012,8,0.012,8,0.012,8,0.012,8,0.012])
+    # numObj, numConstraints, GeneNum, loBound, upBound
 opt = nsga2.Optimizer(test_problem)
 opt.run("SD_Midship_Section_Optimizer_Output", "initial_test", 48109, 100, 100)

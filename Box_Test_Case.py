@@ -21,6 +21,7 @@ import deterioratingStructure
 import Allowable_Permanent_Set
 import Box_Checker
 import smith_collapse
+import smith_v2
 
 # Define the material properties
 pmatl = Structures.EPMatl(207, 71000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
@@ -122,17 +123,20 @@ test_panel_top = TPanel_trans.TPanel_trans(B_top,L_top,nstiff_top,ntrans_top,tp_
 check_my_box = Box_Checker.boxchecker(tp_bot,hw_top,tf_top,B_side,nstiff_side,tw_side,bf_side, test_panel_bot, test_panel_side, test_panel_top)
 check_my_box.check_corner_stiffs()
 
-HCdata = smith_collapse.SmithCollapse([test_panel_bot, test_panel_side, test_panel_top])
-
-# Create the midship section    
+# Create the box girder
 structure = midship_section.Midship_Section([test_panel_bot, test_panel_side, test_panel_top],0)
 
-#plot = HCdata.discretize()
-#data = HCdata.sumForce_and_moment()
-plot_HC = HCdata.plotCollapse()
-#plt.show()
-        
-#get section data
+# Check if the geometry is valid for each individual panel
+valid_bot = test_panel_bot.geoValid()
+valid_side = test_panel_side.geoValid()
+valid_top = test_panel_top.geoValid()
+print(valid_bot, valid_side, valid_top)
+
+# Produce plot of the box girder section
+plot = structure.plot_section()
+plt.show()
+
+# Get section data for the box girder
 '''
 Returns
     EI:     Total EI of the section
@@ -142,43 +146,60 @@ Returns
     I_NA:   Moment of inertia about the neutral axis
     SM_min: Minimum section modulus of the section
     My:     Yield moment of the section
-    Mult:   Ultimate moment of the section based on specified yield strength
 '''
 data = structure.section_data()
-HG_stress = structure.HG_stress()
-        
-#get production cost
-PC = structure.production_cost()
 
-#produce plot
-plot = structure.plot_section()
-plt.show()
-
-""" print ("here's EI: ", data[0])
 print ("here's EI: ", data[0])
 print ("here's NAy: ", data[1])
 print ("here's area: ", data[2])
 print ("here's weight: ", data[3])
 print ("here's I_NA: ", data[4])
-print ("here's SM_min: ", data[5]) """
+print ("here's SM_min: ", data[5])
 print ("here's My: ", data[6])
-""" print ("here's Mult: ", data[7])
+print ("here's Mult: ", data[7]) #this is the old ultimate moment, now replaced by Smith method
+        
+# Get production cost
+PC = structure.production_cost()
 print ("here's PC: ", PC)
-print ("here's HG_stress for each panel: ", HG_stress)
 
+# Run the Smith Method to get moment-curvature relationship and ultimate moment for the midship section
+Smith = smith_v2.SmithMethod()
+Smith.discretize([test_panel_bot, test_panel_side, test_panel_top])
+Smith.getUltimateMoment()
 
-#check if the geometry is valid for each individual panel
-valid_bot = test_panel_bot.geoValid()
-valid_side = test_panel_side.geoValid()
-valid_top = test_panel_top.geoValid()
-
-#get pressure for allowable permanent set
+# Get pressure for allowable permanent set, value comes from LR - Rules and Regulations for the Classification of Special Service Craft, July 2022 - Part 3 General Requirements and Constructional Arrangements - Chapter 1 General Regulations - Section 8 Building tolerances and associated repairs, Table 1.8.6
 stiff_spacing = B_bot/(nstiff_bot+1)
 s_t = stiff_spacing/tp_bot
 if s_t <= 80:
     aps = (1/100)*stiff_spacing*1000
 else:
     aps = (1/75)*stiff_spacing*1000
-press = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)
-press_bot = press._p_aps(test_panel_bot)
-print ("here's the pressure: ", press_bot) """
+press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)._p_aps(test_panel_bot)
+print ("here's the pressure': ", press_bot)
+
+# Determine the HG stress for each panel and calculate the ultimate axial compressive strength using the Hughes methods
+HG_stress = structure.HG_stress()
+Hughes_panel = structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
+print ("here's HG_stress for each panel: ", HG_stress)
+print ("here's Hughes_panel for each panel: ", Hughes_panel)
+
+# Determine the hull girder reliability and proabability of failure
+beta_HG = structure.HG_reliability(data[6])[0]
+P_F_HG = structure.HG_reliability(data[6])[1]
+print ("here's beta_HG: ", beta_HG)
+print ("here's P_F_HG: ", P_F_HG)
+
+# Determine the bottom panel reliability and probability of failure against design pressure and allowable permanent set
+beta_plate = structure.plating_reliability(press_bot)[0]
+P_F_plate = structure.plating_reliability(press_bot)[1]
+print ("here's beta_plate: ", beta_plate)
+print ("here's P_F_plate: ", P_F_plate)
+
+# Determine the panel reliability and probability of failure against axial compression using the Hughes method
+beta_Hpanel = structure.Hansen_panel_reliability(Hughes_panel, HG_stress)[0]
+P_F_Hpanel = structure.Hansen_panel_reliability(Hughes_panel, HG_stress)[1]
+print ("here's beta_Hpanel: ", beta_Hpanel)
+print ("here's P_F_Hpanel: ", P_F_Hpanel)
+
+
+
