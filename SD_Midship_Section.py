@@ -218,31 +218,40 @@ else:
 press_bot = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)._p_aps(bottom_panel)
 print ("here's the pressure': ", press_bot)
 
-# Determine the HG stress for each panel and calculate the ultimate axial compressive strength using the Hughes methods
+# Determine the HG stress for each panel and calculate the ultimate axial compressive strength using the Hughes method
 HG_stress = structure.HG_stress()
-Hughes_panel = structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
+HG_caps = structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
 print ("here's HG_stress for each panel: ", HG_stress)
-print ("here's Hughes_panel for each panel: ", Hughes_panel)
+print ("here's Hughes_panel for each panel: ", HG_caps)
 
-# Determine the hull girder reliability and proabability of failure
+# Determine the FOS against hull girder collapse
+FOS_HG = structure.HG_FOS(data[6])
+print ("here's FOS_HG: ", FOS_HG)
+
+# Determine the FOS against panel collapse using the Hughes method
+FOS_panel = structure.Hughes_panel_FOS(HG_caps, HG_stress)
+print ("here's FOS_panel: ", FOS_panel)
+
+# Determine the FOS against bottom plating collapse
+FOS_plating = structure.plating_FOS(press_bot)
+print ("here's FOS_plating: ", FOS_plating)
+
+# Determine the hull girder reliability and probability of failure
 beta_HG = structure.HG_reliability(data[6])[0]
 P_F_HG = structure.HG_reliability(data[6])[1]
 print ("here's beta_HG: ", beta_HG)
 print ("here's P_F_HG: ", P_F_HG)
+
+# Determine the panel reliability and probability of failure against axial compression using the Hughes method
+beta_Hpanel = structure.Hughes_panel_reliability(HG_caps, HG_stress)[0]
+P_F_Hpanel = structure.Hughes_panel_reliability(HG_caps, HG_stress)[1]
+print ("here's beta_Hpanel: ", beta_Hpanel)
+print ("here's P_F_Hpanel: ", P_F_Hpanel)
 
 # Determine the bottom panel reliability and probability of failure against design pressure and allowable permanent set
 beta_plate = structure.plating_reliability(press_bot)[0]
 P_F_plate = structure.plating_reliability(press_bot)[1]
 print ("here's beta_plate: ", beta_plate)
 print ("here's P_F_plate: ", P_F_plate)
-
-# Determine the panel reliability and probability of failure against axial compression using the Hughes method
-beta_Hpanel = structure.Hansen_panel_reliability(Hughes_panel, HG_stress)[0]
-P_F_Hpanel = structure.Hansen_panel_reliability(Hughes_panel, HG_stress)[1]
-print ("here's beta_Hpanel: ", beta_Hpanel)
-print ("here's P_F_Hpanel: ", P_F_Hpanel)
-        
-
-
 
 

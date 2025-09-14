@@ -172,16 +172,16 @@ class Box_Test_Case(nsga2.Problem):
             constraints[2] = frac_press
 
         elif valid_bot == bool(0):
-            constraints[3] = valid_bot
+            constraints[3] = 1
         
         elif valid_side == bool(0):
-            constraints[4] = valid_side
+            constraints[4] = 1
 
         elif valid_top == bool(0):
-            constraints[5] = valid_top
+            constraints[5] = 1
 
         elif intersect == bool(1):
-            constraints[6] = intersect
+            constraints[6] = 1
 
         else:
             constraints = constraints_empty

@@ -190,19 +190,19 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         SM_R = 0.267 #m^3, required section modulus per LR calculations
         frac_SM = (SM_R-SM)/SM_R
 
-        #evaluate FOS against hull girder collapse
-        HG_FOS = self.structure.HG_FOS(section_data[6])
-        HG_FOS_R = 1.5 #required FOS against hull girder collapse
-        HG_FOS_frac = (HG_FOS_R-HG_FOS)/HG_FOS_R
+        #evaluate beta against hull girder collapse
+        HG_beta = self.structure.HG_reliability(section_data[6])[0]
+        HG_beta_R = 3 #required beta against hull girder collapse
+        HG_beta_frac = (HG_beta_R-HG_beta)/HG_beta_R
 
-        #evaluate FOS against individual panel collapse
+        #evaluate beta against individual panel collapse
         HG_stress = self.structure.HG_stress()
         HG_caps = self.structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
-        panel_FOS = self.structure.Hughes_panel_FOS(HG_caps, HG_stress)
-        panel_FOS_R = 1.5 #required FOS against panel collapse
-        panel_FOS_frac = (panel_FOS_R-panel_FOS)/panel_FOS_R
+        panel_beta = self.structure.Hughes_panel_reliability(HG_caps, HG_stress)
+        panel_beta_R = 1.5 #required beta against panel collapse
+        panel_beta_frac = (panel_beta_R-panel_beta)/panel_beta_R
 
-        #evaluate FOS against plating collapse
+        #evaluate beta against bottom panel collapse
         stiff_spacing = self.B_bot/(self.nstiff_bot+1)
         s_t = stiff_spacing/self.tp_bot
         if s_t <= 80:
@@ -210,9 +210,9 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         else:
             aps = (1/75)*stiff_spacing*1000
         p_allow = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)._p_aps(self.bottom_panel)
-        plating_FOS = self.structure.plating_FOS(p_allow)
-        plating_FOS_R = 1.5 #required FOS against plating collapse
-        plating_FOS_frac = (plating_FOS_R-plating_FOS)/plating_FOS_R
+        plating_beta = self.structure.plating_reliability(p_allow)
+        plating_beta_R = 2 #required beta against plating collapse
+        plating_beta_frac = (plating_beta_R-plating_beta)/plating_beta_R
 
         #iterate through constraints
         constraints_empty = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -236,14 +236,14 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         elif frac_SM > 0:
             constraints[5] = frac_SM
 
-        elif HG_FOS_frac > 0:
-            constraints[6] = HG_FOS_frac
+        elif HG_beta_frac > 0:
+            constraints[6] = HG_beta_frac
 
-        elif panel_FOS_frac > 0:
-            constraints[7] = panel_FOS_frac
+        elif panel_beta_frac > 0:
+            constraints[7] = panel_beta_frac
 
-        elif plating_FOS_frac > 0:
-            constraints[8] = plating_FOS_frac
+        elif plating_beta_frac > 0:
+            constraints[8] = plating_beta_frac
 
         else:
             constraints = constraints_empty

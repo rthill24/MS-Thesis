@@ -602,6 +602,13 @@ class Midship_Section(object):
 
         return sig_a_u
     
+    def HG_FOS (self, My, M_tot = 46589, mirror = True): #M_tot is the total moment in the midship section in kN*m
+        '''
+        Calculates the FOS against hull girder collapse
+        '''
+        FOS_HG = (My/M_tot) #to be replaced with Mult
+        return FOS_HG
+
     def HG_reliability(self, My_nom, Ms_nom = 3006, Mw_r = 1, Mw_cov = 0.15, Mw_nom = 27975, Md_r = 1, Md_cov = 0.25, Md_nom = 15608, My_r = 1, My_cov = 0.15):
         '''
         Calculates the reliability of the midship section's hull girder strength
@@ -659,40 +666,28 @@ class Midship_Section(object):
         P_F_HG = Analysis.getFailure()
         
         return beta_HG, P_F_HG
-    
-    def plating_reliability (self, p_allow, p_design_nom = 38.36, p_design_r = 1, p_design_cov = 0.25): #pressure in ksi
-        
-        self.limit_state = ra.LimitState(lambda p_d, p_a: 1 - (p_d/p_a))
-        
-        #initialize stochastic model
-        self.stochastic_model = ra.StochasticModel()
-        
-        #define random variables
-        
-        ## p_d is a Weibull distributed random variable with a mean/nominal ratio of 1 and a COV of 0.25, where nominal value is 38.36 from LR rules
-        self.stochastic_model.addVariable(ra.Weibull("p_d", p_design_nom*p_design_r, p_design_cov*p_design_nom*p_design_r))
 
-        ## p_a is the allowable permanent set pressure
-        self.stochastic_model.addVariable(ra.Constant("p_a", p_allow))
+    def Hughes_panel_FOS (self, sig_a_u, HG_stress):
+        '''
+        Calculates the FOS against panel compressive collapse based on panel w/ max ratio of HG_stress to ultimate compressive axial strength
+        '''
+        # Find the maximum ratio of HG_stress to sig_a_u
+        ratios = np.zeros(len(HG_stress))
+        for i in range(len(HG_stress)):
+            ratios[i] = HG_stress[i] / sig_a_u[i]
         
-        #initialize reliability analysis
-        options = ra.AnalysisOptions()
-        options.setPrintOutput(False)
+        # Find the index of the maximum ratio
+        max_ratio_index = np.argmax(ratios)
         
-        Analysis = ra.Form(
-            analysis_options=options,
-            stochastic_model=self.stochastic_model,
-            limit_state=self.limit_state
-        )
-        
-        Analysis.run()
-        
-        beta_plating = Analysis.getBeta()
-        P_F_plating = Analysis.getFailure()
-        
-        return beta_plating, P_F_plating
+        # Use the maximum ratio to find the sig_au value and HG_stress value to use in the reliability analysis
+        sig_a_u_Rel = sig_a_u[max_ratio_index]
 
-    def Hansen_panel_reliability (self, sig_a_u, HG_stress, sig_a_u_Rel_r = 1.05, sig_a_u_Rel_cov = 0.075, HG_stress_Rel_r = 1, HG_stress_Rel_cov = 0.20):
+        HG_stress_Rel = HG_stress[max_ratio_index]
+
+        FOS_Hpanel = sig_a_u_Rel/HG_stress_Rel
+        return FOS_Hpanel
+
+    def Hughes_panel_reliability (self, sig_a_u, HG_stress, sig_a_u_Rel_r = 1.05, sig_a_u_Rel_cov = 0.075, HG_stress_Rel_r = 1, HG_stress_Rel_cov = 0.20):
 
         # Calculate the reliability of the panels to compressive collapse based on panel w/ max ratio of HG_stress to ultimate compressive axial strength
         # Results in one beta value for the entire section based on the most critical panel
@@ -739,6 +734,45 @@ class Midship_Section(object):
         P_F_Hpanel = Analysis.getFailure()
         
         return beta_Hpanel, P_F_Hpanel
+    
+    def plating_FOS (self, p_allow, p_design = 38.36): #pressure in ksi
+        '''
+        Calculates the FOS against bottom plating collapse
+        '''
+        FOS_plating = p_allow/p_design
+        return FOS_plating
+
+    def plating_reliability (self, p_allow, p_design_nom = 38.36, p_design_r = 1, p_design_cov = 0.25): #pressure in ksi
+        
+        self.limit_state = ra.LimitState(lambda p_d, p_a: 1 - (p_d/p_a))
+        
+        #initialize stochastic model
+        self.stochastic_model = ra.StochasticModel()
+        
+        #define random variables
+        
+        ## p_d is a Weibull distributed random variable with a mean/nominal ratio of 1 and a COV of 0.25, where nominal value is 38.36 from LR rules
+        self.stochastic_model.addVariable(ra.Weibull("p_d", p_design_nom*p_design_r, p_design_cov*p_design_nom*p_design_r))
+
+        ## p_a is the allowable permanent set pressure
+        self.stochastic_model.addVariable(ra.Constant("p_a", p_allow))
+        
+        #initialize reliability analysis
+        options = ra.AnalysisOptions()
+        options.setPrintOutput(False)
+        
+        Analysis = ra.Form(
+            analysis_options=options,
+            stochastic_model=self.stochastic_model,
+            limit_state=self.limit_state
+        )
+        
+        Analysis.run()
+        
+        beta_plating = Analysis.getBeta()
+        P_F_plating = Analysis.getFailure()
+        
+        return beta_plating, P_F_plating
 
     def plot_section(self, show=False, mirror=True, ax_obj=None): #mirror is used to mirror the plot, does not automatically mirror calculations
         '''Plots the section'''
