@@ -16,7 +16,7 @@ import sys, os, fileinput, math, string, numpy, scipy, random
 import matplotlib.pyplot as plt
 from operator import itemgetter
 from scipy import integrate
-import SD_Midship_Section_Post_Processing
+from SD_Midship_Section_Post_Processing import optvars
 
 plt.close()
 
@@ -117,16 +117,40 @@ ornt_deck = 180
 qloc_deck = ['NA','NA','NA']
 eta_deck = 0
 
-nstiff_bot = SD_Midship_Section_Post_Processing.optvars[0][0]
-tp_bot = SD_Midship_Section_Post_Processing.optvars[0][1]
-nstiff_side = SD_Midship_Section_Post_Processing.optvars[0][2]
-tp_side = SD_Midship_Section_Post_Processing.optvars[0][3]
-nstiff_sheer = SD_Midship_Section_Post_Processing.optvars[0][4]
-tp_sheer = SD_Midship_Section_Post_Processing.optvars[0][5]
-nstiff_top = SD_Midship_Section_Post_Processing.optvars[0][6]
-tp_top = SD_Midship_Section_Post_Processing.optvars[0][7]
-nstiff_deck = SD_Midship_Section_Post_Processing.optvars[0][8]
-tp_deck = SD_Midship_Section_Post_Processing.optvars[0][9]
+nstiff_bot = optvars[0][0]
+tp_bot = optvars[0][1]
+tw_bot = optvars[0][2]
+hw_bot = optvars[0][3]
+tf_bot = optvars[0][4]
+bf_bot = optvars[0][5]
+
+nstiff_side = optvars[0][6]
+tp_side = optvars[0][7]
+tw_side = optvars[0][8]
+hw_side = optvars[0][9]
+tf_side = optvars[0][10]
+bf_side = optvars[0][11]
+
+nstiff_sheer = optvars[0][12]
+tp_sheer = optvars[0][13]
+tw_sheer = optvars[0][14]
+hw_sheer = optvars[0][15]
+tf_sheer = optvars[0][16]
+bf_sheer = optvars[0][17]
+
+nstiff_top = optvars[0][18]
+tp_top = optvars[0][19]
+tw_top = optvars[0][20]
+hw_top = optvars[0][21]
+tf_top = optvars[0][22]
+bf_top = optvars[0][23]
+
+nstiff_deck = optvars[0][24]
+tp_deck = optvars[0][25]
+tw_deck = optvars[0][26]
+hw_deck = optvars[0][27]
+tf_deck = optvars[0][28]
+bf_deck = optvars[0][29]
 
 # Creation of midship section
 bottom_panel = TPanel_trans.TPanel_trans(B_bot,Frame_Spacing,nstiff_bot,ntrans_bot,tp_bot,\
@@ -147,5 +171,10 @@ deck_panel = TPanel_trans.TPanel_trans(B_deck,Frame_Spacing,nstiff_deck,ntrans_d
 # Create the midship section
 structure = midship_section.Midship_Section([bottom_panel,side_panel,sheer_panel,top_panel,deck_panel],0)
 plot = structure.plot_section()
+PC = structure.production_cost()
+print('Production Cost = ', PC)
+data = structure.section_data()
+weight = data[3]
+print('Weight = ', weight)
 plt.show()
 

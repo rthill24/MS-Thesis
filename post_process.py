@@ -366,7 +366,10 @@ class NSGA_PostProcess:
         #This just data copying
         for i in range(0,len(data_list)):
             for j in range(1,len(data_list[i])):
-                returned_data[i,j-1] = data_list[i][j]        
+                if isinstance(data_list[i][j], (int, float, np.integer, np.floating)):
+                    returned_data[i,j-1] = data_list[i][j]
+                else:
+                    returned_data[i,j-1] = np.nan  # or handle as needed
 
         return returned_data
         

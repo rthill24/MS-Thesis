@@ -98,5 +98,10 @@ test_panel_top = TPanel_trans.TPanel_trans(B_top,L_top,nstiff_top,ntrans_top,tp_
 # Create the midship section    
 structure = midship_section.Midship_Section([test_panel_bot,test_panel_side,test_panel_top],0)
 plot = structure.plot_section()
+PC = structure.production_cost()
+print('Production Cost = ', PC)
+data = structure.section_data()
+weight = data[3]
+print('Weight = ', weight)
 plt.show()
 
