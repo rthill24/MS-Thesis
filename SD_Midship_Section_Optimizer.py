@@ -133,14 +133,38 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         chromosome = individual_instance.chromosome
         self.nstiff_bot = chromosome[0]
         self.tp_bot = chromosome[1]
-        self.nstiff_side = chromosome[2]
-        self.tp_side = chromosome[3]
-        self.nstiff_sheer = chromosome[4]
-        self.tp_sheer = chromosome[5]
-        self.nstiff_top = chromosome[6]
-        self.tp_top = chromosome[7]
-        self.nstiff_deck = chromosome[8]
-        self.tp_deck = chromosome[9]
+        self.tw_bot = chromosome[2]
+        self.hw_bot = chromosome[3]
+        self.tf_bot = chromosome[4]
+        self.bf_bot = chromosome[5]
+
+        self.nstiff_side = chromosome[6]
+        self.tp_side = chromosome[7]
+        self.tw_side = chromosome[8]
+        self.hw_side = chromosome[9]
+        self.tf_side = chromosome[10]
+        self.bf_side = chromosome[11]
+
+        self.nstiff_sheer = chromosome[12]
+        self.tp_sheer = chromosome[13]
+        self.tw_sheer = chromosome[14]
+        self.hw_sheer = chromosome[15]
+        self.tf_sheer = chromosome[16]
+        self.bf_sheer = chromosome[17]
+
+        self.nstiff_top = chromosome[18]
+        self.tp_top = chromosome[19]
+        self.tw_top = chromosome[20]
+        self.hw_top = chromosome[21]
+        self.tf_top = chromosome[22]
+        self.bf_top = chromosome[23]
+
+        self.nstiff_deck = chromosome[24]
+        self.tp_deck = chromosome[25]
+        self.tw_deck = chromosome[26]
+        self.hw_deck = chromosome[27]
+        self.tf_deck = chromosome[28]
+        self.bf_deck = chromosome[29]
 
         # Creation of midship section
         self.bottom_panel = TPanel_trans.TPanel_trans(self.B_bot,self.Frame_Spacing,self.nstiff_bot,self.ntrans_bot,self.tp_bot,\
@@ -218,39 +242,42 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         constraints_empty = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         constraints = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-        if valid_bot == bool(0):
-            constraints[0] = 1
-
-        elif valid_side == bool(0):
-            constraints[1] = 1
-
-        elif valid_sheer == bool(0):
-            constraints[2] = 1
-
-        elif valid_top == bool(0):
-            constraints[3] = 1
-
-        elif valid_deck == bool(0):
-            constraints[4] = 1
-
-        elif frac_SM > 0:
-            constraints[5] = frac_SM
+        if frac_SM > 0:
+            constraints[0] = frac_SM
 
         elif HG_FOS_frac > 0:
-            constraints[6] = HG_FOS_frac
-
-        elif panel_FOS_frac > 0:
-            constraints[7] = panel_FOS_frac
+            constraints[1] = HG_FOS_frac
 
         elif plating_FOS_frac > 0:
-            constraints[8] = plating_FOS_frac
+            constraints[2] = plating_FOS_frac
+            
+        elif panel_FOS_frac > 0:
+            constraints[3] = panel_FOS_frac
+
+        elif valid_bot == bool(0):
+            constraints[4] = 1
+
+        elif valid_side == bool(0):
+            constraints[5] = 1
+
+        elif valid_sheer == bool(0):
+            constraints[6] = 1
+
+        elif valid_top == bool(0):
+            constraints[7] = 1
+
+        elif valid_deck == bool(0):
+            constraints[8] = 1
 
         else:
             constraints = constraints_empty
         return (constraints, None)
 
 # run the optimization
-test_problem = SD_Midship_Section_Test_Case(2, 8, 10, [1,0.001,1,0.001,1,0.001,1,0.001,1,0.001], [8,0.012,8,0.012,8,0.012,8,0.012,8,0.012])
+## lower and upper bounds for design variables
+loBound = [1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000]
+upBound = [15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000, 15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000, 15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000, 15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000, 15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000]
+test_problem = SD_Midship_Section_Test_Case(2, 9, 30, loBound, upBound)
     # numObj, numConstraints, GeneNum, loBound, upBound
 opt = nsga2.Optimizer(test_problem)
 opt.run("SD_Midship_Section_Optimizer_Output", "initial_test", 48109, 100, 100)
