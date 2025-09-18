@@ -150,20 +150,37 @@ class NSGA_PostProcess:
         y_vals = np.empty((num_pts,1))
         kount = 0
         for pt in front_list:
+            if pt[index_x] == 'Infeasible' or pt[index_y] == 'Infeasible':
+                continue
             x_vals[kount] = pt[index_x]
             y_vals[kount] = pt[index_y]
             kount += 1
         
-        #The do the plot 
+        #Then do the plot 
         if ax is None:
             ax = plt.gca()
         ax.plot( x_vals, y_vals, format_string)
         if forced_axis:
             plt.axis(forced_axis)
         
-        return 
-    
-    
+        return
+
+    def Feasibility_Stats(self, generations):
+        for gen in generations:
+            sel_tuple = (gen,)
+            self.cur.execute('select * from objfun where Generation= ?', 
+                             sel_tuple)
+            num_pts = 0.
+            feasible = 0
+            infeasible = 0
+            for row in self.cur:
+                num_pts += 1
+                if (row[3] == 'Infeasible'):
+                    infeasible += 1
+                else:
+                    feasible += 1
+            print(f"Generation {gen}: Total Points = {num_pts}, Feasible = {feasible}, Infeasible = {infeasible}")
+        return (num_pts, feasible, infeasible)
     
     def getFront(self, gen_number, front_number, obj_functions, VFO=None):
         '''Returns the individual ids and selected objective function 
@@ -434,7 +451,7 @@ class NSGA_PostProcess:
         
             
     
-    def GenPlot2D(self, gen_num, obj_functions, scale_factor, filename, single_gen):
+    def GenPlot2D(self, gen_num, obj_functions, scale_factor, filename, gif_axes, gif_gen):
         '''Builds a single png of 2 or 3 objective function results
         from a single generation in the database  
         
@@ -489,13 +506,13 @@ class NSGA_PostProcess:
             if (len(data) > 0) and (current_front < 7):
                 #If data, see if we have a point style ready - only 
                 #first 7 fronts get distinct styles
-                if single_gen is True:
+                if gif_gen is False:
                     self.addFrontTo2DPlot(data,
                             format_string = points_style[current_front])
                     legend.append('Front ' + str(current_front))
                 else:
                     self.addFrontTo2DPlot(data,
-                            format_string = points_style[current_front], forced_axis= [15000,30000,5000,10000])
+                            format_string = points_style[current_front], forced_axis=gif_axes)
                     legend.append('Front ' + str(current_front))
             elif (len(data) > 0) and (current_front >= 7):
                 #Otherwise, add to reserve data to be plotted with a 
@@ -613,23 +630,35 @@ class NSGA_PostProcess:
         span = None
 
         #do the points counter and average crowd metric
+        feasible_counts = []
+        infeasible_counts = []
         for gen in generations:
             sel_tuple = (gen, 0)
-            self.cur.execute('select * from generation where GenNum= ? AND ' + \
-                'Front = ?', sel_tuple)            
+            self.cur.execute('select * from generation where GenNum= ? AND ' +
+            'Front = ?', sel_tuple)            
             num_pts = 0.
-            num_pts_crwd = 0. #Different to allow removable of infinite values
-            crowd_dist_sum = 0.
+            #num_pts_crwd = 0. #Different to allow removal of infinite values
+            #crowd_dist_sum = 0.
+            feasible = 0
+            infeasible = 0
             for row in self.cur:
                 num_pts += 1
-                if (row[3] != float('Inf')):
-                    num_pts_crwd += 1. 
-                    crowd_dist_sum += row[3]
+                # Assuming feasibility is stored in row[4] as a boolean or string
+                # Adjust the index if feasibility is stored elsewhere
+                if len(row) > 4 and (row[4] == 1 or row[4] == True or row[4] == 'Feasible'):
+                    feasible += 1
+                else:
+                    infeasible += 1
+                #if (row[3] != float('Inf')):
+                    #num_pts_crwd += 1. 
+                    #crowd_dist_sum += row[3]
             numpts.append(num_pts)
-            if num_pts > 0:
-                avg_crowd.append(crowd_dist_sum/num_pts_crwd)
-            else:
-                avg_crowd.append(0)
+            feasible_counts.append(feasible)
+            infeasible_counts.append(infeasible)
+            #if num_pts > 0:
+                #avg_crowd.append(crowd_dist_sum/num_pts_crwd)
+            #else:
+                #avg_crowd.append(0)
         
         #If requested, do the span normalization
         if (span_norm != None):
@@ -658,7 +687,7 @@ class NSGA_PostProcess:
                     obj_no += 1
                 span.append(spanfactor)
             
-        return (numpts, avg_crowd, span)
+        return (numpts, feasible_counts, infeasible_counts)
         
         
     def getKrigingData(self, model_ID):
@@ -833,7 +862,7 @@ class NSGA_PostProcess:
         
         return
     
-    def ObjMovie(self, start_gen, stop_gen, obj_functions, scale_factor, filenamegif, option):
+    def ObjMovie(self, start_gen, stop_gen, obj_functions, gif_scale, filenamegif):
         '''Builds an animated GIF of 2 or 3 objective function results
         from a database run.  
         
@@ -866,36 +895,65 @@ class NSGA_PostProcess:
         xlabel_movie = "Cost [$]"
         title_movie = "Pareto Front Development"
 
+        # Find global axis limits for all generations
+        print ("Sorting through data from requested generations...")
+        all_x_start = []
+        all_y_start = []
+        all_x_end = []
+        all_y_end = []
+
+        data_start = self.getFront(start_gen, 0, obj_functions)
+        for pt in data_start:
+            if len(pt) > 2 and pt[1] != 'Infeasible' and pt[2] != 'Infeasible':
+                all_x_start.append(pt[1])
+                all_y_start.append(pt[2])
+            elif len(pt) > 1 and pt[1] != 'Infeasible':
+                all_x_start.append(pt[1])
+
+        data_end = self.getFront(stop_gen, 0, obj_functions)
+        for pt in data_end:
+            if len(pt) > 2 and pt[1] != 'Infeasible' and pt[2] != 'Infeasible':
+                all_x_end.append(pt[1])
+                all_y_end.append(pt[2])
+            elif len(pt) > 1 and pt[1] != 'Infeasible':
+                all_x_end.append(pt[1])
+
+        if all_x_start and all_y_start:
+            max_x = max(all_x_start)
+            max_y = max(all_y_start)
+        if all_x_end and all_y_end:
+            min_x = min(all_x_end)
+            min_y = min(all_y_end)
+            gif_axes = [min_x/gif_scale, gif_scale*max_x, min_y/gif_scale, gif_scale*max_y]
+        else:
+            gif_axes = None
+
         number_gens = stop_gen - start_gen + 1
         #Now do the plots
-        count = 0
+        print("Creating GIF, please wait...")
         for frame in range(number_gens): #= number of generations
-            count = count + 1
+            start_gen = start_gen + 1
             plt.close()
-            temp_filename = 'gen_' + filenamegif + str('%05d' % count)
-            plotgen = self.GenPlot2D(count, obj_functions, scale_factor, temp_filename, False)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        
+            temp_filename = 'gen_' + filenamegif + str('%05d' % (start_gen-1))
+            plotgen = self.GenPlot2D((start_gen-1), obj_functions, [0, 0], temp_filename, gif_axes, True)
+
         #Now build the movie
         images = []
         
-        if option == "box":
-            for blah in sorted(glob.glob("C:/Users/rthill/Documents/MS-Thesis/gen_Box*.png")): # loop through all png files in the folder
-                im = Image.open(blah) # open the image
-                images.append(im) # add the image to the list
-            last_frame = (len(images))
-        else:
-            for blah in sorted(glob.glob("C:/Users/rthill/Documents/MS-Thesis/gen_SD*.png")): # loop through all png files in the folder
-                im = Image.open(blah) # open the image
-                images.append(im) # add the image to the list
-            last_frame = (len(images))
+        for blah in sorted(glob.glob("C:/Users/rthill/Documents/MS-Thesis/gen_SD*.png")): # loop through all png files in the folder
+            im = Image.open(blah) # open the image
+            images.append(im) # add the image to the list
+        last_frame = (len(images))
 
-        for x in range(0, 5):
+        for x in range(0, 5): # repeat the last frame 5 times to pause at the end of the gif
             im = images[last_frame-1]
             images.append(im)
-
         images[0].save(filenamegif + '.gif',
                save_all=True, append_images=images[1:], optimize=False, duration=500, loop=0)
-        print ("gif is finished")
+        
+        print("\n" + "="*40)
+        print(" GIF creation is FINISHED ".center(40, "="))
+        print("="*40 + "\n")
     
     def SingleFront (self,gen_number,front_number, obj_functions, scalefactor, filename3):
 
@@ -906,11 +964,24 @@ class NSGA_PostProcess:
 
         plt.close()
         plot_data = self.frontPlotFormat(gen_number,front_number, obj_functions)
+        infeasible_count = 0
+        for i in range(len(plot_data)):
+            if math.isnan(plot_data[i][0]) or math.isnan(plot_data[i][1]):
+                plot_data = np.delete(plot_data, i, 0)
+                infeasible_count += 1
         xvector = list(map(itemgetter(0), plot_data))
         yvector = list(map(itemgetter(1), plot_data))
         plt.plot(xvector, yvector, 'ro')
         plt.xlabel(xlabel_S)
         plt.ylabel(ylabel_S)
+        plt.text(
+            0.99, 0.99,
+            f'Infeasible Points Removed: {infeasible_count}',
+            transform=plt.gca().transAxes,
+            fontsize=8,
+            ha='right',
+            va='top'
+        )
         plt.title(title_S + ' For Generation ' + str(gen_number))
         plt.axis([min(xvector)/scalefactor, max(xvector)*scalefactor, min(yvector)/scalefactor, max(yvector)*scalefactor])
         plt.savefig(filename3 + '.png', dpi=144)
