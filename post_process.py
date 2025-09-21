@@ -179,7 +179,7 @@ class NSGA_PostProcess:
                     infeasible += 1
                 else:
                     feasible += 1
-            print(f"Generation {gen}: Total Points = {num_pts}, Feasible = {feasible}, Infeasible = {infeasible}")
+            #print(f"Generation {gen}: Total Points = {num_pts}, Feasible = {feasible}, Infeasible = {infeasible}")
         return (num_pts, feasible, infeasible)
     
     def getFront(self, gen_number, front_number, obj_functions, VFO=None):
