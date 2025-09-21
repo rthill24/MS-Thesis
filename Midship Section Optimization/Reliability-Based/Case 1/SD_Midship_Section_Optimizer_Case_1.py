@@ -2,6 +2,8 @@
 #author: Richard Thill
 #date: 10/29/2024
 
+import sys
+sys.path.insert(0, 'C:/Users/rthill/Documents/MS-Thesis')
 import TPanel_trans
 import copy
 import math
@@ -280,5 +282,5 @@ upBound = [15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000, 15, 50/1000, 25/1000
 test_problem = SD_Midship_Section_Test_Case(2, 9, 30, loBound, upBound)
     # numObj, numConstraints, GeneNum, loBound, upBound
 opt = nsga2.Optimizer(test_problem)
-opt.run("SD_Midship_Section_Optimizer_Rel_Output", "initial_test", 48109, 100, 100)
+opt.run("SD_Midship_Section_Optimizer_Output_Case_1", "initial_test", 48109, 200, 500)
 # num generations, pop size
