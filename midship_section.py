@@ -506,6 +506,9 @@ class Midship_Section(object):
             sig_e[i] = (math.pi**2 * E * I[i]) / (A[i] * a[i]**2) #in MPa
             phi[i] = 1/(1-(sig_a[i]/sig_e[i]))
             sig_f[i] = sig_a[i] + ((M_o[i] * y_f[i]) / I[i]) + ((sig_a[i]*A[i]*(del_o[i] + delta[i])*y_f[i]*phi[i])/(I[i])) #in MPa
+            if sig_f[i] < 0:
+                sig_f[i] = 0.01 #prevent issue with zeros in square root
+                #print ("sig_f_I less than zero")
             rho_NA[i] = (I[i]/A[i])**0.5
             lamb[i] = (a[i]/(math.pi*rho_NA[i]))*((sig_f[i]/E)**0.5)
             eta[i] = ((del_o[i]+delta[i])*y_f[i])/(rho_NA[i]**2)
@@ -521,6 +524,9 @@ class Midship_Section(object):
             T[i] = 0.25 * (2 + zeta_II[i] - ((zeta_II[i]**2)-(10.4/(beta_II[i]**2)))**0.5)
             tau_II[i] = 0 #(p_total[i] * b[i] * (a[i]/2))/A[i] #formula from text in MPa
             sig_F_II[i] = ((T[i]-0.1)/T[i]) * sig_yp * ((1-(3*(tau_II[i]/sig_yp)**2)))**0.5
+            if sig_F_II[i] < 0:
+                sig_F_II[i] = 0.01 #prevent issue with zeros in square root
+                #print ("sig_F_II less than zero")
             b_II[i] = T[i] * b[i]
             M_o_II[i] = p_total[i] * b_II[i] * a[i] * (a[i]/2) #in MN*m
             A_p_II[i] = t_p[i] * b_II[i]
