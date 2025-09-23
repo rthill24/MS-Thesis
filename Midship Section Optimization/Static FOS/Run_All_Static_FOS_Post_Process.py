@@ -3,7 +3,6 @@ import os
 
 # List of (script_path, script_dir) tuples
 scripts = [
-    ("C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Static FOS/Test Case/SD_Midship_Section_Post_Processing_Test_Case.py", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Static FOS/Test Case"),
     ("C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Static FOS/Case 1/SD_Midship_Section_Post_Processing_Case_1.py", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Static FOS/Case 1"),
     ("C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Static FOS/Case 2/SD_Midship_Section_Post_Processing_Case_2.py", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Static FOS/Case 2"),
     ("C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Static FOS/Case 3/SD_Midship_Section_Post_Processing_Case_3.py", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Static FOS/Case 3"),

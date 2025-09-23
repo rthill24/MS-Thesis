@@ -218,14 +218,14 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
 
         #evaluate FOS against hull girder collapse
         HG_FOS = self.structure.HG_FOS(section_data[6])
-        HG_FOS_R = 1.5 #required FOS against hull girder collapse
+        HG_FOS_R = 0.75 #required FOS against hull girder collapse
         HG_FOS_frac = (HG_FOS_R-HG_FOS)/HG_FOS_R
 
         #evaluate FOS against individual panel collapse
         HG_stress = self.structure.HG_stress()
         HG_caps = self.structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
         panel_FOS = self.structure.Hughes_panel_FOS(HG_caps, HG_stress)
-        panel_FOS_R = 1.5 #required FOS against panel collapse
+        panel_FOS_R = 0.9 #required FOS against panel collapse
         panel_FOS_frac = (panel_FOS_R-panel_FOS)/panel_FOS_R
 
         #evaluate FOS against plating collapse
@@ -237,7 +237,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
             aps = (1/75)*stiff_spacing*1000
         p_allow = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)._p_aps(self.bottom_panel)
         plating_FOS = self.structure.plating_FOS(p_allow)
-        plating_FOS_R = 1.5 #required FOS against plating collapse
+        plating_FOS_R = 0.8 #required FOS against plating collapse
         plating_FOS_frac = (plating_FOS_R-plating_FOS)/plating_FOS_R
 
         #iterate through constraints
