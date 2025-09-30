@@ -225,7 +225,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         HG_stress = self.structure.HG_stress()
         HG_caps = self.structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
         panel_FOS = self.structure.Hughes_panel_FOS(HG_caps, HG_stress)
-        panel_FOS_R = 1.1 #required FOS against panel collapse
+        panel_FOS_R = 1 #required FOS against panel collapse
         panel_FOS_frac = (panel_FOS_R-panel_FOS)/panel_FOS_R
 
         #evaluate FOS against plating collapse

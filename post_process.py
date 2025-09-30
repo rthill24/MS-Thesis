@@ -862,7 +862,7 @@ class NSGA_PostProcess:
         
         return
     
-    def ObjMovie(self, start_gen, stop_gen, obj_functions, gif_scale, filenamegif):
+    def ObjMovie(self, start_gen, stop_gen, obj_functions, gif_scale, filenamegif, filepath):
         '''Builds an animated GIF of 2 or 3 objective function results
         from a database run.  
         
@@ -939,8 +939,8 @@ class NSGA_PostProcess:
 
         #Now build the movie
         images = []
-        
-        for blah in sorted(glob.glob("C:/Users/rthill/Documents/MS-Thesis/gen_SD*.png")): # loop through all png files in the folder
+
+        for blah in sorted(glob.glob(filepath + "/gen_SD*.png")): # loop through all png files in the folder
             im = Image.open(blah) # open the image
             images.append(im) # add the image to the list
         last_frame = (len(images))

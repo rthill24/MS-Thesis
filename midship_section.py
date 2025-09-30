@@ -507,15 +507,16 @@ class Midship_Section(object):
             phi[i] = 1/(1-(sig_a[i]/sig_e[i]))
             sig_f[i] = sig_a[i] + ((M_o[i] * y_f[i]) / I[i]) + ((sig_a[i]*A[i]*(del_o[i] + delta[i])*y_f[i]*phi[i])/(I[i])) #in MPa
             if sig_f[i] < 0:
-                sig_f[i] = 0.01 #prevent issue with zeros in square root
+                sig_a_u_I[i] = 0.01 #this is to set the attained strength very low in case of negative sig_f
                 #print ("sig_f_I less than zero")
-            rho_NA[i] = (I[i]/A[i])**0.5
-            lamb[i] = (a[i]/(math.pi*rho_NA[i]))*((sig_f[i]/E)**0.5)
-            eta[i] = ((del_o[i]+delta[i])*y_f[i])/(rho_NA[i]**2)
-            mu[i] = (M_o[i] * y_f[i]) / (I[i]*sig_f[i])
-            zeta[i] = 1 - mu[i] + ((1+eta[i])/lamb[i]**2)
-            R_I[i] = (zeta[i]/2) - (((zeta[i]**2)/4) - ((1-mu[i])/lamb[i]**2))**0.5
-            sig_a_u_I[i] = sig_ys * R_I[i] #in MPa
+            else:
+                rho_NA[i] = (I[i]/A[i])**0.5
+                lamb[i] = (a[i]/(math.pi*rho_NA[i]))*((sig_f[i]/E)**0.5)
+                eta[i] = ((del_o[i]+delta[i])*y_f[i])/(rho_NA[i]**2)
+                mu[i] = (M_o[i] * y_f[i]) / (I[i]*sig_f[i])
+                zeta[i] = 1 - mu[i] + ((1+eta[i])/lamb[i]**2)
+                R_I[i] = (zeta[i]/2) - (((zeta[i]**2)/4) - ((1-mu[i])/lamb[i]**2))**0.5
+                sig_a_u_I[i] = sig_ys * R_I[i] #in MPa
 
             #Mode II Failure Calculations
 
@@ -525,40 +526,41 @@ class Midship_Section(object):
             tau_II[i] = 0 #(p_total[i] * b[i] * (a[i]/2))/A[i] #formula from text in MPa
             sig_F_II[i] = ((T[i]-0.1)/T[i]) * sig_yp * ((1-(3*(tau_II[i]/sig_yp)**2)))**0.5
             if sig_F_II[i] < 0:
-                sig_F_II[i] = 0.01 #prevent issue with zeros in square root
+                sig_F_II[i] = 0.01 #this is to set the attained strength very low in case of negative sig_f
                 #print ("sig_F_II less than zero")
-            b_II[i] = T[i] * b[i]
-            M_o_II[i] = p_total[i] * b_II[i] * a[i] * (a[i]/2) #in MN*m
-            A_p_II[i] = t_p[i] * b_II[i]
-            A_II[i] = A_p_II[i] + A_w[i] + A_f[i]
-            M_p_II[i] = A_p_II[i] * (t_p[i]/2)
-            NA_II[i] = (M_p_II[i] + M_w[i] + M_f[i]) / (A_II[i])
-            d_p_II[i] = (t_p[i]/2) - NA_II[i]
-            d_w_II[i] = (t_p[i] + (h_w[i]/2)) - NA_II[i]
-            d_f_II[i] = (t_p[i] + h_w[i] + (t_f[i]/2)) - NA_II[i]
-            y_p_II[i] = NA_II[i]
-            I_p_i_II[i] = ((1/12)*(b_II[i]*t_p[i]**3))
-            I_p_NA_II[i] = I_p_i_II[i] + (A_p_II[i] * d_p_II[i]**2)
-            I_w_i_II[i] = ((1/12)*(t_w[i]*h_w[i]**3))
-            I_w_NA_II[i] = I_w_i[i] + (A_w[i] * d_w_II[i]**2)
-            I_f_i_II[i] = ((1/12)*(b_stiff[i]*t_f[i]**3))
-            I_f_NA_II[i] = I_f_i[i] + (A_f[i] * d_f_II[i]**2)
-            I_II[i] = I_p_NA_II[i] + I_w_NA_II[i] + I_f_NA_II[i]
-            del_o_II[i] = (5* (p_total[i]) * b_II[i] * (a[i]**4))/(384 * E * I_II[i]) #in m
-            rho_NA_II[i] = (I_II[i]/A_II[i])**0.5
-            h_II[i] = panel.getNAStiff() - (t_p[i]/2)
-            delta_P[i] = (h_II[i]*(A_f[i]+A_w[i])) * ((1/A_II[i])-(1/A[i]))
-            y_NA_i_II[i] = panel.get_NA_base()
-            H[i] = y_NA_i_II[i] - NA_y
-            delta_H[i] = I[i]/(A[i]*H[i])
-            delta_II[i] = (delta_P[i] + delta_H[i])
-            lamb_II[i] = (a[i]/(math.pi*rho_NA_II[i]))*((sig_F_II[i]/E)**0.5)
-            eta_II[i] = ((del_o_II[i]+delta_II[i])*y_p_II[i])/(rho_NA_II[i]**2)
-            eta_p_II[i] = (delta_P[i]*y_p_II[i])/(rho_NA_II[i]**2)
-            mu_II[i] = (M_o_II[i] * y_p_II[i]) / (I_II[i]*sig_F_II[i])
-            zeta_R_II[i] = 1 - mu_II[i] + ((1+eta_II[i])/lamb_II[i]**2)
-            R_II[i] = (zeta_R_II[i]/2) - (((zeta_R_II[i]**2)/4) - ((1-mu_II[i])/((1+eta_p_II[i])*lamb_II[i]**2)))**0.5
-            sig_a_u_II[i] = sig_F_II[i] * R_II[i] * (A_II[i]/A[i]) #in MPa
+            else:
+                b_II[i] = T[i] * b[i]
+                M_o_II[i] = p_total[i] * b_II[i] * a[i] * (a[i]/2) #in MN*m
+                A_p_II[i] = t_p[i] * b_II[i]
+                A_II[i] = A_p_II[i] + A_w[i] + A_f[i]
+                M_p_II[i] = A_p_II[i] * (t_p[i]/2)
+                NA_II[i] = (M_p_II[i] + M_w[i] + M_f[i]) / (A_II[i])
+                d_p_II[i] = (t_p[i]/2) - NA_II[i]
+                d_w_II[i] = (t_p[i] + (h_w[i]/2)) - NA_II[i]
+                d_f_II[i] = (t_p[i] + h_w[i] + (t_f[i]/2)) - NA_II[i]
+                y_p_II[i] = NA_II[i]
+                I_p_i_II[i] = ((1/12)*(b_II[i]*t_p[i]**3))
+                I_p_NA_II[i] = I_p_i_II[i] + (A_p_II[i] * d_p_II[i]**2)
+                I_w_i_II[i] = ((1/12)*(t_w[i]*h_w[i]**3))
+                I_w_NA_II[i] = I_w_i[i] + (A_w[i] * d_w_II[i]**2)
+                I_f_i_II[i] = ((1/12)*(b_stiff[i]*t_f[i]**3))
+                I_f_NA_II[i] = I_f_i[i] + (A_f[i] * d_f_II[i]**2)
+                I_II[i] = I_p_NA_II[i] + I_w_NA_II[i] + I_f_NA_II[i]
+                del_o_II[i] = (5* (p_total[i]) * b_II[i] * (a[i]**4))/(384 * E * I_II[i]) #in m
+                rho_NA_II[i] = (I_II[i]/A_II[i])**0.5
+                h_II[i] = panel.getNAStiff() - (t_p[i]/2)
+                delta_P[i] = (h_II[i]*(A_f[i]+A_w[i])) * ((1/A_II[i])-(1/A[i]))
+                y_NA_i_II[i] = panel.get_NA_base()
+                H[i] = y_NA_i_II[i] - NA_y
+                delta_H[i] = I[i]/(A[i]*H[i])
+                delta_II[i] = (delta_P[i] + delta_H[i])
+                lamb_II[i] = (a[i]/(math.pi*rho_NA_II[i]))*((sig_F_II[i]/E)**0.5)
+                eta_II[i] = ((del_o_II[i]+delta_II[i])*y_p_II[i])/(rho_NA_II[i]**2)
+                eta_p_II[i] = (delta_P[i]*y_p_II[i])/(rho_NA_II[i]**2)
+                mu_II[i] = (M_o_II[i] * y_p_II[i]) / (I_II[i]*sig_F_II[i])
+                zeta_R_II[i] = 1 - mu_II[i] + ((1+eta_II[i])/lamb_II[i]**2)
+                R_II[i] = (zeta_R_II[i]/2) - (((zeta_R_II[i]**2)/4) - ((1-mu_II[i])/((1+eta_p_II[i])*lamb_II[i]**2)))**0.5
+                sig_a_u_II[i] = sig_F_II[i] * R_II[i] * (A_II[i]/A[i]) #in MPa
 
             #Mode III failure calculations
 

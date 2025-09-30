@@ -15,11 +15,11 @@ plot_pareto = testobj.SingleFront(200, 0, [1,2], 1.2, "SD_Midship_Section_Single
 #plt.show()
 
 #generate and show all fronts for single generation
-plot_data = testobj.GenPlot2D(190, [1,2], [1.75,1.75], "SD_Midship_Section_SingleGen_All_Fronts_Plot", 0, False)
+plot_data = testobj.GenPlot2D(200, [1,2], [1.75,1.75], "SD_Midship_Section_SingleGen_All_Fronts_Plot", 0, False)
 #plt.show()
 
 #generate a gif to show front progression over generations
-movie = testobj.ObjMovie(190,200,[1,2], 1.0,"SD_Midship_Section_All_Fronts_Movie")
+movie = testobj.ObjMovie(190,200,[1,2], 1.0,"SD_Midship_Section_All_Fronts_Movie", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Static FOS/Test Case")
 
-feas_stats = testobj.Feasibility_Stats(list(range(120, 123)))
+feas_stats = testobj.Feasibility_Stats(list(range(190, 200)))
 #print(feas_stats)
