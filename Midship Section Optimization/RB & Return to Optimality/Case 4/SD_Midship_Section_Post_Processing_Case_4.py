@@ -4,7 +4,7 @@ import post_process
 import matplotlib.pyplot as plt
 
 
-dbname = "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Reliability-Based/Case 6/SD_Midship_Section_Optimizer_Output_Case_6"
+dbname = "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/RB & Return to Optimality/Case 4/SD_Midship_Section_Optimizer_Output_Case_4"
 testobj = post_process.NSGA_PostProcess(dbname)
 optvar_front = testobj.getFront(200,0,[1,2])
 optvars = testobj.getIndVariables(optvar_front)
@@ -19,7 +19,7 @@ plot_data = testobj.GenPlot2D(200, [1,2], [1.75,1.75], "SD_Midship_Section_Singl
 #plt.show()
 
 #generate a gif to show front progression over generations
-movie = testobj.ObjMovie(190,200,[1,2], 1.0,"SD_Midship_Section_All_Fronts_Movie", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Reliability-Based/Case 6")
+movie = testobj.ObjMovie(190,200,[1,2], 1.0,"SD_Midship_Section_All_Fronts_Movie", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/RB & Return to Optimality/Case 4")
 
-feas_stats = testobj.Feasibility_Stats(list(range(120, 123)))
+feas_stats = testobj.Feasibility_Stats(list(range(190, 200)))
 #print(feas_stats)
