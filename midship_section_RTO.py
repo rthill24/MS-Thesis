@@ -3,9 +3,6 @@
 
 ### Based on the code by Matthew Lankowski and extended by Dylan Temple
 
-import sys
-sys.path.insert(0, 'C:/Users/rthill/Documents/MS-Thesis')
-
 import pystra as ra
 import numpy as np
 import copy
@@ -202,6 +199,8 @@ class Midship_Section(object):
         My:     Yield moment of the section
         Mult:   Ultimate moment of the section based on specified yield strength
         '''
+
+
         density = self.grillages[0].getTTPanRef().getmatlP().getDensity() #only uses plating density
         yield_strength = self.grillages[0].getTTPanRef().getmatlP().getYld() #only uses plating yield strength
 

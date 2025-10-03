@@ -3,10 +3,8 @@
 #date: 10/29/2024
 
 import sys
-sys.path.insert(0, 'C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/RB & Return to Optimality')
-import midship_section_RTO
-
 sys.path.insert(0, 'C:/Users/rthill/Documents/MS-Thesis')
+import midship_section_RTO
 import TPanel_trans
 import copy
 import math
@@ -189,7 +187,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
                                                 self.tft_deck,self.tfb_deck,self.sloc_deck,self.ornt_deck,self.qloc_deck,self.pmatl,self.smatl,self.tmatl,self.eta_deck)
 
         #objective functions called here for box 
-        self.structure = midship_section.Midship_Section([self.bottom_panel, self.side_panel, self.sheer_panel, self.top_panel, self.deck_panel],0)
+        self.structure = midship_section_RTO.Midship_Section([self.bottom_panel, self.side_panel, self.sheer_panel, self.top_panel, self.deck_panel],0)
         self.current_individual = individual_instance
         PC = self.structure.production_cost()
         data = self.structure.section_data()
