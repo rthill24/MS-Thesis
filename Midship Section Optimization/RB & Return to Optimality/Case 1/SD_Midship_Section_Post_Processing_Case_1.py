@@ -8,7 +8,7 @@ dbname = "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/RB & 
 testobj = post_process.NSGA_PostProcess(dbname)
 optvar_front = testobj.getFront(200,0,[1,2])
 optvars = testobj.getIndVariables(optvar_front)
-print (optvars)
+#print (optvars)
 
 #generate just Pareto front for single generation
 plot_pareto = testobj.SingleFront(200, 0, [1,2], 1.2, "SD_Midship_Section_SingleGen_Pareto_Plot")

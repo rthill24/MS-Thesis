@@ -313,8 +313,8 @@ class Individual:
       
 class Optimizer:
     #Todo add database documentation
-    def __init__(self, prob,  pc=0.8, sbx_ex = 4.0,
-                 p_mut = 0.001, mut_ex = 2.0, use_metamodel=False, offset=-1, 
+    def __init__(self, prob,  pc=0.8, sbx_ex = 2.0,
+                 p_mut = 0.010, mut_ex = 1.0, use_metamodel=False, offset=-1, 
                  density=-1,spacing=-1, max_correction = 10.e12,
                  krig_theta_guess = 10, tol = 0.00, thread=False):
        
