@@ -971,6 +971,7 @@ class NSGA_PostProcess:
                 infeasible_count += 1
         xvector = list(map(itemgetter(0), plot_data))
         yvector = list(map(itemgetter(1), plot_data))
+        
         plt.plot(xvector, yvector, 'ro')
         plt.xlabel(xlabel_S)
         plt.ylabel(ylabel_S)
@@ -985,4 +986,3 @@ class NSGA_PostProcess:
         plt.title(title_S + ' For Generation ' + str(gen_number))
         plt.axis([min(xvector)/scalefactor, max(xvector)*scalefactor, min(yvector)/scalefactor, max(yvector)*scalefactor])
         plt.savefig(filename3 + '.png', dpi=144)
-

@@ -86,7 +86,7 @@ class ElasticElement:
         tuple
             Force and stress in the element, N, and MPA.
         '''
-        force = self.E * self.area * strain*10e6
+        force = self.E * self.area * strain*1e6
         stress = self.E * strain
         return force, stress
 
@@ -151,7 +151,7 @@ class EP_compression_element(ElementBase):
             #print ("NaN in stress")
             #print ("provided strain was: ", strain)
 
-        force = stress*self.area*10e6 #in N
+        force = stress*self.area*1e6 #in N
         return force, stress
 
 class SmithMethod:
@@ -166,44 +166,49 @@ class SmithMethod:
         self._need_update = True
         
     def discretize(self, t_panel_list):
-        
         count = -1
+
+        # Set up file handler for logging element characteristics
+        logging.basicConfig(filename='element_creation.log', filemode='w', level=logging.INFO, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
         for panel in t_panel_list:
             data_i = HC.HansenC(panel)
-            data_i._strn_flip = -np.flip(data_i._strn)
-            data_i._strss_flip = -np.flip(data_i._strss)
-            cs = CubicSpline(data_i._strn_flip, data_i._strss_flip, bc_type='natural')
+            #data_i._strn_flip = -np.flip(data_i._strn)
+            #data_i._strss_flip = -np.flip(data_i._strss)
+            cs = CubicSpline(data_i._strn, data_i._strss, bc_type='natural')
             count += 1
             stiff_spacing = panel.getb()
-            numElements = panel.getnstiff()+2
+            numElements = panel.getnstiff() + 2
             numStiff = panel.getnstiff()
             for j in range(numElements):
                 if j < numStiff:
-                    y_i = panel.get_bot()+((j+1)*(stiff_spacing)*math.sin(math.radians(-panel.getOrnt())))
+                    y_i = panel.get_bot() + ((j + 1) * (stiff_spacing) * math.sin(math.radians(-panel.getOrnt())))
                     x_i = 0
-                    Ys = panel.getsmatl().getYld() #ATTN! currently just uses yield strength of first element
-                    E = panel.getsmatl().getE() #ATTN! currently just uses E of first element
-                    yield_strn = Ys/E
+                    Ys = panel.getsmatl().getYld()
+                    E = panel.getsmatl().getE()
+                    yield_strn = Ys / E
                     area = panel.gettp() * panel.getb() + panel.gettw() * panel.gethw() + panel.gettf() * panel.getbf()
-                    element = EP_compression_element("test", area, x_i, y_i, Ys, E, cs)
+                    element = EP_compression_element(f"Panel {count+1}, Element {j+1}", area, x_i, y_i, Ys, E, cs)
                     self.addElement(element)
+                    logger.info(f"Created element: name={element.name}, area={element.area}, x_loc={element.x_loc}, y_loc={element.y_loc}, sigma_yield={element.sigma_yield}, E={element.E}")
                 elif j == numStiff:
-                    y_0 = panel.get_bot()
-                    y_last = panel.get_bot()+((numStiff)*(stiff_spacing)*math.sin(math.radians(-panel.getOrnt())))
+                    y_0 = panel.get_bot() + ((stiff_spacing/4) * math.sin(math.radians(-panel.getOrnt())))
+                    y_last = panel.get_bot() + (((numStiff * stiff_spacing) + (3*stiff_spacing)/4) * math.sin(math.radians(-panel.getOrnt())))
                     x_0 = 0
                     x_last = 0
-                    span_0 = stiff_spacing
-                    span_last = panel.getB()-(stiff_spacing*(numStiff))-span_0
+                    span_0 = stiff_spacing/2
+                    span_last = stiff_spacing/2
                     Area_0 = panel.gettp() * span_0
                     Area_last = panel.gettp() * span_last
-                    Ys = panel.getsmatl().getYld() #ATTN! currently just uses yield strength of first element
-                    E = panel.getsmatl().getE() #ATTN! currently just uses E of first element
-                    yield_strn = Ys/E
-                    element = EP_compression_element("test", Area_0, x_0, y_0, Ys, E, cs)
-                    self.addElement(element)
-                    element = EP_compression_element("test", Area_last, x_last, y_last, Ys, E, cs)
-                    self.addElement(element)
+                    Ys = panel.getsmatl().getYld()
+                    E = panel.getsmatl().getE()
+                    yield_strn = Ys / E
+                    element_0 = EP_compression_element(f"Panel {count+1}, first element", Area_0, x_0, y_0, Ys, E, cs)
+                    self.addElement(element_0)
+                    logger.info(f"Created element: name={element_0.name}, area={element_0.area}, x_loc={element_0.x_loc}, y_loc={element_0.y_loc}, sigma_yield={element_0.sigma_yield}, E={element_0.E}")
+                    element_last = EP_compression_element(f"Panel {count+1}, last element", Area_last, x_last, y_last, Ys, E, cs)
+                    self.addElement(element_last)
+                    logger.info(f"Created element: name={element_last.name}, area={element_last.area}, x_loc={element_last.x_loc}, y_loc={element_last.y_loc}, sigma_yield={element_last.sigma_yield}, E={element_last.E}")
         return 
 
     def addElement(self, element):
@@ -244,9 +249,9 @@ class SmithMethod:
             total_my += element.area * element.y_loc * factor
             total_ixx += element.area * (element.y_loc**2) * factor
             total_iyy += element.area * (element.x_loc**2) * factor
-            total_shift_denom += element.area * element.E * factor * 10e6 #in N
             yloc_list.append(element.y_loc)
             xloc_list.append(element.x_loc)
+            total_shift_denom += element.area * element.E * factor *1e6 #in N
         
         #Catch case of now panels ready
         if total_area == 0:
@@ -258,30 +263,34 @@ class SmithMethod:
             iyy = total_iyy - total_area * x_na**2
             return total_area, x_na, y_na, ixx, iyy, total_shift_denom, yloc_list, xloc_list
         
-    def setup(self):
+    def setup(self, scale_factor = 15):
         '''Determine the curvature bounds for the ultimate strength calculator'''
 
         total_area, x_na, y_na, ixx, iyy, total_shift_denom, yloc_list, xloc_list = self.getOverallProperties()
         c1 = abs(y_na - max(yloc_list))
+        print ("c1 is: ", c1)
         c2 = abs(y_na - min(yloc_list))
+        print ("c2 is: ", c2)
         c = max(c1,c2)
+        print ("c is: ", c)
         Ys = self._elements[0].sigma_yield #ATTN! currently just uses yield strength of first element
         E = self._elements[0].E #ATTN! currently just uses E of first element
         YldCrv = Ys/(c*E) #yield curvature in 1/m
+        print ("YldCrv is: ", YldCrv)
         
-        num_crv_inc = 20
+        num_crv_inc = scale_factor
 
         #for sagging condition
-        Crv_max_sag = -2*YldCrv
-        Crv_min_sag = Crv_max_sag/10
+        Crv_max_sag = -scale_factor*YldCrv
+        Crv_min_sag = Crv_max_sag/scale_factor
         Crv_step_sag = (Crv_max_sag - Crv_min_sag)/num_crv_inc
 
         #for hogging condition
-        Crv_max_hog = 2*YldCrv
-        Crv_min_hog = Crv_max_hog/10
+        Crv_max_hog = scale_factor*YldCrv
+        Crv_min_hog = Crv_max_hog/scale_factor
         Crv_step_hog = (Crv_max_hog - Crv_min_hog)/num_crv_inc
         
-        return Crv_min_sag, Crv_step_sag, Crv_min_hog, Crv_step_hog, num_crv_inc
+        return Crv_min_sag, Crv_step_sag, Crv_min_hog, Crv_step_hog, num_crv_inc, YldCrv
     
     def plotSection(self):
         #Make a list of all X/Y locations for plotting
@@ -360,7 +369,7 @@ class SmithMethod:
         if NAGuess is not None:
             y_na = NAGuess
         
-        force_tol = 10 #in N
+        force_tol = 1 #in N
         force = 2 * force_tol #just to start
         while abs(force) > force_tol:
             force, moment = self.applyCurvature(curvature, y_na)
@@ -387,7 +396,7 @@ class SmithMethod:
         crv_array = []
         M_array = []
 
-        Crv_min_sag, Crv_step_sag, Crv_min_hog, Crv_step_hog, num_crv_inc = self.setup()
+        Crv_min_sag, Crv_step_sag, Crv_min_hog, Crv_step_hog, num_crv_inc, YldCrv = self.setup()
 
         #for sagging condition first
         for i in range(0,num_crv_inc+1):
@@ -401,16 +410,6 @@ class SmithMethod:
             moment, y_na = self.solveCurvature(curv_applied_hog)
             crv_array.append(curv_applied_hog)
             M_array.append(moment)
-
-        plt.plot(crv_array,M_array, 'ro')
-        plt.xlabel('Curvature [1/m]')
-        plt.ylabel('VBM [kN*m]')
-        plt.title('Collapse Curve for Section')
-        plt.grid(True)
-        plt.show()
-
-        #print ("here's crv array: ", crv_array)
-        #print ("here's M array: ", M_array)
         
         return M_array, crv_array
     
@@ -424,7 +423,37 @@ class SmithMethod:
         '''
         M_array, crv_array = self.getCollapseCurve()
         #Find the max moment in the array
-        Mult = max(M_array, key=abs)
-        print ("here's the ultimate moment: ", Mult)
+        Mult_neg = min(M_array)
+        Mult_pos = max(M_array)
+        Mult = min(abs(Mult_neg), Mult_pos)
         
         return Mult
+    
+    def plotCollapseCurve(self):
+        M_array, crv_array = self.getCollapseCurve()
+        plt.plot(crv_array,M_array, 'ro')
+        plt.xlabel('Curvature [1/m]')
+        plt.ylabel('VBM [kN*m]')
+        plt.title('Collapse Curve for Section')
+        plt.grid(True)
+        plt.show()
+
+    def getMomentatYldCrv(self):
+        '''
+            Finds the moment at yield curvature from the collapse curve.
+            Returns
+            -------     
+            float
+                Myield, moment at yield curvature kN*m
+        '''
+        YldCrv = self.setup()[-1]
+        YldCrv_neg = -YldCrv
+        M_array, crv_array = self.getCollapseCurve()
+
+        # Find the index where curvature is closest to YldCrv and YldCrv_neg
+        idx_yld = np.argmin(np.abs(np.array(crv_array) - YldCrv))
+        idx_yld_neg = np.argmin(np.abs(np.array(crv_array) - YldCrv_neg))
+        Myield = M_array[idx_yld]
+        Myield_neg = M_array[idx_yld_neg]
+        
+        return Myield, Myield_neg
