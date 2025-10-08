@@ -266,6 +266,7 @@ class TPanel_trans(Structures.TPanel):
 
         elif self.ornt == 180 or self.ornt == -180:
             self.bot = start_bot - self._tp - self._hw - self._tf
+            self.bot_1 = start_bot
 
         elif self.ornt < 0 and self.ornt >= -90:
             beta = abs(self.ornt)
@@ -282,6 +283,7 @@ class TPanel_trans(Structures.TPanel):
             self.bot = min(self.bot_1, self.bot_2)
         
         elif self.ornt == 0:
+            self.bot_1 = start_bot
             self.bot = start_bot
 
         #calculate position of neutral axis w.r.t baseline
@@ -602,3 +604,9 @@ class TPanel_trans(Structures.TPanel):
     def getmid(self):
         ''' Returns the height of the middle of the panel w.r.t. the baseline'''
         return self.mid
+    def getbotplate(self):
+        ''' Returns the bottom of the plate w.r.t. the baseline'''
+        return self.bot_1
+    def gettopplate(self):
+        ''' Returns the top of the plate w.r.t. the baseline'''
+        return self.top_1

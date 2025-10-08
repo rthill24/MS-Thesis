@@ -1,43 +1,20 @@
-10/06/2025 06:48:17 PM Created element: name=Panel 1, Element 1, area=0.00583308999, x_loc=0, y_loc=0.2312455206195321, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 1, Element 2, area=0.00583308999, x_loc=0, y_loc=0.4624910412390642, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 1, Element 3, area=0.00583308999, x_loc=0, y_loc=0.6937365618585963, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 1, Element 4, area=0.00583308999, x_loc=0, y_loc=0.9249820824781284, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 1, Element 5, area=0.00583308999, x_loc=0, y_loc=1.1562276030976606, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 1, Element 6, area=0.00583308999, x_loc=0, y_loc=1.3874731237171927, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 1, Element 7, area=0.00583308999, x_loc=0, y_loc=1.6187186443367247, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 1, Element 8, area=0.00583308999, x_loc=0, y_loc=1.8499641649562568, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 1, first element, area=0.002216544995, x_loc=0, y_loc=0.057811380154883026, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 1, last element, area=0.002216544995, x_loc=0, y_loc=2.023398305420906, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 2, Element 1, area=0.003940591144285714, x_loc=0, y_loc=2.569542720594891, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 2, Element 2, area=0.003940591144285714, x_loc=0, y_loc=3.057875755613993, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 2, Element 3, area=0.003940591144285714, x_loc=0, y_loc=3.546208790633095, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 2, Element 4, area=0.003940591144285714, x_loc=0, y_loc=4.034541825652197, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 2, Element 5, area=0.003940591144285714, x_loc=0, y_loc=4.522874860671299, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 2, Element 6, area=0.003940591144285714, x_loc=0, y_loc=5.011207895690402, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 2, first element, area=0.001420295572142857, x_loc=0, y_loc=2.203292944330564, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 2, last element, area=0.001420295572142857, x_loc=0, y_loc=5.377457671954728, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 3, Element 1, area=0.00365631049, x_loc=0, y_loc=5.55298237214044, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 3, Element 2, area=0.00365631049, x_loc=0, y_loc=5.606423813571377, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 3, Element 3, area=0.00365631049, x_loc=0, y_loc=5.659865255002313, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 3, Element 4, area=0.00365631049, x_loc=0, y_loc=5.71330669643325, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 3, first element, area=0.001278155245, x_loc=0, y_loc=5.512901291067238, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 3, last element, area=0.001278155245, x_loc=0, y_loc=5.753387777506452, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 4, Element 1, area=0.0029334985499999996, x_loc=0, y_loc=5.655748137864186, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 4, Element 2, area=0.0029334985499999996, x_loc=0, y_loc=5.655748137864186, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 4, Element 3, area=0.0029334985499999996, x_loc=0, y_loc=5.655748137864186, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 4, Element 4, area=0.0029334985499999996, x_loc=0, y_loc=5.655748137864186, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 4, Element 5, area=0.0029334985499999996, x_loc=0, y_loc=5.655748137864186, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 4, Element 6, area=0.0029334985499999996, x_loc=0, y_loc=5.655748137864186, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 4, first element, area=0.0009167492749999999, x_loc=0, y_loc=5.655748137864186, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 4, last element, area=0.0009167492749999999, x_loc=0, y_loc=5.655748137864186, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, Element 1, area=0.003182845855, x_loc=0, y_loc=2.65265281, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, Element 2, area=0.003182845855, x_loc=0, y_loc=2.65265281, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, Element 3, area=0.003182845855, x_loc=0, y_loc=2.65265281, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, Element 4, area=0.003182845855, x_loc=0, y_loc=2.65265281, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, Element 5, area=0.003182845855, x_loc=0, y_loc=2.6526528099999998, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, Element 6, area=0.003182845855, x_loc=0, y_loc=2.6526528099999998, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, Element 7, area=0.003182845855, x_loc=0, y_loc=2.6526528099999998, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, Element 8, area=0.003182845855, x_loc=0, y_loc=2.6526528099999998, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, Element 9, area=0.003182845855, x_loc=0, y_loc=2.6526528099999998, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, first element, area=0.0010414229275000002, x_loc=0, y_loc=2.65265281, sigma_yield=207, E=71000
-10/06/2025 06:48:17 PM Created element: name=Panel 5, last element, area=0.0010414229275000002, x_loc=0, y_loc=2.6526528099999998, sigma_yield=207, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 1, Element 1, area=0.0006900000000000001, x_loc=0, bot = 0, ornt = 0, y_loc=0.0, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 1, Element 2, area=0.0006900000000000001, x_loc=0, bot = 0, ornt = 0, y_loc=0.0, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 1, Element 3, area=0.0006900000000000001, x_loc=0, bot = 0, ornt = 0, y_loc=0.0, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 1, first element, area=0.00027, x_loc=0, bot = 0, ornt = 0, y_loc=0.0, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 1, last element, area=0.00027, x_loc=0, bot = 0, ornt = 0, y_loc=0.0, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 2, Element 1, area=0.0006900000000000001, x_loc=0, bot = 0, ornt = -90, y_loc=0.18, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 2, Element 2, area=0.0006900000000000001, x_loc=0, bot = 0, ornt = -90, y_loc=0.36, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 2, Element 3, area=0.0006900000000000001, x_loc=0, bot = 0, ornt = -90, y_loc=0.54, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 2, first element, area=0.00027, x_loc=0, bot = 0, ornt = -90, y_loc=0.045, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 2, last element, area=0.00027, x_loc=0, bot = 0, ornt = -90, y_loc=0.675, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 3, Element 1, area=0.0006900000000000001, x_loc=0, bot = 0.6669999999999999, ornt = -180, y_loc=0.6669999999999999, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 3, Element 2, area=0.0006900000000000001, x_loc=0, bot = 0.6669999999999999, ornt = -180, y_loc=0.6669999999999999, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 3, Element 3, area=0.0006900000000000001, x_loc=0, bot = 0.6669999999999999, ornt = -180, y_loc=0.667, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 3, first element, area=0.00027, x_loc=0, bot = 0.6669999999999999, ornt = -180, y_loc=0.6669999999999999, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 3, last element, area=0.00027, x_loc=0, bot = 0.6669999999999999, ornt = -180, y_loc=0.667, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 4, Element 1, area=0.0006900000000000001, x_loc=0, bot = 0.0, ornt = 90, y_loc=0.18, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 4, Element 2, area=0.0006900000000000001, x_loc=0, bot = 0.0, ornt = 90, y_loc=0.36, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 4, Element 3, area=0.0006900000000000001, x_loc=0, bot = 0.0, ornt = 90, y_loc=0.54, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 4, first element, area=0.00027, x_loc=0, bot = 0.0, ornt = 90, y_loc=0.045, sigma_yield=245, E=71000
+10/07/2025 08:17:16 PM Created element: name=Panel 4, last element, area=0.00027, x_loc=0, bot = 0.0, ornt = 90, y_loc=0.675, sigma_yield=245, E=71000
