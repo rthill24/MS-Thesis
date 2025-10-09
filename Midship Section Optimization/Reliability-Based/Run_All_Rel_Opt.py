@@ -3,7 +3,6 @@ import os
 
 # List of (script_path, script_dir) tuples
 scripts = [
-    ("C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Reliability-Based/Test Case/SD_Midship_Section_Optimizer_Test_Case.py", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Reliability-Based/Test Case"),
     ("C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Reliability-Based/Case 1/SD_Midship_Section_Optimizer_Case_1.py", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Reliability-Based/Case 1"),
     ("C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Reliability-Based/Case 2/SD_Midship_Section_Optimizer_Case_2.py", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Reliability-Based/Case 2"),
     ("C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Reliability-Based/Case 3/SD_Midship_Section_Optimizer_Case_3.py", "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Reliability-Based/Case 3"),

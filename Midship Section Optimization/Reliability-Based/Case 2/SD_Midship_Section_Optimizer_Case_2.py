@@ -218,14 +218,14 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
 
         #evaluate beta against hull girder collapse
         HG_beta = self.structure.HG_reliability(section_data[6])[0]
-        HG_beta_R = 4.5 #required beta against hull girder collapse
+        HG_beta_R = 5.5 #required beta against hull girder collapse
         HG_beta_frac = (HG_beta_R-HG_beta)/HG_beta_R
 
         #evaluate beta against individual panel collapse
         HG_stress = self.structure.HG_stress()
         HG_caps = self.structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
         panel_beta = self.structure.Hughes_panel_reliability(HG_caps, HG_stress)[0]
-        panel_beta_R = 3.5 #required beta against panel collapse
+        panel_beta_R = 3.75 #required beta against panel collapse
         panel_beta_frac = (panel_beta_R-panel_beta)/panel_beta_R
 
         #evaluate beta against bottom panel collapse
@@ -237,7 +237,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
             aps = (1/75)*stiff_spacing*1000
         p_allow = Allowable_Permanent_Set.Allowable_Permanent_Set(0, aps)._p_aps(self.bottom_panel)
         plating_beta = self.structure.plating_reliability(p_allow)[0]
-        plating_beta_R = 3 #required beta against plating collapse
+        plating_beta_R = 3.25 #required beta against plating collapse
         plating_beta_frac = (plating_beta_R-plating_beta)/plating_beta_R
 
         #iterate through constraints

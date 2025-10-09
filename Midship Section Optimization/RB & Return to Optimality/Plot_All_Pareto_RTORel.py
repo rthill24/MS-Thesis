@@ -6,7 +6,7 @@ sys.path.insert(0, 'C:/Users/rthill/Documents/MS-Thesis')
 import post_process
 
 dbname_list = []
-for i in range(1,5):
+for i in range(1,9):
     name = "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/RB & Return to Optimality/Case " + str(i) + "/SD_Midship_Section_Optimizer_Output_Case_" + str(i)
     dbname_list.append(name)
 

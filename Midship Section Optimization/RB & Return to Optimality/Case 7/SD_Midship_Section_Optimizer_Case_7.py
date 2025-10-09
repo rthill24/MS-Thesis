@@ -219,14 +219,14 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
 
         #evaluate beta against hull girder collapse
         HG_beta = self.structure.HG_reliability(section_data[6])[0]
-        HG_beta_R = 3 #required beta against hull girder collapse
+        HG_beta_R = 2.75 #required beta against hull girder collapse
         HG_beta_frac = (HG_beta_R-HG_beta)/HG_beta_R
 
         #evaluate beta against individual panel collapse
         HG_stress = self.structure.HG_stress()
         HG_caps = self.structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
         panel_beta = self.structure.Hughes_panel_reliability(HG_caps, HG_stress)[0]
-        panel_beta_R = 1.5 #required beta against panel collapse
+        panel_beta_R = 2.5 #required beta against panel collapse
         panel_beta_frac = (panel_beta_R-panel_beta)/panel_beta_R
 
         #evaluate beta against bottom panel collapse
@@ -279,7 +279,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
 # run the optimization
 ## lower and upper bounds for design variables
 loBound = [1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000]
-upBound = [15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000, 15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000, 15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000, 15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000, 15, 50/1000, 25/1000, 25/1000, 25/1000, 25/1000]
+upBound = [15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000]
 test_problem = SD_Midship_Section_Test_Case(2, 9, 30, loBound, upBound)
     # numObj, numConstraints, GeneNum, loBound, upBound
 opt = nsga2.Optimizer(test_problem)
