@@ -11,7 +11,6 @@ import math
 import Structures
 import logging
 from numpy import zeros
-import midship_section
 import Plate
 import Cost
 import sys
