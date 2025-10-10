@@ -218,7 +218,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
 
         #evaluate beta against hull girder collapse
         HG_beta = self.structure.HG_reliability(section_data[6])[0]
-        HG_beta_R = 5.5 #required beta against hull girder collapse
+        HG_beta_R = 5 #required beta against hull girder collapse
         HG_beta_frac = (HG_beta_R-HG_beta)/HG_beta_R
 
         #evaluate beta against individual panel collapse

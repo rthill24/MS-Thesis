@@ -11,7 +11,6 @@ import math
 import Structures
 import logging
 from numpy import zeros
-import midship_section
 import Plate
 import Cost
 import sys
@@ -226,7 +225,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         HG_stress = self.structure.HG_stress()
         HG_caps = self.structure.Hughes_Panel(2.4, 1025, 38.36, HG_stress)
         panel_beta = self.structure.Hughes_panel_reliability(HG_caps, HG_stress)[0]
-        panel_beta_R = 13 #required beta against panel collapse
+        panel_beta_R = 3 #required beta against panel collapse
         panel_beta_frac = (panel_beta_R-panel_beta)/panel_beta_R
 
         #evaluate beta against bottom panel collapse
