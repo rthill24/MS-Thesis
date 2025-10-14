@@ -7,9 +7,9 @@ import post_process
 
 dbname_list = []
 
-#cycle through static FOS cases
+#cycle through all FYM static FOS cases
 for i in range(1,9):
-    name = "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Smith Collapse/Static FOS/Case " + str(i) + "/SD_Midship_Section_Optimizer_Output_Case_" + str(i)
+    name = "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/First Yield Moment/Static FOS/Case " + str(i) + "/SD_Midship_Section_Optimizer_Output_Case_" + str(i)
     dbname_list.append(name)
 
 #cycle through reliability based cases
@@ -55,7 +55,7 @@ for idx, i in enumerate(dbname_list):
 plt.xlabel('Cost [$]')
 plt.ylabel('Weight [kg]')
 plt.legend()
-plt.title('Pareto Fronts for All SC Cases')
+plt.title('Pareto Fronts for All SC RTO/RB Cases')
 plt.savefig('All_SC_Cases_Pareto_Fronts.png', dpi=144)
 plt.show()
 

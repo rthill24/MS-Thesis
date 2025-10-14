@@ -1,1 +1,0 @@
-This workspace contains eight (8) different static FOS optimization runs
