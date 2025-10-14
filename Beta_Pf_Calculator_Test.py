@@ -11,7 +11,7 @@ print ("Beta_test = ", beta_test) """
 
 
 ##Below is a test to get Pf from a given beta
-beta = 3 #as a test value
+beta = 1.75 #as a test value
 
 Pf_test = Beta_Pf_Calculator.probability_of_failure(beta)
 print ("Pf_test = ", Pf_test)
