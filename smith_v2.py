@@ -5,14 +5,11 @@
 # (c) 2025 Regents of the Univesity of Michigan
 
 import matplotlib.pyplot as plt
-import logging
 import TPanel_trans
 import math
 import HansenC as HC
 import numpy as np
 from scipy.interpolate import CubicSpline
-
-logger = logging.getLogger(__name__)
 
 class ElementBase:
     '''
@@ -168,9 +165,6 @@ class SmithMethod:
     def discretize(self, t_panel_list):
         count = -1
 
-        # Set up file handler for logging element characteristics
-        logging.basicConfig(filename='element_creation.log', filemode='w', level=logging.INFO, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
-
         for panel in t_panel_list:
             data_i = HC.HansenC(panel)
             #data_i._strn_flip = -np.flip(data_i._strn)
@@ -178,8 +172,8 @@ class SmithMethod:
             cs = CubicSpline(data_i._strn, data_i._strss, bc_type='natural')
             count += 1
             stiff_spacing = panel.getb()
-            numElements = panel.getnstiff() + 2
-            numStiff = panel.getnstiff()
+            numElements = round(panel.getnstiff() + 2)
+            numStiff = round(panel.getnstiff())
             for j in range(numElements):
                 if j < numStiff:
                     y_i = panel.get_bot() + ((j + 1) * (stiff_spacing) * math.sin(math.radians(-panel.getOrnt())))
@@ -190,7 +184,6 @@ class SmithMethod:
                     area = panel.gettp() * panel.getb() + panel.gettw() * panel.gethw() + panel.gettf() * panel.getbf()
                     element = EP_compression_element(f"Panel {count+1}, Element {j+1}", area, x_i, y_i, Ys, E, cs)
                     self.addElement(element)
-                    logger.info(f"Created element: name={element.name}, area={element.area}, x_loc={element.x_loc}, y_loc={element.y_loc}, sigma_yield={element.sigma_yield}, E={element.E}")
                 elif j == numStiff:
                     y_0 = panel.get_bot() + ((stiff_spacing/4) * math.sin(math.radians(-panel.getOrnt())))
                     y_last = panel.get_bot() + (((numStiff * stiff_spacing) + (3*stiff_spacing)/4) * math.sin(math.radians(-panel.getOrnt())))
@@ -205,10 +198,8 @@ class SmithMethod:
                     yield_strn = Ys / E
                     element_0 = EP_compression_element(f"Panel {count+1}, first element", Area_0, x_0, y_0, Ys, E, cs)
                     self.addElement(element_0)
-                    logger.info(f"Created element: name={element_0.name}, area={element_0.area}, x_loc={element_0.x_loc}, y_loc={element_0.y_loc}, sigma_yield={element_0.sigma_yield}, E={element_0.E}")
                     element_last = EP_compression_element(f"Panel {count+1}, last element", Area_last, x_last, y_last, Ys, E, cs)
                     self.addElement(element_last)
-                    logger.info(f"Created element: name={element_last.name}, area={element_last.area}, x_loc={element_last.x_loc}, y_loc={element_last.y_loc}, sigma_yield={element_last.sigma_yield}, E={element_last.E}")
         return 
 
     def addElement(self, element):
@@ -217,7 +208,6 @@ class SmithMethod:
         '''
         self._elements.append(element)
         self._need_update = True
-        logger.debug(f"Added element: {element.name} to Smith method.")
 
     def getOverallProperties(self,  mirror = True):
         '''
@@ -263,20 +253,16 @@ class SmithMethod:
             iyy = total_iyy - total_area * x_na**2
             return total_area, x_na, y_na, ixx, iyy, total_shift_denom, yloc_list, xloc_list
         
-    def setup(self, scale_factor = 15, num_crv_inc = 25):
+    def setup(self, scale_factor = 15, num_crv_inc = 15):
         '''Determine the curvature bounds for the ultimate strength calculator'''
 
         total_area, x_na, y_na, ixx, iyy, total_shift_denom, yloc_list, xloc_list = self.getOverallProperties()
         c1 = abs(y_na - max(yloc_list))
-        print ("c1 is: ", c1)
         c2 = abs(y_na - min(yloc_list))
-        print ("c2 is: ", c2)
         c = max(c1,c2)
-        print ("c is: ", c)
         Ys = self._elements[0].sigma_yield #ATTN! currently just uses yield strength of first element
         E = self._elements[0].E #ATTN! currently just uses E of first element
         YldCrv = Ys/(c*E) #yield curvature in 1/m
-        print ("YldCrv is: ", YldCrv)
 
         #for sagging condition
         Crv_max_sag = -scale_factor*YldCrv

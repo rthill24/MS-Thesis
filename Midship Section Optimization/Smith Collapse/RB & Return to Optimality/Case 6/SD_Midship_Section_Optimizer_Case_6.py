@@ -26,6 +26,7 @@ import deterioratingStructure
 import Allowable_Permanent_Set
 import nsga2_michigan_threaded as nsga2
 import Box_Checker
+import smith_v2
 
 class SD_Midship_Section_Test_Case(nsga2.Problem):
 
@@ -210,6 +211,9 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
 
         #get section data for constraints
         section_data = self.structure.section_data()
+        Smith = smith_v2.SmithMethod()
+        Smith.discretize([self.bottom_panel, self.side_panel, self.sheer_panel, self.top_panel, self.deck_panel])
+        Mult = Smith.getUltimateMoment()
 
         #evaluate attained SM against LR requirement
         SM = section_data[5]
@@ -217,7 +221,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
         frac_SM = (SM_R-SM)/SM_R
 
         #evaluate beta against hull girder collapse
-        HG_beta = self.structure.HG_reliability(section_data[6])[0]
+        HG_beta = self.structure.HG_reliability(Mult)[0]
         HG_beta_R = 3 #required beta against hull girder collapse
         HG_beta_frac = (HG_beta_R-HG_beta)/HG_beta_R
 
@@ -277,7 +281,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
 
 # run the optimization
 ## lower and upper bounds for design variables
-loBound = [1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000]
+loBound = [5, 5/1000, 1/1000, 1/1000, 1/1000, 1/1000, 5, 5/1000, 1/1000, 1/1000, 1/1000, 1/1000, 5, 5/1000, 1/1000, 1/1000, 1/1000, 1/1000, 5, 5/1000, 1/1000, 1/1000, 1/1000, 1/1000, 5, 5/1000, 1/1000, 1/1000, 1/1000, 1/1000]
 upBound = [15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000]
 test_problem = SD_Midship_Section_Test_Case(2, 9, 30, loBound, upBound)
     # numObj, numConstraints, GeneNum, loBound, upBound

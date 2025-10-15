@@ -11,7 +11,6 @@ import math
 import Structures
 import logging
 from numpy import zeros
-import midship_section
 import Plate
 import Cost
 import sys
@@ -278,7 +277,7 @@ class SD_Midship_Section_Test_Case(nsga2.Problem):
 
 # run the optimization
 ## lower and upper bounds for design variables
-loBound = [1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000, 1, 1/1000, 1/1000, 1/1000, 1/1000, 1/1000]
+loBound = [5, 5/1000, 1/1000, 1/1000, 1/1000, 1/1000, 5, 5/1000, 1/1000, 1/1000, 1/1000, 1/1000, 5, 5/1000, 1/1000, 1/1000, 1/1000, 1/1000, 5, 5/1000, 1/1000, 1/1000, 1/1000, 1/1000, 5, 5/1000, 1/1000, 1/1000, 1/1000, 1/1000]
 upBound = [15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000]
 test_problem = SD_Midship_Section_Test_Case(2, 9, 30, loBound, upBound)
     # numObj, numConstraints, GeneNum, loBound, upBound
