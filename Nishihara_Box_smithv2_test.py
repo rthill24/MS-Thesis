@@ -22,8 +22,8 @@ import Allowable_Permanent_Set
 import smith_v2_Nishihara
 
 # Define the material properties for the given box girder section
-pmatl = Structures.EPMatl(245, 71000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
-smatl = Structures.EPMatl(245, 71000, 2660, 0.33)
+pmatl = Structures.EPMatl(245, 207000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
+smatl = Structures.EPMatl(245, 207000, 2660, 0.33)
 tmatl = smatl
 
 """

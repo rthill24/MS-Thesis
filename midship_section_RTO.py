@@ -658,6 +658,11 @@ class Midship_Section(object):
         self.stochastic_model.addVariable(ra.Gumbel("Md", Md_nom*Md_r, Md_cov*Md_nom*Md_r))
         
         ## My is a Lognormal distributed random variable with a mean/nominal ratio of 1 and a COV of 0.15, where nominal value is provided by design optimization
+        
+        #Included because optimization start up was having issues with very high My values
+        if My_nom >= 500000:
+            My_nom = 500000
+
         self.stochastic_model.addVariable(ra.Lognormal("My", My_nom*My_r, My_cov*My_nom*My_r))
     
         #initialize reliability analysis
