@@ -35,7 +35,7 @@ marker_size = 5
 
 # Define two plot colors for the two groups and distinct markers per case
 group_colors = ['tab:green', 'tab:red']
-case_markers = ['o', 's', '^', 'v', '<', '>', 'D', 'P']
+case_markers = ['o-', 's--', '^-', 'd:', 'x-', '*--', 'p-', 'h--']
 
 for idx, i in enumerate(dbname_list):
     testobj = post_process.NSGA_PostProcess(i)
