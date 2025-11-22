@@ -8,12 +8,12 @@ from matplotlib.lines import Line2D
 
 dbname_list = []
 
-#cycle through static FOS cases
+#cycle through FYM return to optimality & reliability-based cases
 for i in range(1,9):
-    name = "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/First Yield Moment/Static FOS/Case " + str(i) + "/SD_Midship_Section_Optimizer_Output_Case_" + str(i)
+    name = "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/First Yield Moment/RB & Return to Optimality/Case " + str(i) + "/SD_Midship_Section_Optimizer_Output_Case_" + str(i)
     dbname_list.append(name)
 
-#cycle through return to optimality & reliability-based cases
+#cycle through SC return to optimality & reliability-based cases
 for i in range(1,9):
     name = "C:/Users/rthill/Documents/MS-Thesis/Midship Section Optimization/Smith Collapse/RB & Return to Optimality/Case " + str(i) + "/SD_Midship_Section_Optimizer_Output_Case_" + str(i)
     dbname_list.append(name)
@@ -22,8 +22,8 @@ comb_list = []
 # Define two plot styles for the two groups of cases
 group_styles = ['o', 's']
 group_labels = [
-    'Static FOS',
-    'Reliability-Based'
+    'R-B',
+    'P-B'
 ]
 
 cases_per_group = 8
@@ -73,7 +73,7 @@ case_handles = [
 ]
 
 ax = plt.gca()
-legend1 = ax.legend(handles=group_handles, loc='upper right', title='Set Type')
+legend1 = ax.legend(handles=group_handles, loc='upper right', title='Group Type')
 ax.add_artist(legend1)
 # place case legend to the right of the plot
 case_legend = ax.legend(handles=case_handles, loc='center left', bbox_to_anchor=(1.02, 0.5), title='Case Marker')
@@ -81,7 +81,7 @@ case_legend = ax.legend(handles=case_handles, loc='center left', bbox_to_anchor=
 # make room on the right for the external legend
 plt.subplots_adjust(right=0.78)
 
-plt.savefig('SC_vs_RB_Presentation.png', dpi=144, bbox_inches='tight')
+plt.savefig('SC_RBRTO_vs_FYM_RBORTO_Paper.png', dpi=144, bbox_inches='tight')
 plt.show()
 
 
