@@ -282,5 +282,5 @@ upBound = [15, 100/1000, 50/1000, 50/1000, 50/1000, 50/1000, 15, 100/1000, 50/10
 test_problem = SD_Midship_Section_Test_Case(2, 9, 30, loBound, upBound)
     # numObj, numConstraints, GeneNum, loBound, upBound
 opt = nsga2.Optimizer(test_problem)
-opt.run("SD_Midship_Section_Optimizer_Output_Case_3", "initial_test", 48109, 200, 500)
+opt.run("SD_Midship_Section_Optimizer_Output_Case_3", "initial_test", 48109, 200, 1000)
 # num generations, pop size
