@@ -16,9 +16,23 @@ import sys, os, fileinput, math, string, numpy, scipy, random
 import matplotlib.pyplot as plt
 from operator import itemgetter
 from scipy import integrate
-from SD_Midship_Section_Post_Processing import optvars
+import tkinter as tk
+from tkinter import filedialog
+import importlib.util
 
 plt.close()
+
+# Specify the filepath to the Python script containing optvars
+filepath = 'C:\\Users\\rthill\\Documents\\MS-Thesis\\Midship Section Optimization\\Smith Collapse\\RB & Return to Optimality\\Case 8\\SD_Midship_Section_Post_Processing_Case_8.py'
+
+if filepath:
+    spec = importlib.util.spec_from_file_location("module", filepath)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    optvars = module.optvars
+else:
+    print("No file specified")
+    sys.exit()
 
 # Define the material properties
 pmatl = Structures.EPMatl(207, 71000, 2660, 0.33) #MPa, MPa, kg/m^3, Poisson's ratio
@@ -117,40 +131,40 @@ ornt_deck = 180
 qloc_deck = ['NA','NA','NA']
 eta_deck = 0
 
-nstiff_bot = optvars[0][0]
-tp_bot = optvars[0][1]
-tw_bot = optvars[0][2]
-hw_bot = optvars[0][3]
-tf_bot = optvars[0][4]
-bf_bot = optvars[0][5]
+nstiff_bot = optvars[1][0]
+tp_bot = optvars[1][1]
+tw_bot = optvars[1][2]
+hw_bot = optvars[1][3]
+tf_bot = optvars[1][4]
+bf_bot = optvars[1][5]
 
-nstiff_side = optvars[0][6]
-tp_side = optvars[0][7]
-tw_side = optvars[0][8]
-hw_side = optvars[0][9]
-tf_side = optvars[0][10]
-bf_side = optvars[0][11]
+nstiff_side = optvars[1][6]
+tp_side = optvars[1][7]
+tw_side = optvars[1][8]
+hw_side = optvars[1][9]
+tf_side = optvars[1][10]
+bf_side = optvars[1][11]
 
-nstiff_sheer = optvars[0][12]
-tp_sheer = optvars[0][13]
-tw_sheer = optvars[0][14]
-hw_sheer = optvars[0][15]
-tf_sheer = optvars[0][16]
-bf_sheer = optvars[0][17]
+nstiff_sheer = optvars[1][12]
+tp_sheer = optvars[1][13]
+tw_sheer = optvars[1][14]
+hw_sheer = optvars[1][15]
+tf_sheer = optvars[1][16]
+bf_sheer = optvars[1][17]
 
-nstiff_top = optvars[0][18]
-tp_top = optvars[0][19]
-tw_top = optvars[0][20]
-hw_top = optvars[0][21]
-tf_top = optvars[0][22]
-bf_top = optvars[0][23]
+nstiff_top = optvars[1][18]
+tp_top = optvars[1][19]
+tw_top = optvars[1][20]
+hw_top = optvars[1][21]
+tf_top = optvars[1][22]
+bf_top = optvars[1][23]
 
-nstiff_deck = optvars[0][24]
-tp_deck = optvars[0][25]
-tw_deck = optvars[0][26]
-hw_deck = optvars[0][27]
-tf_deck = optvars[0][28]
-bf_deck = optvars[0][29]
+nstiff_deck = optvars[1][24]
+tp_deck = optvars[1][25]
+tw_deck = optvars[1][26]
+hw_deck = optvars[1][27]
+tf_deck = optvars[1][28]
+bf_deck = optvars[1][29]
 
 # Creation of midship section
 bottom_panel = TPanel_trans.TPanel_trans(B_bot,Frame_Spacing,nstiff_bot,ntrans_bot,tp_bot,\
@@ -176,5 +190,8 @@ print('Production Cost = ', PC)
 data = structure.section_data()
 weight = data[3]
 print('Weight = ', weight)
+
+print ('Opt Vars = ', optvars[1])
+
 plt.show()
 
